@@ -1,0 +1,12 @@
+prefix=/home/vm2/mipsel_uclibc_toolchain/buildroot-2014.08/output/host/usr
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: com_err
+Description: Common error description library
+Version: 1.42.11
+Requires:
+Cflags: -I${includedir}/et -I${includedir}
+Libs: -L${libdir} -lcom_err
+Libs.private: -lpthread

@@ -1,0 +1,11 @@
+prefix=/home/vm2/mipsel_uclibc_toolchain/buildroot-2014.08/output/host/usr
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: ext2fs
+Description: Ext2fs library
+Version: 1.42.11
+Requires.private: com_err
+Cflags: -I${includedir}/ext2fs -I${includedir}
+Libs: -L${libdir} -lext2fs

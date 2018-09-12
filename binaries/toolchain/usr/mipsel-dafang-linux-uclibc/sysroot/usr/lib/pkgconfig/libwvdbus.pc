@@ -1,0 +1,13 @@
+version=4.6.1
+prefix=/usr
+exec_prefix=/usr
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: WvStreams D-Bus
+Description: WvStreams-style wrapper for D-Bus library
+Version: ${version}
+Requires: libwvbase = ${version}, libwvstreams = ${version}, libwvutils = ${version}
+Libs: -L${libdir} -lwvdbus
+Cflags: -I${includedir}/wvstreams
+

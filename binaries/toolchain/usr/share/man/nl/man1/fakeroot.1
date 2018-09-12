@@ -1,0 +1,254 @@
+.de  CW
+.sp
+.nf
+.ft CW
+..
+.\" Process this file with
+.\" groff -man -Tascii foo.1
+.\"
+.\" "verbatim" environment (from strace.1)
+.de  CE
+.ft
+.fi
+.sp
+..
+.\"
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH fakeroot 1 "6 augustus 2004" "Project Debian" "Handleiding van Debian"
+.\" Manpage by J.H.M. Dassen <jdassen@debian.org>
+.\" and Clint Adams <clint@debian.org>
+.SH NAAM
+fakeroot \- voert een commando uit in een omgeving die root\-privileges
+fingeert voor het manipuleren van bestanden
+.SH SYNTAX
+\fBfakeroot\fP \fB[\-l|\-\-lib\fP \fIbibliotheek]\fP \fB[\-\-faked\fP
+\fIbinair\-bestand\-faked\fP\fB]\fP \fB[\-i\fP \fIte\-laden\-bestand\fP\fB]\fP \fB[\-s\fP
+\fIte\-bewaren\-bestand\fP\fB]\fP \fB[\-u|\-\-unknown\-is\-real ]\fP \fB[\-b|\-\-fd\-base ]\fP
+\fB[\-h|\-\-help ]\fP \fB[\-v|\-\-version ]\fP \fB[\-\-]\fP \fB[commando]\fP
+.SH BESCHRIJVING
+\fBfakeroot\fP voert een commando uit in een omgeving waarin het voor dit
+commando lijkt alsof het root\-privileges heeft voor het bewerken van
+bestanden. Zo kunnen gebruikers in archieven (zoals tar, ar, .deb enz.)
+bestanden opnemen met eigenaar en toegangsrechten die normaal gesproken
+alleen root mag instellen. Zonder \fBfakeroot\fP zou men root\-toegang nodig
+hebben om de bestanden in het archief aan te maken met de juiste
+toegangsrechten en eigenaar en ze dan in te pakken, of men zou de archieven
+direct, dus zonder gebruik te maken van het archiveerprogramma, moeten
+opbouwen.
+
+\fBfakeroot\fP werkt door de bibliotheekfuncties voor bestandsbewerking
+(chmod(2), stat(2) enz.) te vervangen door namaakfuncties, die het effect
+dat zou zijn opgetreden als de gebruiker echt root was, nabootsen. Deze
+`omhulselfuncties' (wrapper functions) bevinden zich in een gedeelde
+bibliotheek, \fB/usr/lib/libfakeroot.so*\fP, die wordt geladen via het
+mechanisme \fBLD_PRELOAD\fP van de dynamische lader. (Zie \fBld.so\fP(8).)
+
+Bent u van plan met behulp van \fBfakeroot\fP programmatuurpakketten te maken,
+probeer dan eerst het fakeroot\-pakket zelf opnieuw op te bouwen. De regel
+`build' in het bestand \fIdebian/rules\fP bevat namelijk een aantal tests (die
+vooral fouten in oude versies van fakeroot opsporen). Als deze tests niet
+slagen (omdat u bijvoorbeeld bepaalde libc5\-programma's op uw systeem
+heeft), dan zullen andere pakketten die u met behulp van fakeroot opbouwt
+waarschijnlijk ook niet goed werken. Dit kan dan echter veel moeilijker te
+ontdekken zijn.
+
+Onthoud ook dat u beter niet de binaire bestanden zelf kunt bouwen in een
+fakeroot\-omgeving. Vooral \fBconfigure\fP en dergelijke werken vaak niet goed
+als het systeem zich plotseling anders gaat gedragen. (Bovendien wissen deze
+programma's soms omgevingsvariabelen die fakeroot nodig kan hebben.)
+
+.SH OPTIES
+.TP 
+\fB\-l\fP \fIbibliotheek\fP, \fB\-\-lib\fP \fIbibliotheek\fP
+Een andere omhulselbibliotheek gebruiken.
+.TP 
+\fB\-\-faked\fP\fI\ binary\fP
+Een ander binair bestand als \fBfaked\fP(1) gebruiken.
+.TP 
+\fB[\-\-]\fP\fI\ commando\fP
+Een willekeurig commando dat u in een fakeroot\-omgeving wilt
+uitvoeren. Gebruik \(oq\-\-\(cq als uw commando eigen opties bevat die het
+uitlezen van opties door fakeroot in de war zouden kunnen sturen.
+.TP 
+\fB\-s\fP\fI\ te\-bewaren\-bestand\fP
+De fakeroot\-omgeving in het \fIte\-bewaren\-bestand\fP opslaan bij
+afsluiten. Door dit bestand aan de optie \-i mee te geven kunt u later de
+omgeving herstellen. U moet echter niet tussentijds buiten de
+fakeroot\-omgeving enige bewerking uitvoeren op de bestanden, anders zal dit
+bestand gaan `lekken' en zal fakeroot zich onvoorspelbaar gedragen. Toch kan
+deze mogelijkheid nuttig zijn. U kunt bijvoorbeeld met rsync(1)
+reservekopieën maken van hele mappen, compleet met informatie over
+gebruikers, groepen en apparaten, zonder root te hoeven worden. Zie
+\fI/usr/share/doc/fakeroot/README.saving\fP voor meer informatie.
+.TP 
+\fB\-i\fP\fI\ te\-laden\-bestand\fP
+Een eerder met \-s bewaarde fakeroot\-omgeving laden uit het
+\fIte\-laden\-bestand\fP. Let erop dat met deze optie het bestand niet bijgewerkt
+wordt; gebruik daarvoor ook \-s. Het is veilig om voor zowel \-i als \-s
+hetzelfde bestand aan te geven binnen een enkele aanroep van fakeroot.
+.TP 
+\fB\-u\fP, \fB\-\-unknown\-is\-real\fP
+De echte eigenaren handhaven van bestanden die niet eerder bij fakeroot
+bekend waren, in plaats van te doen alsof deze eigendom waren van root:root.
+.TP 
+\fB\-b\fP\fI\ fd\fP
+Het basisnummer van file descriptors aangeven (alleen TCP\-modus). \fIfd\fP
+geeft het minimale file descriptor\-nummer aan dat voor TCP\-verbindingen
+gebruikt kan worden; dit kan belangrijk zijn om conflicten te vermijden met
+de file descriptors die door de onder fakeroot uitgevoerde programma's
+gebruikt worden.
+.TP 
+\fB\-h\fP
+Hulp tonen.
+.TP 
+\fB\-v\fP
+Versie tonen.
+
+.SH VOORBEELDEN
+Hieronder ziet u een voorbeeldsessie met \fBfakeroot\fP. Merk op dat binnen de
+nagebootste root\-omgeving de bestandsbewerkingen die root\-privileges
+vereisen lijken te slagen, maar in het echt niet worden uitgevoerd.
+.CW
+$  whoami
+joost
+$ fakeroot /bin/bash
+#  whoami
+root
+# mknod hda3 b 3 1
+# ls \-ld hda3
+brw\-r\-\-r\-\-  1 root root 3, 1 2007\-01\-21 12:02 hda3
+# chown joost:root hda3
+# ls \-ld hda3
+brw\-r\-\-r\-\-  1 joost root 3, 1 2007\-01\-21 12:02 hda3
+# ls \-ld /
+drwxr\-xr\-x  22 root root 600 2007\-01\-20 23:58 /
+# chown joost:users /
+# chmod a+w /
+# ls \-ld /
+drwxrwxrwx  22 joost users 600 2007\-01\-20 23:58 /
+# exit
+$ ls \-ld /
+drwxr\-xr\-x  22 root root 600 2007\-01\-20 23:58 /
+$ ls \-ld hda3
+\-rw\-r\-\-r\-\-  1 joost users 0 2007\-01\-21 12:06 hda3
+.CE
+Alleen de bewerkingen die de gebruiker \fBjoost\fP toch al mocht uitvoeren,
+gebeuren ook echt.
+
+\fBfakeroot\fP is speciaal geschreven zodat gebruikers Debian
+GNU/Linux\-pakketten (in het \fBdeb(5)\fP\-formaat) kunnen maken zonder daarvoor
+root\-privileges nodig te hebben. Dit doet u met commando's als
+\fBdpkg\-buildpackage \-rfakeroot\fP of \fBdebuild \-rfakeroot\fP (in feite is
+\-rfakeroot tegenwoordig standaard in debuild, dus die parameter kunt u
+weglaten).
+.SH VEILIGHEIDSASPECTEN
+\fBfakeroot\fP is een normaal programma, zonder setuid. Het verhoogt de
+privileges van de gebruiker niet, en verlaagt dus ook niet de veiligheid van
+het systeem.
+.SH BESTANDEN
+\fI/usr/lib/libfakeroot/libfakeroot.so*\fP De gedeelde bibliotheek met de
+omhulselfuncties.
+.SH OMGEVING
+.IP \fBFAKEROOTKEY\fP
+De sleutel om met de fakeroot\-daemon te communiceren. Ieder programma dat
+wordt gestart met de juiste \fBLD_PRELOAD\fP en een \fBFAKEROOTKEY\fP van een
+momenteel draaiende daemon wordt automatisch verbonden met die daemon, en
+krijgt hetzelfde `valse' zicht op de toegangsrechten/eigenaren van het
+bestandssysteem (ervan uitgaande dat de daemon en het programma dat de
+verbinding maakt werden opgestart door dezelfde gebruiker).
+.IP \fBLD_LIBRARY_PATH\fP
+.IP \fBLD_PRELOAD\fP
+Fakeroot werkt door systeemaanroepen te `omhullen' (`wrappen'). Dit wordt
+mogelijk gemaakt door LD_LIBRARY_PATH=/usr/lib/fakeroot en
+LD_PRELOAD=libfakeroot.so.0 in te stellen. Deze bibliotheek wordt vóór de
+C\-bibliotheek van het systeem geladen, en dus wordt het grootste deel van de
+bibliotheekfuncties erdoor afgevangen. Als u ofwel \fBLD_LIBRARY_PATH\fP ofwel
+\fBLD_PRELOAD\fP moet instellen vanuit een fakeroot\-omgeving, dan moeten deze
+\fIna\fP de al ingestelde paden worden ingesteld, bijvoorbeeld:
+\fBLD_LIBRARY_PATH=$LD_LIBRARY_PATH:/pad/naar/de/map/\fP
+
+.SH BEPERKINGEN
+.IP "\fBVersies bibliotheken\fP"
+Ieder binnen \fBfakeroot\fP uitgevoerd commando dient gekoppeld te zijn aan
+dezelfde versie van de C\-bibliotheek als \fBfakeroot\fP zelf.
+.IP \fBopen()/create()\fP
+fakeroot `omhult' niet de functies open(), create(), enz. Dus als de
+gebruiker \fBjoost\fP de commando's
+.CW
+touch testbestand
+fakeroot
+ls \-al testbestand
+.CE
+uitvoert, in deze of in omgekeerde volgorde,
+.CW
+fakeroot
+touch testbestand
+ls \-al testbestand
+.CE
+dan kan fakeroot niet weten dat in het eerste geval de eigenaar van
+\fItestbestand\fP eigenlijk \fBjoost\fP zou moeten zijn terwijl in het tweede
+geval deze \fBroot\fP moet zijn. Voor het maken van Debian\-pakketten is het
+altijd goed om standaard alle `onbekende' bestanden eigenaar en groep 0
+(root) te geven. Een echte oplossing voor dit probleem zou zijn het omhullen
+van \fBopen()\fP en \fBcreate()\fP, maar dat geeft weer andere problemen, zoals
+het libtricks\-pakket heeft aangetoond. Dit pakket omhulde veel meer
+functies, en wilde veel meer doen dan \fBfakeroot\fP. Het bleek dat slechts een
+kleine bijwerking van libc (van een versie waarin de functie \fBstat()\fP de
+functie \fBopen()\fP niet aanriep, naar eentje met een \fBstat()\fP\-functie die
+(in sommige gevallen) wel degelijk van \fBopen()\fP gebruikt maakte)
+onverklaarbare `segfaults' veroorzaakte (dat wil zeggen, de \fBstat()\fP van
+libc6 riep de omhulde \fBopen()\fP aan, die vervolgens de \fBstat()\fP van libc6
+weer aanriep, enz.). Het oplossen van dit probleem was al niet makkelijk,
+maar bij iedere oplossing was het slechts een kwestie van tijd voordat een
+andere functie weer \fBopen()\fP begon aan te roepen, en dan hebben we het nog
+niet eens over het aanpassen van fakeroot aan een ander
+besturingssysteem. Dus besloot ik om het aantal door fakeroot omhulde
+functies dan maar zo klein mogelijk te houden, om zo het gevaar van
+\(oqbotsingen\(cq in te perken.
+.IP "\fBGNU configure (en andere soortgelijke programma's)\fP"
+Fakeroot verandert de manier waarop het systeem zich gedraagt. Programma's
+die het systeem verkennen, zoals GNU configure, kunnen hierdoor in de war
+raken (of anders kunnen zij fakeroot zo zwaar belasten dat fakeroot zelf in
+de war raakt). Het is dus niet aan te raden \fBconfigure\fP binnen fakeroot uit
+te voeren. Aangezien configure dient te worden aangeroepen in de regel
+`build' in \fIdebian/rules\fP, zorgt het commando \fBdpkg\-buildpackage
+\-rfakeroot\fP er automatisch voor dat dit correct wordt afgehandeld.
+.SH FOUTEN
+Het programma omhult \fBopen()\fP niet. Dit is op zichzelf geen fout, maar als
+een programma een commando \fIopen ("bestand", O_WRONLY, 000)\fP uitvoert, dan
+iets naar het bestand \fIbestand\fP  schrijft, het sluit, en dan nogmaals
+probeert het bestand voor uitlezen te openen, dan mislukt die
+\fBopen()\fP\-aanroep, omdat de toegangsrechten van het bestand op 000 staan. De
+fout zit erin dat als root hetzelfde doet, \fBopen()\fP wel degelijk zal
+slagen, omdat de toegangsrechten voor root nooit worden nagetrokken. Ik heb
+er niettemin voor gekozen \fBopen()\fP niet te omhullen, omdat \fBopen()\fP door
+vele andere functies in libc wordt gebruikt (ook door al omhulde functies),
+wat kan uitmonden in oneindige lussen (nu of in de toekomst, wanneer de
+implementatie van verscheidene libc\-functies enigzins verandert).
+.SH KOPIËREN
+\fBfakeroot\fP wordt verspreid onder de voorwaarden van de GNU General Public
+License (GPL 2.0 of recenter).
+.SH AUTEURS
+.TP 
+joost witteveen
+<\fIjoostje@debian.org\fP>
+.TP 
+Clint Adams
+<\fIclint@debian.org\fP>
+.TP 
+Timo Savola
+.SH VERTALING
+.TP
+Martijn Dekker
+.RI < martijn@inlv.org >
+.SH HANDLEIDINGSPAGINA
+Vooral door J.H.M. Dassen <\fIjdassen@debian.org\fP>. Nogal wat
+wijzigingen en aanvullingen door joost en Clint.
+.SH "ZIE OOK"
+\fBfaked\fP(1),  \fBdpkg\-buildpackage\fP(1), \fBdebuild\fP(1),
+\fB/usr/share/doc/fakeroot/DEBUG\fP
+
