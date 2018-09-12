@@ -1,0 +1,68 @@
+#!/bin/sh
+
+# Set mdev
+echo /sbin/mdev > /proc/sys/kernel/hotplug
+/sbin/mdev -s && echo "mdev is ok......"
+
+# Set Global Environment
+export PATH=/bin:/sbin:/usr/bin:/usr/sbin
+export PATH=$PATH:/opt/bin:/opt/sbin
+
+# networking
+ifconfig lo up
+#ifconfig eth0 192.168.1.80
+
+# Start telnet daemon
+#telnetd &
+
+# Set the system time from the hardware clock
+#hwclock -s
+
+#set the GPIO PC13 to high, make the USB Disk can be use
+cd /sys/class/gpio
+echo 77 > export
+cd gpio77
+echo out > direction
+echo 0 > active_low
+echo 1 > value
+
+# Mount params partition
+mount -t jffs2 /dev/mtdblock9 /params
+
+KERNEL_VERSION=$(uname -r)
+
+# Start Network:
+MAC=$(grep MAC < /params/config/.product_config | cut -c16-27 | sed 's/\(..\)/\1:/g;s/:$//')
+
+modprobe rtl8189es.ko rtw_initmac="$MAC"
+# Uncomment for XiaoFang s1 && Wyzecam V2 :
+# modprobe rtl8189fs.ko rtw_initmac="$MAC"
+
+wpa_supplicant -B -i wlan0 -c /etc/wpa_supplicant.conf -P /var/run/wpa_supplicant.pid
+udhcpc -i wlan0 -p /var/run/udhcpc.pid -s /etc/udhcpc.script -b -x hostname:"$(hostname)"
+
+# Start Motor:
+insmod /lib/modules/$KERNEL_VERSION/sample_motor.ko
+
+# Determine the image sensor model:
+insmod /lib/modules/$KERNEL_VERSION/sinfo.ko
+echo 1 >/proc/jz/sinfo/info
+sensor=$(grep -m1 -oE 'jxf[0-9]*$' /proc/jz/sinfo/info)
+
+# Start the image sensor:
+insmod /lib/modules/$KERNEL_VERSION/tx-isp.ko isp_clk=100000000
+if [ $sensor = 'jxf22' ]; then
+  insmod /lib/modules/$KERNEL_VERSION/sensor_jxf22.ko data_interface=2 pwdn_gpio=-1 reset_gpio=18 sensor_gpio_func=0
+else
+  insmod /lib/modules/$KERNEL_VERSION/sensor_jxf23.ko data_interface=2 pwdn_gpio=-1 reset_gpio=18 sensor_gpio_func=0
+fi
+
+# Start User Applications:
+#bftpd -d
+dropbear -R
+lighttpd -f /etc/lighttpd.conf
+
+# Disable motion:
+setconf -k m -v -1
+# Start RTSP-Server without Audio:
+v4l2rtspserver-master -A -W 1280 -H 960 &
