@@ -2,7 +2,7 @@
 
 CPW=$(pwd)
 
-DIR=__build
+DIR=_build
 [[ -d $DIR ]] || { printf '%s does not exist!\n' "$DIR"; mkdir $DIR; cp fs $DIR/ -r; }
 
 
@@ -50,7 +50,7 @@ if [ "$GCCVER" -ge "5" ]; then
 fi
 
 # copy the new package buildroot packages and gcc-5 patches
-cp $CPW/buildroot . -r
+cp $CPW/buildroot/* . -r
 
 make
 
