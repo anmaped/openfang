@@ -23,16 +23,7 @@ cp $CPW/config/uClibc-ng.config ./package/uclibc
 
 #cp $CPW/config/.config_kernel ./
 
-# copy the new package v4l2rtspserver
-# here
-
-#make
-
-
-cd ..
-# compile v4l2rtspserver
-git clone https://github.com/mpromonet/v4l2rtspserver.git
-
+WDIR=$CPW/$DIR/buildroot-2014.08
 
 # if you are using gcc 5 then
 #
@@ -47,4 +38,20 @@ git clone https://github.com/mpromonet/v4l2rtspserver.git
 #  - copy hashtable_itr.patch into output/build/host-mtd-1.5.1 and patch it using the command:
 # $ patch -p1 < hashtable_itr.patch
 #
+# AUTO patch by buildroot if needed
+#
+GCCVER=$(gcc -dumpversion)
+echo $GCCVER
+if [ "$GCCVER" -ge "5" ]; then
+  cp $CPW/patches/patch-gcc_cp_cfns.h.patch $WDIR/package/gcc/gcc-final
+  cp $CPW/patches/automake.in.patch $WDIR/package/automake
+  cp $CPW/patches/ncurses-5.9-gcc-5.patch $WDIR/package/ncurses
+  cp $CPW/patches/hashtable_itr.patch $WDIR/package/mtd
+fi
+
+# copy the new package buildroot packages and gcc-5 patches
+cp $CPW/buildroot . -r
+
+make
+
 
