@@ -65,4 +65,4 @@ lighttpd -f /etc/lighttpd.conf
 # Disable motion:
 setconf -k m -v -1
 # Start RTSP-Server without Audio:
-v4l2rtspserver-v0.0.8 -A -W 1280 -H 960 &
+v4l2rtspserver-v0.0.8 -W 1280 -H 960 &

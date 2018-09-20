@@ -1,0 +1,14 @@
+#!/bin/sh
+
+usb_modeswitch -v 1c9e -p f000 -M "55534243123456788000000080000606f50402527000000000000000000000"
+
+sleep 5
+
+modprobe usbserial vendor=0x1c9e product=0x9605
+
+mknod /dev/ppp c 108 0
+
+pppd file /etc/ppp/peers/mobile-auth
+
+#wvdial Init1=ATZ Init2='ATQ0 V1 E1 +FCLASS=0' ISDN=0 Modem=/dev/ttyUSB3 Baud=9600 Phone='*99#' Username=eplus Password=web Init3='AT+CGDCONT=1,"IP","internet.eplus.de"'
+
