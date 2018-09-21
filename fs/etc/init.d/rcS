@@ -60,7 +60,17 @@ fi
 # Start User Applications:
 #bftpd -d
 dropbear -R
-lighttpd -f /etc/lighttpd.conf
+
+CONFIGPATH=/etc
+
+## Create a certificate for the webserver
+if [ ! -f $CONFIGPATH/ssl/lighttpd.pem ]; then
+  export OPENSSL_CONF=$CONFIGPATH/ssl/openssl.cnf
+  openssl req -new -x509 -keyout $CONFIGPATH/ssl/lighttpd.pem -out $CONFIGPATH/ssl/lighttpd.pem -days 365 -nodes -subj "/C=DE/ST=Bavaria/L=Munich/O=.../OU=.../CN=.../emailAddress=..."
+  chmod 400 $CONFIGPATH/ssl/lighttpd.pem
+fi
+
+lighttpd -f /etc/lighttpd/lighttpd.conf
 
 # Disable motion:
 setconf -k m -v -1

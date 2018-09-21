@@ -1,9 +1,9 @@
 # openfang
-The openfang is a bootloader, kernel and toolchain for devices using Ingenic T10 and T20 SOC
+The openfang is a bootloader, kernel and toolchain for devices using Ingenic T10 and T20 SOC.
 
 ## Overview
 
-At the present moment, this repository only contains kernel and rootfs for cameras using Inegnic T20 SOC. To identify it please use the camera pictures below.
+At the present time, this repository only contains kernel and rootfs for cameras using Inegnic T20 SOC. To ease identifying these cameras please use the pictures below.
 
 ![Xiaomi Dafang](doc/wyzecam_pan.jpg) Xiaomi Dafang
 ![Wyzecam Pan](doc/xiaomi_dafang.jpg) Wyzecam Pan
@@ -15,9 +15,9 @@ If you have a classic XiaoFang with a ARM-Processor, consider using https://gith
 
 ## How to install openfang
 
-Before you install openfang, we sugest you to carefully read the [FAQ](/doc/faq.md)
+Before you install openfang, we sugest you to carefully read the [FAQ](/doc/faq.md).
 
-After that, continue to the [Installation](/doc/install.md) procedure
+After that, continue to the [Installation](/doc/install.md) procedure.
 
 
 ### Issues and support ###
@@ -26,12 +26,12 @@ If you encounter an issue which you think is a bug in the openfang or the associ
 
 Please provide as much context as possible:
 
-- buildroot core version which you are using.
-- kernel version and modules you have enable.
-- build root packages you are trying to integrate.
-- when encountering an issue which happens at run time, attach serial output. Wrap it into a code block, just like the code.
-- for issues which happen at compile time, enable verbose compiler output in the buildroot preferences, and attach that output (also inside a code block).
-- development board model and brand.
+- buildroot core version which you are using;
+- kernel version and modules you have enable;
+- build root packages you are trying to integrate;
+- when encountering an issue which happens at run time, attach serial output. Wrap it into a code block, just like the code;
+- for issues which happen at compile time, enable verbose compiler output in the buildroot preferences, and attach that output (also inside a code block);
+- development board model and brand;
 - other settings (board choice, flash size, etc.).
 
 Or ask in our [Gitter channel](https://gitter.im/openfang) for help.
