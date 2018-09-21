@@ -48,16 +48,16 @@ to flash the rootfs image.
 
 To use the full space of the partition please resize it using the command
 ```
-resizefs /dev/root
+resize2fs /dev/root
 ```
 It will take some time depending of the size of the partition.
 
 Format the second partition to exFat or Fat32 using the command
 
 ```
-mk.exfat /dev/mmcblk0p2
+mkfs.exfat /dev/partition
 ```
 or
 ```
-mk.fat /dev/mmcblk0p2
+mkfs.fat -F 32 /dev/partition
 ```

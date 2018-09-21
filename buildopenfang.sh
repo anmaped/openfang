@@ -47,6 +47,7 @@ if [ "$GCCVER" -ge "5" ]; then
   cp $CPW/patches/automake.in.patch $WDIR/package/automake
   cp $CPW/patches/ncurses-5.9-gcc-5.patch $WDIR/package/ncurses
   cp $CPW/patches/hashtable_itr.patch $WDIR/package/mtd
+  cp $CPW/patches/python2.7_gcc8__fix.patch $WDIR/package/python
 fi
 
 # copy the new package buildroot packages and gcc-5 patches
