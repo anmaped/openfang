@@ -182,7 +182,7 @@ CONFIG_BUILDTIME_EXTABLE_SORT=y
 #
 CONFIG_BROKEN_ON_SMP=y
 CONFIG_INIT_ENV_ARG_LIMIT=32
-CONFIG_CROSS_COMPILE="/home/vm2/mipsel_uclibc_toolchain/openfang/_build/buildroot-2014.08/output/host/usr/bin/mipsel-dafang-linux-uclibc-"
+CONFIG_CROSS_COMPILE="output/host/usr/bin/mipsel-ingenic-linux-uclibc-"
 CONFIG_LOCALVERSION=""
 # CONFIG_LOCALVERSION_AUTO is not set
 CONFIG_HAVE_KERNEL_GZIP=y
