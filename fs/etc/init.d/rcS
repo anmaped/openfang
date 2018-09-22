@@ -34,7 +34,7 @@ KERNEL_VERSION=$(uname -r)
 # Start Network:
 MAC=$(grep MAC < /params/config/.product_config | cut -c16-27 | sed 's/\(..\)/\1:/g;s/:$//')
 
-modprobe rtl8189es.ko rtw_initmac="$MAC"
+modprobe 8189es rtw_initmac="$MAC"
 # Uncomment for XiaoFang s1 && Wyzecam V2 :
 # modprobe rtl8189fs.ko rtw_initmac="$MAC"
 

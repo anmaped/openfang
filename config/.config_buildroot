@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Buildroot 2014.08-geee5c7f-dirty Configuration
+# Buildroot 2014.08-g65016aa-dirty Configuration
 #
 BR2_HAVE_DOT_CONFIG=y
 
@@ -250,7 +250,33 @@ BR2_ROOTFS_POST_IMAGE_SCRIPT=""
 #
 # Kernel
 #
-# BR2_LINUX_KERNEL is not set
+BR2_LINUX_KERNEL=y
+# BR2_LINUX_KERNEL_LATEST_VERSION is not set
+# BR2_LINUX_KERNEL_SAME_AS_HEADERS is not set
+# BR2_LINUX_KERNEL_CUSTOM_VERSION is not set
+BR2_LINUX_KERNEL_CUSTOM_TARBALL=y
+# BR2_LINUX_KERNEL_CUSTOM_GIT is not set
+# BR2_LINUX_KERNEL_CUSTOM_HG is not set
+# BR2_LINUX_KERNEL_CUSTOM_LOCAL is not set
+BR2_LINUX_KERNEL_CUSTOM_TARBALL_LOCATION="https://raw.githubusercontent.com/anmaped/openfang/master/kernel-3.10.14.tar.xz"
+BR2_LINUX_KERNEL_VERSION="custom"
+BR2_LINUX_KERNEL_PATCH="../../patches/kernel"
+# BR2_LINUX_KERNEL_USE_DEFCONFIG is not set
+BR2_LINUX_KERNEL_USE_CUSTOM_CONFIG=y
+BR2_LINUX_KERNEL_CUSTOM_CONFIG_FILE="../../config/.config_kernel"
+# BR2_LINUX_KERNEL_VMLINUX_BIN is not set
+# BR2_LINUX_KERNEL_VMLINUX is not set
+# BR2_LINUX_KERNEL_VMLINUZ is not set
+BR2_LINUX_KERNEL_IMAGE_TARGET_CUSTOM=y
+BR2_LINUX_KERNEL_IMAGE_TARGET_NAME="uImage"
+BR2_LINUX_KERNEL_IMAGE_NAME="uImage.lzma"
+# BR2_LINUX_KERNEL_DTS_SUPPORT is not set
+BR2_LINUX_KERNEL_INSTALL_TARGET=y
+
+#
+# Linux Kernel Extensions
+#
+# BR2_LINUX_KERNEL_EXT_RTAI is not set
 
 #
 # Target packages
@@ -349,28 +375,19 @@ BR2_PACKAGE_GOOGLE_BREAKPAD_ARCH_SUPPORTS=y
 #
 # BR2_PACKAGE_IOZONE is not set
 # BR2_PACKAGE_KEXEC is not set
-
-#
-# ktap needs a Linux kernel to be built
-#
+# BR2_PACKAGE_KTAP is not set
 # BR2_PACKAGE_LATENCYTOP is not set
 # BR2_PACKAGE_LMBENCH is not set
 
 #
 # ltp-testsuite needs a toolchain w/ IPv6, RPC, largefile, threads
 #
-
-#
-# lttng-modules needs a Linux kernel to be built
-#
+# BR2_PACKAGE_LTTNG_MODULES is not set
 BR2_PACKAGE_MEMSTAT=y
 # BR2_PACKAGE_NETPERF is not set
 # BR2_PACKAGE_OPROFILE is not set
 # BR2_PACKAGE_PAX_UTILS is not set
-
-#
-# perf needs a toolchain w/ largefile and a Linux kernel to be built
-#
+# BR2_PACKAGE_PERF is not set
 # BR2_PACKAGE_PV is not set
 # BR2_PACKAGE_RAMSMP is not set
 # BR2_PACKAGE_RAMSPEED is not set
@@ -500,10 +517,7 @@ BR2_PACKAGE_MTD_UBIBLOCK=y
 BR2_PACKAGE_NTFS_3G=y
 # BR2_PACKAGE_NTFS_3G_ENCRYPTED is not set
 BR2_PACKAGE_NTFS_3G_NTFSPROGS=y
-
-#
-# simicsfs needs a Linux kernel to be built
-#
+# BR2_PACKAGE_SIMICSFS is not set
 # BR2_PACKAGE_SQUASHFS is not set
 # BR2_PACKAGE_SSHFS is not set
 # BR2_PACKAGE_UNIONFS is not set
@@ -544,10 +558,7 @@ BR2_PACKAGE_NTFS_3G_NTFSPROGS=y
 #
 # BR2_PACKAGE_FBV is not set
 # BR2_PACKAGE_IMAGEMAGICK is not set
-
-#
-# linux-fusion needs a Linux kernel to be built
-#
+# BR2_PACKAGE_LINUX_FUSION is not set
 
 #
 # mesa3d needs udev /dev management and a toolchain w/ C++, largefile, NPTL
@@ -826,10 +837,7 @@ BR2_PACKAGE_ZLIB=y
 #
 # BR2_PACKAGE_BEECRYPT is not set
 # BR2_PACKAGE_CA_CERTIFICATES is not set
-
-#
-# cryptodev needs a Linux kernel to be built
-#
+# BR2_PACKAGE_CRYPTODEV is not set
 # BR2_PACKAGE_GNUTLS is not set
 # BR2_PACKAGE_LIBASSUAN is not set
 # BR2_PACKAGE_LIBGCRYPT is not set
@@ -1342,10 +1350,7 @@ BR2_PACKAGE_DROPBEAR_SMALL=y
 #
 # iftop needs a toolchain w/ IPv6, threads
 #
-
-#
-# igh-ethercat needs a Linux kernel to be built
-#
+# BR2_PACKAGE_IGH_ETHERCAT is not set
 # BR2_PACKAGE_IGMPPROXY is not set
 # BR2_PACKAGE_INADYN is not set
 # BR2_PACKAGE_IPERF is not set
@@ -1631,10 +1636,7 @@ BR2_TARGET_ROOTFS_EXT2_NONE=y
 # BR2_TARGET_ROOTFS_EXT2_LZMA is not set
 # BR2_TARGET_ROOTFS_EXT2_LZO is not set
 # BR2_TARGET_ROOTFS_EXT2_XZ is not set
-
-#
-# initramfs needs a Linux kernel to be built
-#
+# BR2_TARGET_ROOTFS_INITRAMFS is not set
 BR2_TARGET_ROOTFS_JFFS2=y
 # BR2_TARGET_ROOTFS_JFFS2_DATAFLASH_1056 is not set
 # BR2_TARGET_ROOTFS_JFFS2_DATAFLASH_528 is not set

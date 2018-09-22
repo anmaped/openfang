@@ -22,6 +22,8 @@ cp $CPW/config/busybox.config ./package/busybox
 cp $CPW/config/uClibc-ng.config ./package/uclibc
 
 #cp $CPW/config/.config_kernel ./
+mkdir dl
+cp ../../kernel-3.10.14.tar.xz dl/
 
 WDIR=$CPW/$DIR/buildroot-2014.08
 
@@ -48,6 +50,7 @@ if [ "$GCCVER" -ge "5" ]; then
   cp $CPW/patches/ncurses-5.9-gcc-5.patch $WDIR/package/ncurses
   cp $CPW/patches/hashtable_itr.patch $WDIR/package/mtd
   cp $CPW/patches/python2.7_gcc8__fix.patch $WDIR/package/python
+  cp $CPW/patches/lzop-gcc6.patch $WDIR/package/lzop
 fi
 
 # copy the new package buildroot packages and gcc-5 patches

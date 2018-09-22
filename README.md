@@ -34,7 +34,7 @@ Please provide as much context as possible:
 - development board model and brand;
 - other settings (board choice, flash size, etc.).
 
-Or ask in our [Gitter channel](https://gitter.im/openfang) for help.
+Or ask in our [Gitter channel](https://gitter.im/openfang_project) for help.
 
 ### Contributing
 
