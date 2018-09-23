@@ -2,9 +2,9 @@
 #
 #
 
-datarootdir=/home/vm2/mipsel_uclibc_toolchain/buildroot-2014.08/output/host/usr/share
-DIR="${DIR-/home/vm2/mipsel_uclibc_toolchain/buildroot-2014.08/output/host/usr/share/ss}"
-SS_DIR="/home/vm2/mipsel_uclibc_toolchain/buildroot-2014.08/output/build/host-e2fsprogs-1.42.11/lib/ss"
+datarootdir=/home/dev/openfang/_build/buildroot-2014.08/output/host/usr/share
+DIR="${DIR-/home/dev/openfang/_build/buildroot-2014.08/output/host/usr/share/ss}"
+SS_DIR="/home/dev/openfang/_build/buildroot-2014.08/output/build/host-e2fsprogs-1.42.11/lib/ss"
 AWK=gawk
 SED=/usr/bin/sed
 

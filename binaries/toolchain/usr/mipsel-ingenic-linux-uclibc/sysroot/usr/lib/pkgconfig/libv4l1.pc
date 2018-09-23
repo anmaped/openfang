@@ -1,0 +1,12 @@
+prefix=/usr
+exec_prefix=/usr
+includedir=${prefix}/include
+libdir=${exec_prefix}/lib
+
+Name: libv4l1
+Description: v4l1 compatibility library
+Version: 1.0.1
+Requires.private: libv4l2
+Libs: -L${libdir} -lv4l1
+Libs.private: -lpthread
+Cflags: -I${includedir}

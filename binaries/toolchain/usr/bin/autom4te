@@ -24,7 +24,7 @@ eval 'case $# in 0) exec /usr/bin/perl -S "$0";; *) exec /usr/bin/perl -S "$0" "
 
 BEGIN
 {
-  my $pkgdatadir = $ENV{'autom4te_perllibdir'} || '/home/vm2/mipsel_uclibc_toolchain/buildroot-2014.08/output/host/usr/share/autoconf';
+  my $pkgdatadir = $ENV{'autom4te_perllibdir'} || '/home/dev/openfang/_build/buildroot-2014.08/output/host/usr/share/autoconf';
   unshift @INC, $pkgdatadir;
 
   # Override SHELL.  On DJGPP SHELL may not be set to a shell
@@ -44,7 +44,7 @@ use File::Basename;
 use strict;
 
 # Data directory.
-my $pkgdatadir = $ENV{'AC_MACRODIR'} || '/home/vm2/mipsel_uclibc_toolchain/buildroot-2014.08/output/host/usr/share/autoconf';
+my $pkgdatadir = $ENV{'AC_MACRODIR'} || '/home/dev/openfang/_build/buildroot-2014.08/output/host/usr/share/autoconf';
 
 # $LANGUAGE{LANGUAGE} -- Automatic options for LANGUAGE.
 my %language;
@@ -87,7 +87,7 @@ my @include;
 my $freeze = 0;
 
 # $M4.
-my $m4 = $ENV{"M4"} || '/home/vm2/mipsel_uclibc_toolchain/buildroot-2014.08/output/host/usr/bin/m4';
+my $m4 = $ENV{"M4"} || '/home/dev/openfang/_build/buildroot-2014.08/output/host/usr/bin/m4';
 # Some non-GNU m4's don't reject the --help option, so give them /dev/null.
 fatal "need GNU m4 1.4 or later: $m4"
   if system "$m4 --help </dev/null 2>&1 | grep reload-state >/dev/null";

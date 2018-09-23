@@ -1,2 +1,2 @@
 #! /bin/sh
-exec '/home/vm2/mipsel_uclibc_toolchain/buildroot-2014.08/output/host/usr/bin/bison' -y "$@"
+exec '/home/dev/openfang/_build/buildroot-2014.08/output/host/usr/bin/bison' -y "$@"

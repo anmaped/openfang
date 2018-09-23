@@ -3,7 +3,7 @@ OUTPUT_FORMAT("elf32-ntradlittlemips", "elf32-ntradbigmips",
 	      "elf32-ntradlittlemips")
 OUTPUT_ARCH(mips)
 ENTRY(__start)
-SEARCH_DIR("/home/vm2/mipsel_uclibc_toolchain/buildroot-2014.08/output/host/usr/mipsel-dafang-linux-uclibc/lib32"); SEARCH_DIR("=/usr/local/lib32"); SEARCH_DIR("=/lib32"); SEARCH_DIR("=/usr/lib32"); SEARCH_DIR("=/usr/local/lib"); SEARCH_DIR("=/lib"); SEARCH_DIR("=/usr/lib");
+SEARCH_DIR("/home/dev/openfang/_build/buildroot-2014.08/output/host/usr/mipsel-ingenic-linux-uclibc/lib32"); SEARCH_DIR("=/usr/local/lib32"); SEARCH_DIR("=/lib32"); SEARCH_DIR("=/usr/lib32"); SEARCH_DIR("=/usr/local/lib"); SEARCH_DIR("=/lib"); SEARCH_DIR("=/usr/lib");
 SECTIONS
 {
   /* Read-only sections, merged into text segment: */

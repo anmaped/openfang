@@ -17,7 +17,7 @@ old_library=''
 inherited_linker_flags=''
 
 # Libraries that this one depends upon.
-dependency_libs=' -L/home/vm2/mipsel_uclibc_toolchain/buildroot-2014.08/output/host/lib -L/home/vm2/mipsel_uclibc_toolchain/buildroot-2014.08/output/host/usr/lib'
+dependency_libs=' -L/home/dev/openfang/_build/buildroot-2014.08/output/host/lib -L/home/dev/openfang/_build/buildroot-2014.08/output/host/usr/lib'
 
 # Names of additional weak libraries provided by this library
 weak_library_names=''
@@ -38,4 +38,4 @@ dlopen=''
 dlpreopen=''
 
 # Directory that this library needs to be installed in:
-libdir='/home/vm2/mipsel_uclibc_toolchain/buildroot-2014.08/output/host/usr/lib'
+libdir='/home/dev/openfang/_build/buildroot-2014.08/output/host/usr/lib'

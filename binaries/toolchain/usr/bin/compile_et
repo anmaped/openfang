@@ -2,10 +2,10 @@
 #
 #
 
-datarootdir=/home/vm2/mipsel_uclibc_toolchain/buildroot-2014.08/output/host/usr/share
+datarootdir=/home/dev/openfang/_build/buildroot-2014.08/output/host/usr/share
 AWK=gawk
-DIR="${DIR-/home/vm2/mipsel_uclibc_toolchain/buildroot-2014.08/output/host/usr/share/et}"
-ET_DIR="/home/vm2/mipsel_uclibc_toolchain/buildroot-2014.08/output/build/host-e2fsprogs-1.42.11/lib/et"
+DIR="${DIR-/home/dev/openfang/_build/buildroot-2014.08/output/host/usr/share/et}"
+ET_DIR="/home/dev/openfang/_build/buildroot-2014.08/output/build/host-e2fsprogs-1.42.11/lib/et"
 
 if test "$1" = "--build-tree" ; then
     shift;

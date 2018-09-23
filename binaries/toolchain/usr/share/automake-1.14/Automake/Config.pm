@@ -32,7 +32,7 @@ our $PACKAGE = 'automake';
 our $PACKAGE_BUGREPORT = 'bug-automake@gnu.org';
 our $VERSION = '1.14.1';
 our $RELEASE_YEAR = '2013';
-our $libdir = '/home/vm2/mipsel_uclibc_toolchain/buildroot-2014.08/output/host/usr/share/automake-1.14';
+our $libdir = '/home/dev/openfang/_build/buildroot-2014.08/output/host/usr/share/automake-1.14';
 
 our $perl_threads = 0;
 # We need at least this version for CLONE support.

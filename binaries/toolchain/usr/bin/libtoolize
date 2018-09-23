@@ -2486,11 +2486,11 @@ func_check_macros ()
   all_pkgltdl_files="COPYING.LIB Makefile Makefile.in Makefile.inc Makefile.am README acinclude.m4 aclocal.m4 argz_.h argz.c config.h.in config-h.in configure configure.ac configure.in libltdl/lt__alloc.h libltdl/lt__dirent.h libltdl/lt__glibc.h libltdl/lt__private.h libltdl/lt__strl.h libltdl/lt_dlloader.h libltdl/lt_error.h libltdl/lt_system.h libltdl/slist.h loaders/dld_link.c loaders/dlopen.c loaders/dyld.c loaders/load_add_on.c loaders/loadlibrary.c loaders/preopen.c loaders/shl_load.c lt__alloc.c lt__dirent.c lt__strl.c lt_dlloader.c lt_error.c ltdl.c ltdl.h slist.c"
 
   # Locations for important files:
-  prefix=/home/vm2/mipsel_uclibc_toolchain/buildroot-2014.08/output/host/usr
-  datadir=/home/vm2/mipsel_uclibc_toolchain/buildroot-2014.08/output/host/usr/share
-  pkgdatadir=/home/vm2/mipsel_uclibc_toolchain/buildroot-2014.08/output/host/usr/share/libtool
-  pkgltdldir=/home/vm2/mipsel_uclibc_toolchain/buildroot-2014.08/output/host/usr/share/libtool
-  aclocaldir=/home/vm2/mipsel_uclibc_toolchain/buildroot-2014.08/output/host/usr/share/aclocal
+  prefix=/home/dev/openfang/_build/buildroot-2014.08/output/host/usr
+  datadir=/home/dev/openfang/_build/buildroot-2014.08/output/host/usr/share
+  pkgdatadir=/home/dev/openfang/_build/buildroot-2014.08/output/host/usr/share/libtool
+  pkgltdldir=/home/dev/openfang/_build/buildroot-2014.08/output/host/usr/share/libtool
+  aclocaldir=/home/dev/openfang/_build/buildroot-2014.08/output/host/usr/share/aclocal
   auxdir=
   macrodir=
   configure_ac=configure.in

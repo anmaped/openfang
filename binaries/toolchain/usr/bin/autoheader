@@ -28,7 +28,7 @@ eval 'case $# in 0) exec /usr/bin/perl -S "$0";; *) exec /usr/bin/perl -S "$0" "
 
 BEGIN
 {
-  my $pkgdatadir = $ENV{'autom4te_perllibdir'} || '/home/vm2/mipsel_uclibc_toolchain/buildroot-2014.08/output/host/usr/share/autoconf';
+  my $pkgdatadir = $ENV{'autom4te_perllibdir'} || '/home/dev/openfang/_build/buildroot-2014.08/output/host/usr/share/autoconf';
   unshift @INC, "$pkgdatadir";
 
   # Override SHELL.  On DJGPP SHELL may not be set to a shell
@@ -50,7 +50,7 @@ use strict;
 use vars qw ($config_h %verbatim %symbol);
 
 # Lib files.
-my $autom4te = $ENV{'AUTOM4TE'} || '/home/vm2/mipsel_uclibc_toolchain/buildroot-2014.08/output/host/usr/bin/autom4te';
+my $autom4te = $ENV{'AUTOM4TE'} || '/home/dev/openfang/_build/buildroot-2014.08/output/host/usr/bin/autom4te';
 local $config_h;
 my $config_h_in;
 my @prepend_include;

@@ -2,7 +2,7 @@
 
 # libtool - Provide generalized library-building support services.
 # Generated automatically by config.status (libtool) 2.4.2
-# Libtool was configured on host localhost.localdomain:
+# Libtool was configured on host openfang:
 # NOTE: Changes made to this file will be lost: look at ltmain.sh.
 #
 #   Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001, 2003, 2004, 2005,
@@ -167,7 +167,7 @@ lock_old_archive_extraction=no
 LTCC="/usr/bin/gcc"
 
 # LTCC compiler flags.
-LTCFLAGS="-O2 -I/home/vm2/mipsel_uclibc_toolchain/buildroot-2014.08/output/host/usr/include"
+LTCFLAGS="-O2 -I/home/dev/openfang/_build/buildroot-2014.08/output/host/usr/include"
 
 # Take the output of nm and produce a listing of raw symbols and C names.
 global_symbol_pipe="sed -n -e 's/^.*[	 ]\\([ABCDGIRSTW][ABCDGIRSTW]*\\)[	 ][	 ]*\\([_A-Za-z][_A-Za-z0-9]*\\)\$/\\1 \\2 \\2/p' | sed '/ __gnu_lto/d'"

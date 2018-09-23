@@ -1,0 +1,11 @@
+prefix=/home/dev/openfang/_build/buildroot-2014.08/output/host/usr
+exec_prefix=/home/dev/openfang/_build/buildroot-2014.08/output/host/usr
+libdir=/home/dev/openfang/_build/buildroot-2014.08/output/host/usr/lib
+includedir=/home/dev/openfang/_build/buildroot-2014.08/output/host/usr/include
+
+Name: libkmod
+Description: Library to deal with kernel modules
+Version: 18
+Libs: -L${libdir} -lkmod
+Libs.private:  
+Cflags: -I${includedir}

@@ -1,0 +1,5 @@
+#!/home/dev/openfang/_build/buildroot-2014.08/output/host/usr/bin/python2.7
+import sys
+from lib2to3.main import main
+
+sys.exit(main("lib2to3.fixes"))

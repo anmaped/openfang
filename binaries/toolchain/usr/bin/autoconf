@@ -398,7 +398,7 @@ exit_missing_arg='
 # restore font-lock: '
 
 # Variables.
-: ${AUTOM4TE='/home/vm2/mipsel_uclibc_toolchain/buildroot-2014.08/output/host/usr/bin/autom4te'}
+: ${AUTOM4TE='/home/dev/openfang/_build/buildroot-2014.08/output/host/usr/bin/autom4te'}
 autom4te_options=
 outfile=
 verbose=false
