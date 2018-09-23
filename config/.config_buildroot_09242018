@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Buildroot 2014.08-g1b098c4 Configuration
+# Buildroot 2014.08-g3cfdd42 Configuration
 #
 BR2_HAVE_DOT_CONFIG=y
 
@@ -1447,7 +1447,7 @@ BR2_PACKAGE_NOIP=y
 BR2_PACKAGE_PPPD=y
 BR2_PACKAGE_PPPD_FILTER=y
 # BR2_PACKAGE_PPPD_RADIUS is not set
-BR2_PACKAGE_PPTP_LINUX=y
+# BR2_PACKAGE_PPTP_LINUX is not set
 # BR2_PACKAGE_PROFTPD is not set
 # BR2_PACKAGE_PROXYCHAINS_NG is not set
 # BR2_PACKAGE_PTPD is not set
