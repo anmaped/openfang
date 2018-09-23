@@ -1,12 +1,13 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Buildroot 2014.08-g3cfdd42 Configuration
+# Buildroot 2014.08-g65016aa-dirty Configuration
 #
 BR2_HAVE_DOT_CONFIG=y
 
 #
 # Target options
 #
+BR2_SOFT_FLOAT=y
 # BR2_arcle is not set
 # BR2_arceb is not set
 # BR2_arm is not set
@@ -36,7 +37,7 @@ BR2_GCC_TARGET_ABI="32"
 BR2_ARCH_HAS_ATOMICS=y
 BR2_mips_32=y
 # BR2_mips_32r2 is not set
-# BR2_MIPS_SOFT_FLOAT is not set
+BR2_MIPS_SOFT_FLOAT=y
 BR2_MIPS_OABI32=y
 
 #
@@ -720,7 +721,6 @@ BR2_PACKAGE_LUA_EDITING_NONE=y
 # BR2_PACKAGE_LUA_READLINE is not set
 # BR2_PACKAGE_LUA_LINENOISE is not set
 BR2_PACKAGE_HAS_LUAINTERPRETER=y
-# BR2_PACKAGE_LUAJIT is not set
 
 #
 # Lua libraries/modules
@@ -817,7 +817,7 @@ BR2_PACKAGE_ALSA_LIB_OLD_SYMBOLS=y
 # BR2_PACKAGE_LIBVORBIS is not set
 # BR2_PACKAGE_OPENCORE_AMR is not set
 BR2_PACKAGE_OPUS=y
-# BR2_PACKAGE_OPUS_FIXED_POINT is not set
+BR2_PACKAGE_OPUS_FIXED_POINT=y
 # BR2_PACKAGE_PORTAUDIO is not set
 # BR2_PACKAGE_SPEEX is not set
 # BR2_PACKAGE_TAGLIB is not set
