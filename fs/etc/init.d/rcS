@@ -2,7 +2,7 @@
 
 # Set mdev
 echo /sbin/mdev > /proc/sys/kernel/hotplug
-/sbin/mdev -s && echo "mdev is ok......"
+/sbin/mdev -s && echo "mdev is running."
 
 # Set Global Environment
 export PATH=/bin:/sbin:/usr/bin:/usr/sbin
@@ -12,19 +12,14 @@ export PATH=$PATH:/opt/bin:/opt/sbin
 ifconfig lo up
 #ifconfig eth0 192.168.1.80
 
-# Start telnet daemon
-#telnetd &
-
 # Set the system time from the hardware clock
 #hwclock -s
 
 #set the GPIO PC13 to high, make the USB Disk can be use
-cd /sys/class/gpio
-echo 77 > export
-cd gpio77
-echo out > direction
-echo 0 > active_low
-echo 1 > value
+echo 77 > /sys/class/gpio/export
+echo out > /sys/class/gpio/gpio77/direction
+echo 0 > /sys/class/gpio/gpio77/active_low
+echo 1 > /sys/class/gpio/gpio77/value
 
 # Mount params partition
 mount -t jffs2 /dev/mtdblock9 /params
@@ -58,7 +53,6 @@ else
 fi
 
 # Start User Applications:
-#bftpd -d
 dropbear -R
 
 CONFIGPATH=/etc
@@ -66,7 +60,7 @@ CONFIGPATH=/etc
 ## Create a certificate for the webserver
 if [ ! -f $CONFIGPATH/ssl/lighttpd.pem ]; then
   export OPENSSL_CONF=$CONFIGPATH/ssl/openssl.cnf
-  openssl req -new -x509 -keyout $CONFIGPATH/ssl/lighttpd.pem -out $CONFIGPATH/ssl/lighttpd.pem -days 365 -nodes -subj "/C=DE/ST=Bavaria/L=Munich/O=.../OU=.../CN=.../emailAddress=..."
+  openssl req -new -x509 -keyout $CONFIGPATH/ssl/lighttpd.pem -out $CONFIGPATH/ssl/lighttpd.pem -days 365 -nodes -subj "/C=DE/ST=.../L=.../O=.../OU=.../CN=.../emailAddress=..."
   chmod 400 $CONFIGPATH/ssl/lighttpd.pem
 fi
 
@@ -74,5 +68,18 @@ lighttpd -f /etc/lighttpd/lighttpd.conf
 
 # Disable motion:
 setconf -k m -v -1
-# Start RTSP-Server without Audio:
+
+# Start RTSP-Server:
 v4l2rtspserver-v0.0.8 -W 1280 -H 960 &
+
+# enable gpio 25 26 49
+echo 25 > /sys/class/gpio/export
+echo 26 > /sys/class/gpio/export
+echo 49 > /sys/class/gpio/export
+echo out > /sys/class/gpio/gpio25/direction
+echo out > /sys/class/gpio/gpio26/direction
+echo out > /sys/class/gpio/gpio49/direction
+echo 1 > /sys/class/gpio/gpio49/active_low
+
+autonight -D /dev/jz_adc_aux_0 -d 1 -O 600 -F 650 &
+

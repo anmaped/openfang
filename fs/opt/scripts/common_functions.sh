@@ -333,15 +333,15 @@ night_mode(){
   on)
     ir_led on
     ir_cut off
-    /system/sdcard/bin/setconf -k n -v 1
+    /usr/bin/setconf -k n -v 1
     ;;
   off)
     ir_led off
     ir_cut on
-    /system/sdcard/bin/setconf -k n -v 0
+    /usr/bin/setconf -k n -v 0
     ;;
   status)
-    status=$(/system/sdcard/bin/setconf -g n)
+    status=$(/usr/bin/setconf -g n)
     case $status in
       0)
         echo "OFF"
