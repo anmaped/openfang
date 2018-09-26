@@ -21,6 +21,12 @@ echo out > /sys/class/gpio/gpio77/direction
 echo 0 > /sys/class/gpio/gpio77/active_low
 echo 1 > /sys/class/gpio/gpio77/value
 
+# Leds
+echo 38 > /sys/class/gpio/export
+echo 39 > /sys/class/gpio/export
+echo out > /sys/class/gpio/gpio38/direction
+echo out > /sys/class/gpio/gpio39/direction
+
 # Mount params partition
 mount -t jffs2 /dev/mtdblock9 /params
 
@@ -56,6 +62,12 @@ fi
 dropbear -R
 
 CONFIGPATH=/etc
+
+## Sync the via NTP:
+ntp_srv="$(cat "$CONFIGPATH/ntp.conf")"
+timeout -t 30 sh -c "until ping -c1 \"google.com\" &>/dev/null; do sleep 3; done"; # wait for available connection
+ntpd -p "$ntp_srv"
+
 
 ## Create a certificate for the webserver
 if [ ! -f $CONFIGPATH/ssl/lighttpd.pem ]; then
