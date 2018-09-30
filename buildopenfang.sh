@@ -6,6 +6,7 @@ DIR=_build
 [[ -d $DIR ]] || { printf '%s does not exist!\n' "$DIR"; mkdir $DIR; cp fs $DIR/ -r; }
 
 ID="(`git rev-parse HEAD`) `date +"%Y-%m-%d %H:%M"`"
+SHORTID=`git rev-parse --short HEAD`
 
 echo $ID > fs/opt/version
 
@@ -31,20 +32,7 @@ cp ../../uboot-v2013.07.tar.xz dl/
 
 WDIR=$CPW/$DIR/buildroot-2014.08
 
-# if you are using gcc 5 then
-#
-#  - copy patch-gcc_cp_cfns.h.patch into output/build/host-gcc-final-4.7.4 and patch it using the command:
-# $ patch -p0 < patch-gcc_cp_cfns.h.patch
-#
-#  - copy automake.in.patch into output/build/host-automake-1.14.1 and patch it using the command:
-# $ patch -p0 < automake.in.patch
-#
-# FOR ncurses-5.9 *USE* patch -p1 < ncurses-5.9-gcc-5.patch
-#
-#  - copy hashtable_itr.patch into output/build/host-mtd-1.5.1 and patch it using the command:
-# $ patch -p1 < hashtable_itr.patch
-#
-# AUTO patch by buildroot if needed
+# Patch buildroot if gcc >= 5
 #
 GCCVER=$(gcc -dumpversion)
 echo $GCCVER
@@ -57,9 +45,13 @@ if [ "$GCCVER" -ge "5" ]; then
   cp $CPW/patches/lzop-gcc6.patch $WDIR/package/lzop
 fi
 
-# copy the new package buildroot packages and gcc-5 patches
+# copy custom opendafang packages to buildroot directory
 cp $CPW/buildroot/* . -r
 
 make
+
+# constructs release
+tar c $WDIR/output/host | xz --best > $CPW/toolchain-$SHORTID.tar.xz
+tar c $WDIR/output/images | xz --best > $CPW/images-$SHORTID.tar.xz
 
 
