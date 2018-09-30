@@ -5,6 +5,9 @@ CPW=$(pwd)
 DIR=_build
 [[ -d $DIR ]] || { printf '%s does not exist!\n' "$DIR"; mkdir $DIR; cp fs $DIR/ -r; }
 
+ID="(`git rev-parse HEAD`) `date +"%Y-%m-%d %H:%M"`"
+
+echo $ID > fs/opt/version
 
 cd $DIR
 
@@ -24,6 +27,7 @@ cp $CPW/config/uClibc-ng.config ./package/uclibc
 #cp $CPW/config/.config_kernel ./
 mkdir dl
 cp ../../kernel-3.10.14.tar.xz dl/
+cp ../../uboot-v2013.07.tar.xz dl/
 
 WDIR=$CPW/$DIR/buildroot-2014.08
 

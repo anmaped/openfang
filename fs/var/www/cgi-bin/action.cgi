@@ -228,13 +228,13 @@ if [ -n "$F_cmd" ]; then
     settz)
        ntp_srv=$(printf '%b' "${F_ntp_srv//%/\\x}")
        #read ntp_serv.conf
-       conf_ntp_srv=$(cat /etc/ntp_srv.conf)
+       conf_ntp_srv=$(cat /etc/ntp.conf)
 
       if [ $conf_ntp_srv != "$ntp_srv" ]; then
         echo "<p>Setting NTP Server to '$ntp_srv'...</p>"
-        echo "$ntp_srv" > /etc/ntp_srv.conf
+        echo "$ntp_srv" > /etc/ntp.conf
         echo "<p>Syncing time on '$ntp_srv'...</p>"
-        if busybox ntpd -q -n -p "$ntp_srv" > /dev/null 2>&1; then
+        if ntpd -q -n -p "$ntp_srv" > /dev/null 2>&1; then
           echo "<p>Success</p>"
         else
           echo "<p>Failed</p>"
@@ -246,7 +246,7 @@ if [ -n "$F_cmd" ]; then
         echo "<p>Setting TZ to '$tz'...</p>"
         echo "$tz" > /etc/TZ
         echo "<p>Syncing time...</p>"
-        if busybox ntpd -q -n -p "$ntp_srv" > /dev/null 2>&1; then
+        if ntpd -q -n -p "$ntp_srv" > /dev/null 2>&1; then
           echo "<p>Success</p>"
         else echo "<p>Failed</p>"
         fi

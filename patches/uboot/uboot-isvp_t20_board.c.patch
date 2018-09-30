@@ -1,0 +1,34 @@
+--- uboot/board/ingenic/isvp_t20/board.c	2018-09-28 03:16:06.000000000 +0200
++++ uboot_/board/ingenic/isvp_t20/board.c	2018-09-30 17:15:44.282180181 +0200
+@@ -67,6 +67,22 @@
+ #endif
+ 	/* used for usb_dete */
+ 	/*gpio_set_pull_dir(GPIO_PB(22), 1);*/
++
++	printf("Set yellow LED off:\n");
++	run_command("gpio set 38",0);
++	printf("Set blue LED off:\n");
++	run_command("gpio set 39",0);
++
++	printf("Enables USB:\n");
++	run_command("gpio set 47",0);
++
++	printf("Enables SDCARD:\n");
++	run_command("gpio set 43",0);
++	run_command("gpio clear 48",0);
++
++	printf("Checks Auto Update\n");
++	run_command("sdupdate",0);
++
+ 	return 0;
+ }
+ 
+@@ -101,7 +117,7 @@
+ /* U-Boot common routines */
+ int checkboard(void)
+ {
+-	puts("Board: ISVP (Ingenic XBurst T20 SoC)\n");
++	puts("Board: Xiaomi Dafang 128MB (Ingenic XBurst T20 SoC)\n");
+ 	return 0;
+ }
+ 

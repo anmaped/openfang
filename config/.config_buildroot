@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Buildroot 2014.08-g90e22ab Configuration
+# Buildroot 2014.08-g3aaf205-dirty Configuration
 #
 BR2_HAVE_DOT_CONFIG=y
 
@@ -1555,7 +1555,26 @@ BR2_TARGET_ROOTFS_TAR_OPTIONS=""
 # Bootloaders
 #
 # BR2_TARGET_BAREBOX is not set
-# BR2_TARGET_UBOOT is not set
+BR2_TARGET_UBOOT=y
+BR2_TARGET_UBOOT_BOARDNAME="isvp_t20_sfcnor_ddr128M"
+# BR2_TARGET_UBOOT_LATEST_VERSION is not set
+# BR2_TARGET_UBOOT_CUSTOM_VERSION is not set
+BR2_TARGET_UBOOT_CUSTOM_TARBALL=y
+# BR2_TARGET_UBOOT_CUSTOM_GIT is not set
+# BR2_TARGET_UBOOT_CUSTOM_HG is not set
+BR2_TARGET_UBOOT_CUSTOM_TARBALL_LOCATION="https://raw.githubusercontent.com/anmaped/openfang/master/uboot-v2013.07.tar.xz"
+BR2_TARGET_UBOOT_VERSION="custom"
+BR2_TARGET_UBOOT_CUSTOM_PATCH_DIR="../../patches/uboot"
+# BR2_TARGET_UBOOT_FORMAT_AIS is not set
+# BR2_TARGET_UBOOT_FORMAT_BIN is not set
+# BR2_TARGET_UBOOT_FORMAT_IMG is not set
+# BR2_TARGET_UBOOT_FORMAT_IMX is not set
+# BR2_TARGET_UBOOT_FORMAT_NAND_BIN is not set
+# BR2_TARGET_UBOOT_FORMAT_ELF is not set
+BR2_TARGET_UBOOT_FORMAT_CUSTOM=y
+BR2_TARGET_UBOOT_FORMAT_CUSTOM_NAME="u-boot-with-spl.bin"
+# BR2_TARGET_UBOOT_SPL is not set
+# BR2_TARGET_UBOOT_ENVIMAGE is not set
 
 #
 # Host utilities

@@ -34,7 +34,7 @@ cat << EOF
             <div class="field-body">
                 <div class="field">
                     <div class="control">
-                        <input class="input" id="ntp_srv" name="ntp_srv" type="text" size="25" value="$(cat /system/sdcard/config/ntp_srv.conf)" />
+                        <input class="input" id="ntp_srv" name="ntp_srv" type="text" size="25" value="$(cat /etc/ntp.conf)" />
                     </div>
                 </div>
             </div>
@@ -102,7 +102,7 @@ cat << EOF
 <div class='card status_card'>
     <header class='card-header'><p class='card-header-title'>Version (last commit date from GitHub/autoupdate script)</p></header>
     <div class='card-content'>
-    <p>$(cat /system/sdcard/.lastCommitDate)</p>
+    <p>$(cat /opt/version)</p>
     </div>
 </div>
 
