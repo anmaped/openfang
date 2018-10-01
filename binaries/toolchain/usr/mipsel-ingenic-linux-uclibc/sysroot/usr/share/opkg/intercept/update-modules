@@ -1,7 +1,0 @@
-#!/bin/sh
-
-if [ ! -f $OPKG_INTERCEPT_DIR/update-modules ]; then
-  echo "update-modules" > $OPKG_INTERCEPT_DIR/update-modules
-  chmod +x $OPKG_INTERCEPT_DIR/update-modules
-fi
-

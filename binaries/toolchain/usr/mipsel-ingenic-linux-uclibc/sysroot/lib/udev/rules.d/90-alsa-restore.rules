@@ -1,8 +1,0 @@
-ACTION=="add", SUBSYSTEM=="sound", KERNEL=="controlC*", KERNELS!="card*", TEST=="/usr/sbin", TEST=="/usr/share/alsa", GOTO="alsa_restore_go"
-GOTO="alsa_restore_end"
-
-LABEL="alsa_restore_go"
-TEST!="/etc/alsa/state-daemon.conf", RUN+="/usr/sbin/alsactl restore $attr{device/number}"
-TEST=="/etc/alsa/state-daemon.conf", RUN+="/usr/sbin/alsactl nrestore $attr{device/number}"
-
-LABEL="alsa_restore_end"

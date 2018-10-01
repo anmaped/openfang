@@ -1,2 +1,0 @@
-#! /bin/sh
-exec '/home/dev/openfang/_build/buildroot-2014.08/output/host/usr/bin/bison' -y "$@"

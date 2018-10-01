@@ -1,2 +1,0 @@
-#!/bin/sh
-PKG_CONFIG_LIBDIR=${PKG_CONFIG_LIBDIR:-/home/dev/openfang/_build/buildroot-2014.08/output/host/usr/mipsel-ingenic-linux-uclibc/sysroot/usr/lib/pkgconfig:/home/dev/openfang/_build/buildroot-2014.08/output/host/usr/mipsel-ingenic-linux-uclibc/sysroot/usr/share/pkgconfig} PKG_CONFIG_SYSROOT_DIR=${PKG_CONFIG_SYSROOT_DIR:-/home/dev/openfang/_build/buildroot-2014.08/output/host/usr/mipsel-ingenic-linux-uclibc/sysroot} $(dirname $0)/pkgconf  $@

@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 CPW=$(pwd)
 
 DIR=_build
@@ -25,8 +27,8 @@ cp $CPW/config/.config_buildroot ./.config
 cp $CPW/config/busybox.config ./package/busybox
 cp $CPW/config/uClibc-ng.config ./package/uclibc
 
-#cp $CPW/config/.config_kernel ./
-mkdir dl
+[[ -d "dl" ]] || { mkdir dl; }
+
 cp ../../kernel-3.10.14.tar.xz dl/
 cp ../../uboot-v2013.07.tar.xz dl/
 
@@ -35,7 +37,7 @@ WDIR=$CPW/$DIR/buildroot-2014.08
 # Patch buildroot if gcc >= 5
 #
 GCCVER=$(gcc -dumpversion)
-echo $GCCVER
+echo "GCC version: $GCCVER"
 if [ "$GCCVER" -ge "5" ]; then
   cp $CPW/patches/patch-gcc_cp_cfns.h.patch $WDIR/package/gcc/gcc-final
   cp $CPW/patches/automake.in.patch $WDIR/package/automake
@@ -50,8 +52,11 @@ cp $CPW/buildroot/* . -r
 
 make
 
-# constructs release
-tar c $WDIR/output/host | xz --best > $CPW/toolchain-$SHORTID.tar.xz
-tar c $WDIR/output/images | xz --best > $CPW/images-$SHORTID.tar.xz
+# constructs release with git hash label
+echo "Compressing toolchain..."
+tar -c -C $WDIR/output/host --transform s/./mipsel-ingenic-linux-uclibc/ --checkpoint=.1000 .  | xz --best > $CPW/toolchain-$SHORTID.tar.xz
+echo "Compressing rootfs images..."
+tar -c -C $WDIR/output/images --transform s/./openfang-images/ --checkpoint=.1000 . | xz --best > $CPW/images-$SHORTID.tar.xz
+echo "Build completed successfully."
 
 

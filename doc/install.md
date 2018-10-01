@@ -1,8 +1,27 @@
-## Flash the bootloader
+# Installation
+
+The modification of Xiaomi Dafang's firmware is composed of three steps. The first one consists on flashing a new bootloader capable to load all the ROOTFS directories entirely from the SD card partition, the second one consists on partitioning the SD cards into two partitions and writing the new ROOTFS in one of the partitions, and the third one consists on resizing the ROOTFS filesystem.
+
+- [Download and flash the bootloader](#dowload-bootloader)
+- [Download and write the rootfs image](#download-rootfs)
+- [Resize the written filesystem](#resize-the-rootfs-image)
+
+
+## Dowload bootloader
+
+:heavy_exclamation_mark:WARNING!! You may brick your device in this step. Be cautious.
+
+The bootloader for Xiaomi Dafang 128M can be found in this [Link](https://github.com/Dafang-Hacks/uboot/raw/master/compiled_bootloader/dafang_128mb_v1.bin)
+
+### Flash the bootloader
 
 Please follow the instructions [here](https://github.com/EliasKotlyar/Xiaomi-Dafang-Hacks/blob/master/hacks/flashinguboot.md).
 
-## Flash rootfs using windows 10
+## Download rootfs
+
+Xiaomi Dafang 128M [Link](https://github.com/anmaped/openfang/releases/download/rc1_01/rootfs.ext2-706829f.xz)
+
+### Flash rootfs using windows 10
 
 diskpart or disk management wizard can be used to make partitions.
 
@@ -13,7 +32,7 @@ To flash the image in the first partition of the sd card use the tool DiskImage 
 <img src="/doc/towrite.png" width="300">
 
 
-## Flash rootfs using linux
+### Flash rootfs using linux
 
 ```
 fdisk /dev/sdb
@@ -44,20 +63,21 @@ dd if=/path/to/image/rootfs.ext3 of=/dev/sdb1
 to flash the rootfs image.
 
 
-## Resize the partition after the first boot
+### Resize the rootfs image
 
-To use the full space of the partition please resize it using the command
+The rootfs image is smaller than the available partition where we have written the rootfs directories. To be able to use all the available space we allocated for the partition, we have to resize the filesystem using the command
 ```
 resize2fs /dev/root
 ```
-It will take some time depending of the size of the partition.
+It will take a short while. Note that the time it takes depends of the size of the partition you are resizing.
 
-Format the second partition to exFat or Fat32 using the command
+To format the second partition to exFat or Fat32, we can use the command
 
 ```
 mkfs.exfat /dev/partition
 ```
-or
+to format the device as an exfat filesystem or
 ```
 mkfs.fat -F 32 /dev/partition
 ```
+to create a fat32 filesystem.
