@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Buildroot 2014.08-g3aaf205-dirty Configuration
+# Buildroot 2014.08 Configuration
 #
 BR2_HAVE_DOT_CONFIG=y
 
@@ -774,9 +774,188 @@ BR2_PACKAGE_HAS_LUAINTERPRETER=y
 # BR2_PACKAGE_XAVANTE is not set
 # BR2_PACKAGE_NODEJS is not set
 # BR2_PACKAGE_PERL is not set
-# BR2_PACKAGE_PHP is not set
-# BR2_PACKAGE_PYTHON is not set
-# BR2_PACKAGE_PYTHON3 is not set
+BR2_PACKAGE_PHP=y
+
+#
+# Extensions
+#
+# BR2_PACKAGE_PHP_EXT_CALENDAR is not set
+# BR2_PACKAGE_PHP_EXT_FILEINFO is not set
+# BR2_PACKAGE_PHP_EXT_READLINE is not set
+BR2_PACKAGE_PHP_EXT_SESSION=y
+
+#
+# Compression extensions
+#
+# BR2_PACKAGE_PHP_EXT_BZIP2 is not set
+# BR2_PACKAGE_PHP_EXT_PHAR is not set
+# BR2_PACKAGE_PHP_EXT_ZIP is not set
+BR2_PACKAGE_PHP_EXT_ZLIB=y
+
+#
+# Cryptography extensions
+#
+# BR2_PACKAGE_PHP_EXT_HASH is not set
+# BR2_PACKAGE_PHP_EXT_OPENSSL is not set
+
+#
+# Database extensions
+#
+# BR2_PACKAGE_PHP_EXT_DBA is not set
+# BR2_PACKAGE_PHP_EXT_MYSQL is not set
+# BR2_PACKAGE_PHP_EXT_MYSQLI is not set
+# BR2_PACKAGE_PHP_EXT_PDO is not set
+
+#
+# Human language and character encoding support
+#
+# BR2_PACKAGE_PHP_EXT_GETTEXT is not set
+# BR2_PACKAGE_PHP_EXT_ICONV is not set
+# BR2_PACKAGE_PHP_EXT_INTL is not set
+
+#
+# Image processing
+#
+# BR2_PACKAGE_PHP_EXT_EXIF is not set
+
+#
+# Mathematical extensions
+#
+# BR2_PACKAGE_PHP_EXT_BCMATH is not set
+# BR2_PACKAGE_PHP_EXT_GMP is not set
+
+#
+# Other basic extensions
+#
+# BR2_PACKAGE_PHP_EXT_JSON is not set
+# BR2_PACKAGE_PHP_EXT_TOKENIZER is not set
+
+#
+# Other services
+#
+# BR2_PACKAGE_PHP_EXT_CURL is not set
+# BR2_PACKAGE_PHP_EXT_FTP is not set
+# BR2_PACKAGE_PHP_EXT_SNMP is not set
+# BR2_PACKAGE_PHP_EXT_SOCKETS is not set
+
+#
+# Process Control
+#
+# BR2_PACKAGE_PHP_EXT_PCNTL is not set
+BR2_PACKAGE_PHP_EXT_POSIX=y
+# BR2_PACKAGE_PHP_EXT_SHMOP is not set
+# BR2_PACKAGE_PHP_EXT_SYSVMSG is not set
+# BR2_PACKAGE_PHP_EXT_SYSVSEM is not set
+# BR2_PACKAGE_PHP_EXT_SYSVSHM is not set
+
+#
+# Variable and Type related
+#
+# BR2_PACKAGE_PHP_EXT_CTYPE is not set
+# BR2_PACKAGE_PHP_EXT_FILTER is not set
+
+#
+# Web services
+#
+# BR2_PACKAGE_PHP_EXT_SOAP is not set
+# BR2_PACKAGE_PHP_EXT_XMLRPC is not set
+
+#
+# XML manipulation
+#
+# BR2_PACKAGE_PHP_EXT_DOM is not set
+# BR2_PACKAGE_PHP_EXT_LIBXML2 is not set
+# BR2_PACKAGE_PHP_EXT_SIMPLEXML is not set
+# BR2_PACKAGE_PHP_EXT_WDDX is not set
+# BR2_PACKAGE_PHP_EXT_XML is not set
+# BR2_PACKAGE_PHP_EXT_XMLREADER is not set
+# BR2_PACKAGE_PHP_EXT_XMLWRITER is not set
+# BR2_PACKAGE_PHP_EXT_XSL is not set
+BR2_PACKAGE_PHP_CLI=y
+BR2_PACKAGE_PHP_CGI=y
+# BR2_PACKAGE_PHP_SAPI_CGI is not set
+# BR2_PACKAGE_PHP_SAPI_CLI is not set
+# BR2_PACKAGE_PHP_SAPI_FPM is not set
+BR2_PACKAGE_PHP_SAPI_CLI_CGI=y
+# BR2_PACKAGE_PHP_SAPI_CLI_FPM is not set
+
+#
+# External php extensions
+#
+# BR2_PACKAGE_PHP_GEOIP is not set
+# BR2_PACKAGE_PHP_GNUPG is not set
+# BR2_PACKAGE_PHP_IMAGICK is not set
+# BR2_PACKAGE_PHP_MEMCACHED is not set
+# BR2_PACKAGE_PHP_SSH2 is not set
+# BR2_PACKAGE_PHP_YAML is not set
+# BR2_PACKAGE_PHP_ZMQ is not set
+BR2_PACKAGE_PYTHON=y
+# BR2_PACKAGE_PYTHON_PY_ONLY is not set
+BR2_PACKAGE_PYTHON_PYC_ONLY=y
+# BR2_PACKAGE_PYTHON_PY_PYC is not set
+
+#
+# core python modules
+#
+
+#
+# The following modules are unusual or require extra libraries
+#
+# BR2_PACKAGE_PYTHON_BZIP2 is not set
+# BR2_PACKAGE_PYTHON_BSDDB is not set
+# BR2_PACKAGE_PYTHON_CODECSCJK is not set
+# BR2_PACKAGE_PYTHON_CURSES is not set
+# BR2_PACKAGE_PYTHON_PYEXPAT is not set
+# BR2_PACKAGE_PYTHON_READLINE is not set
+# BR2_PACKAGE_PYTHON_SSL is not set
+BR2_PACKAGE_PYTHON_UNICODEDATA=y
+BR2_PACKAGE_PYTHON_UCS2=y
+# BR2_PACKAGE_PYTHON_UCS4 is not set
+# BR2_PACKAGE_PYTHON_SQLITE is not set
+# BR2_PACKAGE_PYTHON_ZLIB is not set
+# BR2_PACKAGE_PYTHON_HASHLIB is not set
+
+#
+# external python modules
+#
+# BR2_PACKAGE_PYTHON_BOTTLE is not set
+# BR2_PACKAGE_PYTHON_CFFI is not set
+# BR2_PACKAGE_PYTHON_CONFIGOBJ is not set
+# BR2_PACKAGE_PYTHON_CRC16 is not set
+# BR2_PACKAGE_PYTHON_DAEMON is not set
+# BR2_PACKAGE_PYTHON_DIALOG is not set
+# BR2_PACKAGE_PYTHON_DPKT is not set
+# BR2_PACKAGE_PYTHON_FLUP is not set
+# BR2_PACKAGE_PYTHON_ID3 is not set
+# BR2_PACKAGE_PYTHON_IPY is not set
+# BR2_PACKAGE_PYTHON_IPYTHON is not set
+# BR2_PACKAGE_PYTHON_JSON_SCHEMA_VALIDATOR is not set
+# BR2_PACKAGE_PYTHON_KEYRING is not set
+# BR2_PACKAGE_PYTHON_LIBCONFIG is not set
+# BR2_PACKAGE_PYTHON_MAD is not set
+# BR2_PACKAGE_PYTHON_MELD3 is not set
+# BR2_PACKAGE_PYTHON_MSGPACK is not set
+# BR2_PACKAGE_PYTHON_NETIFACES is not set
+# BR2_PACKAGE_PYTHON_NFC is not set
+# BR2_PACKAGE_PYTHON_POSIX_IPC is not set
+# BR2_PACKAGE_PYTHON_PROTOBUF is not set
+# BR2_PACKAGE_PYTHON_PYASN is not set
+# BR2_PACKAGE_PYTHON_PYCRYPTO is not set
+# BR2_PACKAGE_PYTHON_PYGAME is not set
+# BR2_PACKAGE_PYTHON_PYPARSING is not set
+# BR2_PACKAGE_PYTHON_PYPCAP is not set
+# BR2_PACKAGE_PYTHON_PYRO is not set
+# BR2_PACKAGE_PYTHON_PYSNMP is not set
+# BR2_PACKAGE_PYTHON_PYSNMP_APPS is not set
+# BR2_PACKAGE_PYTHON_PYSNMP_MIBS is not set
+BR2_PACKAGE_PYTHON_PYUSB=y
+# BR2_PACKAGE_PYTHON_PYZMQ is not set
+BR2_PACKAGE_PYTHON_SERIAL=y
+# BR2_PACKAGE_PYTHON_SETUPTOOLS is not set
+# BR2_PACKAGE_PYTHON_SIMPLEJSON is not set
+# BR2_PACKAGE_PYTHON_THRIFT is not set
+# BR2_PACKAGE_PYTHON_TORNADO is not set
+# BR2_PACKAGE_PYTHON_VERSIONTOOLS is not set
 # BR2_PACKAGE_RUBY is not set
 # BR2_PACKAGE_TCL is not set
 
@@ -788,6 +967,7 @@ BR2_PACKAGE_HAS_LUAINTERPRETER=y
 # Audio/Sound
 #
 BR2_PACKAGE_ALSA_LIB=y
+# BR2_PACKAGE_ALSA_LIB_PYTHON is not set
 
 #
 # ALSA lib selection
@@ -1157,7 +1337,7 @@ BR2_PACKAGE_ARGP_STANDALONE=y
 # BR2_PACKAGE_LIBEV is not set
 # BR2_PACKAGE_LIBEVDEV is not set
 # BR2_PACKAGE_LIBEVENT is not set
-# BR2_PACKAGE_LIBFFI is not set
+BR2_PACKAGE_LIBFFI=y
 # BR2_PACKAGE_LIBGLIB2 is not set
 # BR2_PACKAGE_LIBICAL is not set
 BR2_PACKAGE_LIBNSPR_ARCH_SUPPORT=y
@@ -1481,10 +1661,7 @@ BR2_PACKAGE_SCREEN=y
 # BR2_PACKAGE_PWGEN is not set
 # BR2_PACKAGE_QUOTA is not set
 # BR2_PACKAGE_SMACK is not set
-
-#
-# supervisor needs the python interpreter
-#
+# BR2_PACKAGE_SUPERVISOR is not set
 BR2_PACKAGE_SYSTEMD_ARCH_SUPPORTS=y
 BR2_PACKAGE_UTIL_LINUX=y
 BR2_PACKAGE_UTIL_LINUX_LIBBLKID=y
