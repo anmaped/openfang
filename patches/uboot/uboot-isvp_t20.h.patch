@@ -1,5 +1,14 @@
 --- uboot/include/configs/isvp_t20.h	2018-09-28 03:16:07.000000000 +0200
-+++ uboot_/include/configs/isvp_t20.h	2018-09-30 18:21:15.803164090 +0200
++++ uboot_/include/configs/isvp_t20.h	2018-10-14 02:09:48.512476981 +0200
+@@ -98,7 +98,7 @@
+ #else
+ #define CONFIG_DDR2_M14D5121632A
+ #endif
+-#define DDR2_CHIP_DRIVER_OUT_STRENGTH 0
++/*#define DDR2_CHIP_DRIVER_OUT_STRENGTH 0*/
+ 
+ #define CONFIG_DDR_PHY_IMPEDANCE 40000
+ #define CONFIG_DDR_PHY_ODT_IMPEDANCE 50000 //75000
 @@ -112,6 +112,8 @@
  /*#define CONFIG_DDR_PHY_DQ_ODT*/
  /*#define CONFIG_DDR_PHY_DQS_ODT*/
@@ -18,13 +27,22 @@
  #endif
  
  /**
-@@ -137,7 +139,22 @@
+@@ -137,7 +139,31 @@
  #endif
  
  #ifdef CONFIG_SFC_NOR
 -	#define CONFIG_BOOTCOMMAND "sf probe;sf read 0x80600000 0x40000 0x280000; bootm 0x80600000"
 +	#define CONFIG_BOOTCOMMAND \
-+	"if mmc rescan; then " \
++	"echo \"Sets yellow LED off\"; \
++	gpio set 38; \
++	echo \"Sets blue LED off\"; \
++	gpio set 39; \
++	echo \"Enables USB\"; \
++	gpio set 47; \
++	echo \"Enables SDCARD\"; \
++	gpio set 43; \
++	gpio clear 48; \
++	if mmc rescan; then " \
 +		"echo MMC Found; " \
 +		"echo Trying to find EXT3 uEnv.txt; " \
 +		"if ext4load mmc 0:1 0x80600000 uEnv.txt; then " \
@@ -42,7 +60,19 @@
  #endif /* CONFIG_SFC_NOR */
  
  /**
-@@ -266,7 +283,10 @@
+@@ -255,9 +281,10 @@
+ #define CONFIG_CMDLINE_EDITING
+ #define CONFIG_AUTO_COMPLETE
+ /*#define CONFIG_CMD_I2C*/
++#define CONFIG_CMD_GPIO
+ 
+ /************************ USB CONFIG ***************************/
+-#undef CONFIG_CMD_USB
++#define CONFIG_CMD_USB
+ #ifdef CONFIG_CMD_USB
+ #define CONFIG_USB_DWC2
+ #define CONFIG_USB_DWC2_REG_ADDR 0x13500000
+@@ -266,7 +293,10 @@
  /* #define CONFIG_USB_STORAGE */
  #endif
  
@@ -53,4 +83,13 @@
 +#define CONFIG_AUTO_UPDATE			1
  #ifdef CONFIG_AUTO_UPDATE
  	#define CONFIG_CMD_SDUPDATE		1
+ #endif
+@@ -363,7 +393,7 @@
+ 
+ #define CONFIG_SPL_MAX_SIZE		(26 * 1024)
+ 
+-#undef CONFIG_SPL_LZOP
++#define CONFIG_SPL_LZOP
+ #ifdef CONFIG_SPL_LZOP
+ 	#define CONFIG_DECMP_BUFFER_ADRS        0x80200000
  #endif

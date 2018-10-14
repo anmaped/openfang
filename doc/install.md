@@ -11,11 +11,26 @@ The modification of Xiaomi Dafang's firmware is composed of three steps. The fir
 
 :heavy_exclamation_mark:WARNING!! You may brick your device in this step. Be cautious.
 
-The bootloader for Xiaomi Dafang 128M can be found in this [Link](https://github.com/Dafang-Hacks/uboot/raw/master/compiled_bootloader/dafang_128mb_v1.bin)
+The bootloader for Xiaomi Dafang 128M can be found in this [Link](https://github.com/anmaped/openfang/releases/download/rc2_01/u-boot-lzo-with-spl.bin)
 
 ### Flash the bootloader
 
-Please follow the instructions [here](https://github.com/EliasKotlyar/Xiaomi-Dafang-Hacks/blob/master/hacks/flashinguboot.md).
+Please perform the following steps.
+1) Download the file into the device using ssh.
+```
+scp u-boot-lzo-with-spl.bin root@<remote_host>:u-boot-lzo-with-spl.bin
+```
+
+2) Veryfy the SHA-256 checksum (98fc8fb0d74f0a65aa765b4bd03b15474911ba9b14709ef0d156a6a801048ea6)
+```
+sha256sum u-boot-lzo-with-spl.bin
+```
+
+3) Flash the firmware using dd command (always erase mtd0 device before flashing; otherwise you may break your device. Be cautious.)
+```
+flash_eraseall /dev/mtd0
+dd if=<filename.bin> of=/dev/mtd0
+```
 
 ## Download rootfs
 

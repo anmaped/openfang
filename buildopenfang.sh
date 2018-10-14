@@ -23,14 +23,14 @@ rm buildroot-2014.08.tar.gz;
 cd buildroot-2014.08
 
 # update config files
-cp $CPW/config/.config_buildroot ./.config
-cp $CPW/config/busybox.config ./package/busybox
-cp $CPW/config/uClibc-ng.config ./package/uclibc
+cp --preserve=context $CPW/config/.config_buildroot ./.config
+cp --preserve=context $CPW/config/busybox.config ./package/busybox
+cp --preserve=context $CPW/config/uClibc-ng.config ./package/uclibc
 
 [[ -d "dl" ]] || { mkdir dl; }
 
-cp ../../kernel-3.10.14.tar.xz dl/
-cp ../../uboot-v2013.07.tar.xz dl/
+cp --preserve=context ../../kernel-3.10.14.tar.xz dl/
+cp --preserve=context ../../uboot-v2013.07.tar.xz dl/
 
 WDIR=$CPW/$DIR/buildroot-2014.08
 
@@ -48,7 +48,7 @@ if [ "$GCCVER" -ge "5" ]; then
 fi
 
 # copy custom opendafang packages to buildroot directory
-cp $CPW/buildroot/* . -r
+cp --preserve=context $CPW/buildroot/* . -r
 
 make
 
