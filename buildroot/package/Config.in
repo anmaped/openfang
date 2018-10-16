@@ -36,6 +36,7 @@ menu "Audio and video applications"
 	source "package/xbmc/Config.in"
 	source "package/yavta/Config.in"
 	source "package/v4l2rtspserver/Config.in"
+	source "package/oss/Config.in"
 endmenu
 
 menu "Compressors and decompressors"

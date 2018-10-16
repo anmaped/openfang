@@ -1,5 +1,5 @@
 --- uboot/include/configs/isvp_t20.h	2018-09-28 03:16:07.000000000 +0200
-+++ uboot_/include/configs/isvp_t20.h	2018-10-14 02:09:48.512476981 +0200
++++ uboot_/include/configs/isvp_t20.h	2018-10-14 05:43:27.064133800 +0200
 @@ -98,7 +98,7 @@
  #else
  #define CONFIG_DDR2_M14D5121632A
@@ -72,19 +72,21 @@
  #ifdef CONFIG_CMD_USB
  #define CONFIG_USB_DWC2
  #define CONFIG_USB_DWC2_REG_ADDR 0x13500000
-@@ -266,7 +293,10 @@
+@@ -266,7 +293,12 @@
  /* #define CONFIG_USB_STORAGE */
  #endif
  
 -/*#define CONFIG_AUTO_UPDATE			1*/
 +#define CONFIG_CMD_EXT4
 +#define CONFIG_CMD_JFFS2
++/*#define CONFIG_CMD_UBI
++#define CONFIG_CMD_UBIFS*/
 +
 +#define CONFIG_AUTO_UPDATE			1
  #ifdef CONFIG_AUTO_UPDATE
  	#define CONFIG_CMD_SDUPDATE		1
  #endif
-@@ -363,7 +393,7 @@
+@@ -363,7 +395,7 @@
  
  #define CONFIG_SPL_MAX_SIZE		(26 * 1024)
  
