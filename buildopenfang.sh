@@ -48,7 +48,7 @@ if [ "$GCCVER" -ge "5" ]; then
 fi
 
 # copy custom opendafang packages to buildroot directory
-cp --preserve=context $CPW/buildroot/* . -r
+cp --preserve=context $CPW/buildroot/* . -rf
 
 make
 

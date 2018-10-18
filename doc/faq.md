@@ -27,11 +27,7 @@ See [custom bootloader installation](/doc/install.md) for more details.
 - Image-Snap(Get Jpeg Image) 
 - Horizontal/vertical motor rotation / move to center
 - Turn on/off blue/yellow/IR LEDs/IR-Cut
-- Local h264 recording possible:
-```
-$ h264Snap > my-video.h264
-```
-- Audio recording/playing possible:
+- Audio recording/playing:
 ```
 Playing Audio:
 $ ossplay /your/wave/file.wav volume
@@ -42,11 +38,12 @@ $ ossrecord test.wav
 Recording Audio in mp3:
 $ ossrecord -g 1000 -S -b16 -s48 - | lame -m j - filename.mp3
 ```
+- Curl
+- Mosquito (MQTT + websockets)
 - Anything else you can compile yourself. There is a toolchain available [here](https://github.com/anmaped/openfang/releases).
 
 
 ### What features does the openfang distribution will have?
-- Curl
-- MQTT
+- Local h264 recording
 - OpenCV
 

@@ -4,4 +4,4 @@ config BR2_PACKAGE_OSS
 	depends on BR2_USE_WCHAR
 	select BR2_PACKAGE_GETTEXT if BR2_NEEDS_GETTEXT_IF_LOCALE
 	help
-	  oss commands
+	  oss commands including ossplay and ossrecord

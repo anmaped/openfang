@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Buildroot 2014.08 Configuration
+# Buildroot 2014.08-00003-g42a13ef-dirty Configuration
 #
 BR2_HAVE_DOT_CONFIG=y
 
@@ -289,24 +289,7 @@ BR2_PACKAGE_BUSYBOX_CONFIG="package/busybox/busybox.config"
 #
 # Audio and video applications
 #
-BR2_PACKAGE_ALSA_UTILS=y
-
-#
-# ALSA utils selection
-#
-BR2_PACKAGE_ALSA_UTILS_ALSACONF=y
-BR2_PACKAGE_ALSA_UTILS_ALSACTL=y
-BR2_PACKAGE_ALSA_UTILS_ALSAMIXER=y
-# BR2_PACKAGE_ALSA_UTILS_AMIDI is not set
-# BR2_PACKAGE_ALSA_UTILS_AMIXER is not set
-BR2_PACKAGE_ALSA_UTILS_APLAY=y
-# BR2_PACKAGE_ALSA_UTILS_IECSET is not set
-# BR2_PACKAGE_ALSA_UTILS_ACONNECT is not set
-# BR2_PACKAGE_ALSA_UTILS_APLAYMIDI is not set
-# BR2_PACKAGE_ALSA_UTILS_ARECORDMIDI is not set
-# BR2_PACKAGE_ALSA_UTILS_ASEQDUMP is not set
-# BR2_PACKAGE_ALSA_UTILS_ASEQNET is not set
-# BR2_PACKAGE_ALSA_UTILS_SPEAKER_TEST is not set
+# BR2_PACKAGE_ALSA_UTILS is not set
 # BR2_PACKAGE_AUMIX is not set
 # BR2_PACKAGE_BELLAGIO is not set
 # BR2_PACKAGE_ESPEAK is not set
@@ -356,6 +339,7 @@ BR2_PACKAGE_OPUS_TOOLS=y
 # BR2_PACKAGE_WAVPACK is not set
 # BR2_PACKAGE_YAVTA is not set
 BR2_PACKAGE_V4L2RTSPSERVER=y
+BR2_PACKAGE_OSS=y
 
 #
 # Compressors and decompressors
@@ -1256,7 +1240,8 @@ BR2_PACKAGE_LIVE555_MPEG2_INDEXER=y
 # BR2_PACKAGE_GLIB_NETWORKING is not set
 # BR2_PACKAGE_LIBCGI is not set
 # BR2_PACKAGE_LIBCGICC is not set
-# BR2_PACKAGE_LIBCURL is not set
+BR2_PACKAGE_LIBCURL=y
+BR2_PACKAGE_CURL=y
 # BR2_PACKAGE_LIBDNET is not set
 # BR2_PACKAGE_LIBEXOSIP2 is not set
 # BR2_PACKAGE_LIBFCGI is not set
@@ -1292,7 +1277,7 @@ BR2_PACKAGE_LIBPCAP=y
 # BR2_PACKAGE_LIBTORRENT is not set
 # BR2_PACKAGE_LIBUPNP is not set
 # BR2_PACKAGE_LIBVNCSERVER is not set
-# BR2_PACKAGE_LIBWEBSOCKETS is not set
+BR2_PACKAGE_LIBWEBSOCKETS=y
 # BR2_PACKAGE_NEON is not set
 # BR2_PACKAGE_OMNIORB is not set
 # BR2_PACKAGE_OPENPGM is not set
@@ -1508,6 +1493,11 @@ BR2_PACKAGE_LIGHTTPD_LUA=y
 # modemmanager needs udev /dev management and a toolchain w/ largefile, wchar, threads, IPv6
 #
 # BR2_PACKAGE_MONGOOSE is not set
+BR2_PACKAGE_MOSQUITTO=y
+
+#
+# mosquitto needs a toolchain w/ dynamic library
+#
 # BR2_PACKAGE_MROUTED is not set
 # BR2_PACKAGE_MTR is not set
 # BR2_PACKAGE_NBD is not set
