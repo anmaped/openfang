@@ -1,16 +1,27 @@
 #!/bin/sh
 
+TAG=rc03_01
+
 set -e
 
 CPW=$(pwd)
 
 DIR=_build
-[[ -d $DIR ]] || { printf '%s does not exist!\n' "$DIR"; mkdir $DIR; cp fs $DIR/ -r; }
+[[ -d $DIR ]] || { printf '%s does not exist!\n' "$DIR"; mkdir $DIR; }
 
-ID="(`git rev-parse HEAD`) `date +"%Y-%m-%d %H:%M"`"
+date=`date +"%Y-%m-%d %H:%M"`
+ID="(`git rev-parse HEAD`) $date"
 SHORTID=`git rev-parse --short HEAD`
 
 echo $ID > fs/opt/version
+
+cp --preserve=context fs $DIR/ -r;
+
+sed -i "s/VERSION=.*/VERSION=\"$date\"/g" $DIR/fs/opt/autoupdate.sh
+sed -i "s/TAG=.*/TAG=\"$TAG\"/g" $DIR/fs/opt/autoupdate.sh
+sed -i "s/ID=.*/ID=\"$SHORTID\"/g" $DIR/fs/opt/autoupdate.sh
+
+[[ "$1" = "stamp" ]] && { exit 0; }
 
 cd $DIR
 

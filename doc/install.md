@@ -11,7 +11,8 @@ The modification of Xiaomi Dafang's firmware is composed of three steps. The fir
 
 :heavy_exclamation_mark:WARNING!! You may brick your device in this step. Be cautious.
 
-The bootloader for Xiaomi Dafang 128M can be found in this [Link](https://github.com/anmaped/openfang/releases/download/rc2_01/u-boot-lzo-with-spl.bin)
+- The bootloader for Xiaomi Dafang with 64M SOC can be found [here](https://github.com/anmaped/openfang/releases)
+- The bootloader for Xiaomi Dafang with 128M SOC can be found [here](https://github.com/anmaped/openfang/releases)
 
 ### Flash the bootloader
 
@@ -34,7 +35,8 @@ dd if=<filename.bin> of=/dev/mtd0
 
 ## Download rootfs
 
-Xiaomi Dafang 128M [Link](https://github.com/anmaped/openfang/releases/download/rc1_01/rootfs.ext2-706829f.xz)
+- ROOTFS for Xiaomi Xiofang S1 [Link](https://github.com/anmaped/openfang/releases)
+- ROOTFS for Xiaomi Dafang 64M and 128M versions [Link](https://github.com/anmaped/openfang/releases)
 
 ### Flash rootfs using windows 10
 
@@ -82,7 +84,7 @@ to flash the rootfs image.
 
 The rootfs image is smaller than the available partition where we have written the rootfs directories. To be able to use all the available space we allocated for the partition, we have to resize the filesystem using the command
 ```
-resize2fs /dev/root
+resize2fs /dev/mmcblk0p1
 ```
 It will take a short while. Note that the time it takes depends of the size of the partition you are resizing.
 
