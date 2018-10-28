@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Buildroot 2014.08-00003-g42a13ef-dirty Configuration
+# Buildroot 2014.08-00005-gbba9cca Configuration
 #
 BR2_HAVE_DOT_CONFIG=y
 
@@ -408,11 +408,11 @@ BR2_PACKAGE_STRACE=y
 # BR2_PACKAGE_CVS is not set
 # BR2_PACKAGE_FLEX is not set
 # BR2_PACKAGE_GETTEXT is not set
-# BR2_PACKAGE_GIT is not set
+BR2_PACKAGE_GIT=y
 # BR2_PACKAGE_GPERF is not set
 # BR2_PACKAGE_JQ is not set
 # BR2_PACKAGE_LIBTOOL is not set
-# BR2_PACKAGE_MAKE is not set
+BR2_PACKAGE_MAKE=y
 # BR2_PACKAGE_PKGCONF is not set
 # BR2_PACKAGE_SSTRIP is not set
 # BR2_PACKAGE_SUBVERSION is not set
