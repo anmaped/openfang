@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 set -e
 
@@ -24,22 +24,25 @@ date_b=$(cat /opt/version  | cut -d ")" -f 2)
 NEW_VER=`sh /opt/autoupdate.sh_new version`
 
 VERSION_=`date -d "$VERSION" +%s`
-NEW_VER=`date -d "$NEW_VER" +%s`
-echo $VERSION_
-echo $NEW_VER
+NEW_VER_=`date -d "$NEW_VER" +%s`
 
-if [[ "$VERSION_" -lt "$NEW_VER" ]] ;
+
+if [[ "$VERSION_" -lt "$NEW_VER_" ]] ;
 then
-    echo "Updating..."
+    echo "***"
+    echo "$VERSION ($VERSION_) will be updated to $NEW_VER ($NEW_VER_)"
+    echo "***"
     . /opt/autoupdate.sh_new
     exit 0
 fi
 
-date_b=`date -d "$date_b" +%s`
-echo $VERSION_
-echo $date_b
+date_b_=`date -d "$date_b" +%s`
 
-[[ "$VERSION_" -le "$date_b" ]] && { echo "nothing to do."; exit 0; }
+echo "***"
+echo "Current version is $date_b ($date_b_) and will be updated to $VERSION ($VERSION_)"
+echo "***"
+
+[[ "$VERSION_" -le "$date_b_" ]] && { echo "nothing to do."; exit 0; }
 
 cd /mnt/mmcblk0p2
 
