@@ -3,7 +3,7 @@
 # A very light-weight interface just for responsive ui to get states
 
 source func.cgi
-source /system/sdcard/scripts/common_functions.sh
+source /opt/scripts/common_functions.sh
 
 
 echo "Content-type: text"
