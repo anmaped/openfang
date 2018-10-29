@@ -17,6 +17,7 @@ OSS_CONFIGURE_CMDS = mkdir $(@D)/build && cd $(@D)/build && ../configure --no-re
 define OSS_BUILD_CMDS
 	$(MAKE) CPLUSPLUS=$(TARGET_CXX) CC=$(TARGET_CC) LD=$(TARGET_LD) -C $(@D)/build/lib
 	$(MAKE) CPLUSPLUS=$(TARGET_CXX) CC=$(TARGET_CC) LD=$(TARGET_LD) -C $(@D)/build/cmd
+	$(MAKE) LIBTOOL="$(HOST_DIR)/usr/mipsel-ingenic-linux-uclibc/sysroot/usr/bin/libtool --tag=CC" CPLUSPLUS=$(TARGET_CXX) CC=$(TARGET_CC) LD=$(TARGET_LD) -C $(@D)/build/lib/libsalsa
 endef
 
 define OSS_INSTALL_TARGET_CMDS
@@ -24,6 +25,8 @@ define OSS_INSTALL_TARGET_CMDS
 	cp -a $(@D)/build/target/bin/* $(TARGET_DIR)/usr/bin
 	cp $(@D)/build/target/lib/* $(TARGET_DIR)/usr/lib
 	cp $(@D)/build/target/sbin/* $(TARGET_DIR)/usr/sbin
+	cp -f $(@D)/build/lib/libsalsa/.libs/libsalsa.so.2.0.0 $(TARGET_DIR)/usr/lib/libasound.so.2.0.0
+	cp $(@D)/build/lib/libOSSlib/libOSSlib.so $(TARGET_DIR)/usr/lib/libOSSlib.so
 endef
 
 $(eval $(generic-package))

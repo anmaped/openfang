@@ -40,6 +40,11 @@ $ ossrecord -g 1000 -S -b16 -s48 - | lame -m j - filename.mp3
 ```
 - Curl
 - Mosquito (MQTT + websockets)
+- Git
+- VPN (pptp)
+- GSM 3G/4G Connection (ppp)
+- Common filesystems: exfat, ntfs
+- Transcode and encoding using ffmpeg
 - Anything else you can compile yourself. There is a toolchain available [here](https://github.com/anmaped/openfang/releases).
 
 
