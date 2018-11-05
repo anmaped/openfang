@@ -50,12 +50,11 @@ curl -L --insecure https://github.com/anmaped/openfang/releases/download/$TAG/im
 
 xz -cd images-$ID.tar.xz | tar xvf -
 
-cp /bin/dd .
-cp /sbin/reboot .
+[[ -d "/mnt/update" ]] || { mkdir /mnt/update; }
 
-./dd if=openfang-images/rootfs.ext2 of=/dev/mmcblk0p1
+mount -t ext3 -o loop openfang-images/rootfs.ext2 /mnt/update
 
-./reboot
+cp -n --preserve=timestamps /mnt/update /
 
 esac
 

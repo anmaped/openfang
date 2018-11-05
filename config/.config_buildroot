@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Buildroot 2014.08-00007-gd3af896 Configuration
+# Buildroot 2014.08-00007-g5571dff Configuration
 #
 BR2_HAVE_DOT_CONFIG=y
 
@@ -1644,7 +1644,7 @@ BR2_PACKAGE_OPKG=y
 # BR2_PACKAGE_LOGSURFER is not set
 # BR2_PACKAGE_PINENTRY is not set
 BR2_PACKAGE_SCREEN=y
-# BR2_PACKAGE_SUDO is not set
+BR2_PACKAGE_SUDO=y
 # BR2_PACKAGE_TMUX is not set
 # BR2_PACKAGE_XMLSTARLET is not set
 
