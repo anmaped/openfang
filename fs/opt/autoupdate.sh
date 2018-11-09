@@ -54,7 +54,18 @@ xz -cd images-$ID.tar.xz | tar xvf -
 
 mount -t ext3 -o loop openfang-images/rootfs.ext2 /mnt/update
 
-cp -n --preserve=timestamps /mnt/update /
+#backup
+cp /etc/wpa_supplicant.conf .
+
+#update
+cp -a /mnt/update/. /
+
+#restore
+cp wpa_supplicant.conf /etc/
+
+umount /mnt/update/
+
+echo "Update Successful."
 
 esac
 
