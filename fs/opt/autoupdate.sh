@@ -54,14 +54,8 @@ xz -cd images-$ID.tar.xz | tar xvf -
 
 mount -t ext3 -o loop openfang-images/rootfs.ext2 /mnt/update
 
-#backup
-cp /etc/wpa_supplicant.conf .
-
 #update
 cp -a /mnt/update/. /
-
-#restore
-cp wpa_supplicant.conf /etc/
 
 umount /mnt/update/
 

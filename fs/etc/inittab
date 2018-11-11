@@ -15,8 +15,6 @@
 
 # Startup the system
 ::sysinit:/sbin/swapoff -a
-::sysinit:/bin/echo /sbin/mdev > /proc/sys/kernel/hotplug
-::sysinit:/sbin/mdev -s && echo "mdev is running."
 ::sysinit:/bin/mkdir -p /dev/pts
 ::sysinit:/bin/mkdir -p /dev/shm
 ::sysinit:/bin/mount -a
