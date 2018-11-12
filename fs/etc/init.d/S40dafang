@@ -13,12 +13,6 @@ echo out > /sys/class/gpio/gpio77/direction
 echo 0 > /sys/class/gpio/gpio77/active_low
 echo 1 > /sys/class/gpio/gpio77/value
 
-# Leds
-echo 38 > /sys/class/gpio/export
-echo 39 > /sys/class/gpio/export
-echo out > /sys/class/gpio/gpio38/direction
-echo out > /sys/class/gpio/gpio39/direction
-
 # Mount params partition
 mount -t jffs2 /dev/mtdblock9 /params
 
@@ -99,4 +93,8 @@ echo out > /sys/class/gpio/gpio49/direction
 echo 1 > /sys/class/gpio/gpio49/active_low
 
 autonight -D /dev/jz_adc_aux_0 -d 1 -O 600 -F 650 &
+
+# set solid yellow led
+echo none > /sys/class/leds/led_yellow/trigger
+echo 1 > /sys/class/leds/led_yellow/brightness
 
