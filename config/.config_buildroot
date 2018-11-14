@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Buildroot 2014.08-00001-g62543ea Configuration
+# Buildroot 2014.08-00004-gda3cbc6 Configuration
 #
 BR2_HAVE_DOT_CONFIG=y
 
@@ -376,7 +376,7 @@ BR2_PACKAGE_XZ=y
 # BR2_PACKAGE_DHRYSTONE is not set
 # BR2_PACKAGE_DMALLOC is not set
 # BR2_PACKAGE_DROPWATCH is not set
-# BR2_PACKAGE_DSTAT is not set
+BR2_PACKAGE_DSTAT=y
 # BR2_PACKAGE_DUMA is not set
 # BR2_PACKAGE_FIO is not set
 

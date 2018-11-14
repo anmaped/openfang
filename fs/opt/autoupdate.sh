@@ -6,9 +6,32 @@ VERSION=
 TAG=
 ID=
 
+WORKING_DIR=/mnt/mmcblk0p2
+
+update () {
+  xz -cd images-$ID.tar.xz | tar xvf -
+
+  [[ -d "/mnt/update" ]] || { mkdir /mnt/update; }
+
+  mount -t ext3 -o loop openfang-images/rootfs.ext2 /mnt/update
+
+  cp -a /mnt/update/. /
+
+  umount /mnt/update/
+
+  echo "Update Successful."
+}
+
 case "$1" in
 version)
   echo "$VERSION";
+  ;;
+
+--id=*)
+  ID_NEW=`echo "$1" | cut -d "=" -f 2`
+  echo "$ID_NEW";
+  [[ ! -f "$WORKING_DIR/images-$ID_NEW.tar.xz" ]] || { cd $WORKING_DIR; update; exit 0; }
+  echo "File not found!"
   ;;
 
 *)
@@ -44,22 +67,11 @@ echo "***"
 
 [[ "$VERSION_" -le "$date_b_" ]] && { echo "nothing to do."; exit 0; }
 
-cd /mnt/mmcblk0p2
+cd $WORKING_DIR
 
 curl -L --insecure https://github.com/anmaped/openfang/releases/download/$TAG/images-$ID.tar.xz -o images-$ID.tar.xz
 
-xz -cd images-$ID.tar.xz | tar xvf -
-
-[[ -d "/mnt/update" ]] || { mkdir /mnt/update; }
-
-mount -t ext3 -o loop openfang-images/rootfs.ext2 /mnt/update
-
-#update
-cp -a /mnt/update/. /
-
-umount /mnt/update/
-
-echo "Update Successful."
+update
 
 esac
 
