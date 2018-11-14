@@ -8,7 +8,32 @@ echo ""
 # source header.cgi
 
 cat << EOF
-<!-- Date -->
+<script src="scripts/tab.js" type="text/javascript"></script>
+<script src="scripts/motion.js" type="text/javascript"></script>
+<style id="custom_css">
+#tab_container .container_item {
+  display: none;
+}
+
+#tab_container .container_item.is-active {
+  display: block;
+}
+</style>
+
+<div class="tabs is-centered" id="tab_header">
+  <ul>
+    <li class="item is-active" data-option="1"><a>General</a></li>
+    <li class="item" data-option="2"><a>Video</a></li>
+        <li class="item" data-option="3"><a>OSD</a></li>
+    <li class="item" data-option="4"><a>Sound</a></li>
+    <li class="item" data-option="5"><a>Motion</a></li>
+    <li class="item" data-option="6"><a>System Monitor</a></li>
+    <li class="item" data-option="7"><a>Theme</a></li>
+  </ul>
+</div>
+<div class="box" id="tab_container">
+  <div class="container_item is-active" data-item="1">
+    <!-- Date -->
 <div class='card status_card'>
     <header class='card-header'><p class='card-header-title'>System</p></header>
     <div class='card-content'>
@@ -98,23 +123,6 @@ cat << EOF
     </div>
 </div>
 
-<!-- Version -->
-<div class='card status_card'>
-    <header class='card-header'><p class='card-header-title'>Version (last commit date from GitHub/autoupdate script)</p></header>
-    <div class='card-content'>
-    <p>$(cat /opt/version)</p>
-    </div>
-</div>
-
-<script>
-    function call(url){
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', url, true);
-            xhr.send();
-    }
-
-</script>
-
 <!-- Blue / Yellow LED -->
 <div class='card status_card'>
     <header class='card-header'><p class='card-header-title'>LED</p></header>
@@ -139,6 +147,17 @@ cat << EOF
         </div>
     </div>
 </div>
+
+<!-- Version -->
+<div class='card status_card'>
+    <header class='card-header'><p class='card-header-title'>Version (last commit date from GitHub/autoupdate script)</p></header>
+    <div class='card-content'>
+    <p>$(cat /opt/version)</p>
+    </div>
+</div>
+
+  </div>
+  <div class="container_item" data-item="2"> 
 
 <!-- IR LED / Cut-->
 <div class='card status_card'>
@@ -220,86 +239,6 @@ cat << EOF
             <div class="buttons">
             <button class="button is-link" onClick="call('cgi-bin/action.cgi?cmd=flip-on')">On</button>
             <button class="button is-warning" onClick="call('cgi-bin/action.cgi?cmd=flip-off')">Off</button>
-            </div>
-        </div>
-
-        </div>
-    </div>
-</div>
-
-<!-- Motor -->
-<div class='card status_card'>
-    <header class='card-header'><p class='card-header-title'>Motor</p></header>
-    <div class='card-content'>
-        <table class="motor_control">
-            <tr>
-                <td></td>
-                <td>
-                    <button class="button is-link" onclick="call('cgi-bin/action.cgi?cmd=motor_up&val='+document.getElementById('val').value)">&uarr; Up</button>
-                </td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>
-                    <button class="button is-link" onclick="call('cgi-bin/action.cgi?cmd=motor_left&val='+document.getElementById('val').value)">&larr; Left</button>
-                </td>
-                <td>
-                    <input class="input has-text-centered" type="text" id="val" name="val" value="100">
-                </td>
-                <td>
-                    <button class="button is-link" onclick="call('cgi-bin/action.cgi?cmd=motor_right&val='+document.getElementById('val').value)">Right &rarr;</button>
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>
-                    <button class="button is-link" onclick="call('cgi-bin/action.cgi?cmd=motor_down&val='+document.getElementById('val').value)">&darr; Down</button>
-                </td>
-                <td></td>
-            </tr>
-        </table>
-        <div class="buttons">
-        <button class="button is-warning" onclick="call('cgi-bin/action.cgi?cmd=motor_vcalibrate')">Calibrate Vertical</button>
-        <button class="button is-warning" onclick="call('cgi-bin/action.cgi?cmd=motor_hcalibrate')">Calibrate Horizontal</button>
-        </div>
-    </div>
-</div>
-
-<!-- Audio / Image -->
-<div class='card status_card'>
-    <header class='card-header'><p class='card-header-title'>Tests</p></header>
-    <div class='card-content'>
-
-        <div class="columns">
-        <div class="column">
-            <form id="formAudio" action="cgi-bin/action.cgi?cmd=audio_test" method="post">
-                <label>Audio Output Test</label>
-                <div class="select">
-                    <select name="audioSource">
-                        $(
-                           for i in `find /usr/share/notify/ -name *.wav`
-                           do
-                                echo  "<option value=$i> `basename $i` </option>"
-                           done
-                        )
-                    </select>
-                </div>
-                <input class="slider is-fullwidth" name="audiotestVol" step="1" min="0" max="120" value="50" type="range">
-
-                <div class="field-body">
-                    <div class="field">
-                        <div class="control">
-                            <input id="AudioTestSubmit" class="button is-primary" type="submit" value="Test" />
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
-
-        <div class="column">
-            <label>Image</label>
-            <div class="buttons">
-                <a class="button is-link" href='cgi-bin/currentpic.cgi' target='_blank'>Get</a>
             </div>
         </div>
 
@@ -419,80 +358,53 @@ cat << EOF
     </div>
 </div>
 
-<!-- Audio Settings -->
+<!-- Timelapse -->
 <div class='card status_card'>
-    <header class='card-header'>
-        <p class='card-header-title'>Audio Settings</p>
-    </header>
+    <header class='card-header'><p class='card-header-title'>Timelapse</p></header>
     <div class='card-content'>
-        <form id="formaudioin" action="cgi-bin/action.cgi?cmd=conf_audioin" method="post">
-            <div class="columns">
-                <div class="column">
-                    <div class="field is-horizontal">
-                        <div class="field-label is-normal">
-                            <label class="label">Select audio format</label>
-                        </div>
-
-                        <div class="field-body">
-                            <div class="select">
-                                <select name="audioinFormat">
-                                       <option value="OFF" $(source /opt/config/rtspserver.conf; if [ "$(echo $AUDIOFORMAT | grep OFF)" != "" ]; then echo selected; fi)>OFF</option>
-                                       <option value="OPUS" $(source /opt/config/rtspserver.conf; if [ "$(echo $AUDIOFORMAT | grep OPUS)" != "" ]; then echo selected; fi)>OPUS</option>
-                                       <option value="PCM"  $(source /opt/config/rtspserver.conf; if [ "$(echo $AUDIOFORMAT | grep -w PCM)" != "" ]; then echo selected; fi)>PCM</option>
-                                       <option value="PCMU" $(source /opt/config/rtspserver.conf; if [ "$(echo $AUDIOFORMAT | grep -w PCMU)" != "" ]; then echo selected; fi)>PCMU</option>
-                                       <option value="MP3-8000" $(source /opt/config/rtspserver.conf; if [ "$(echo $AUDIOFORMAT$AUDIOOUTB | grep -w MP38000)" != "" ]; then echo selected; fi)>MP3-8000</option>
-                                       <option value="MP3-44100" $(source /opt/config/rtspserver.conf; if [ "$(echo $AUDIOFORMAT$AUDIOOUTBR | grep -w MP344100)" != "" ]; then echo selected; fi)>MP3-44100</option>
-                                </select>
-                            </div>
-                            <span class="help">
-                                Needs a restart to become active.
-                            </span>
-                        </div>
-                    </div>
-                    <div class="field is-horizontal">
-                        <div class="field-label is-normal">
-                            <label class="label">Filter (low filter)</label>
-                        </div>
-                        <div class="field-body">
-                            <div class="select">
-                                <select name="audioinFilter">
-                                       <option value="0" $(if [ "$(/usr/bin/setconf -g q)" == "0" ]; then echo selected; fi)>No filter</option>
-                                       <option value="1" $(if [ "$(/usr/bin/setconf -g q)" == "1" ]; then echo selected; fi)>Filter 1</option>
-                                       <option value="2" $(if [ "$(/usr/bin/setconf -g q)" == "2" ]; then echo selected; fi)>Filter 2</option>
-                                       <option value="3" $(if [ "$(/usr/bin/setconf -g q)" == "3" ]; then echo selected; fi)>NS Filter LOW</option>
-                                       <option value="4" $(if [ "$(/usr/bin/setconf -g q)" == "4" ]; then echo selected; fi)>NS Filter MODERATE</option>
-                                       <option value="5" $(if [ "$(/usr/bin/setconf -g q)" == "5" ]; then echo selected; fi)>NS Filter HIGH</option>
-                                       <option value="6" $(if [ "$(/usr/bin/setconf -g q)" == "6" ]; then echo selected; fi)>NS Filter VERY HIGH</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="field is-horizontal">
-                        <div class="field-label is-normal">
-                            <label class="label">High pass filter</label>
-                        </div>
-                        <div class="field-body">
-                            <p class="control">
-                                <input type="checkbox" name="HFEnabled" value="enabled" $(if [ "$(/usr/bin/setconf -g l)" == "true" ]; then echo checked; fi)/>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="column">
-                    <div class="field is-horizontal">
-                        <div class="field-label is-normal">
-                            <label class="label">Volume</label>
-                        </div>
-                        <input class="slider is-fullwidth" name="audioinVol" step="1" min="-1" max="120" value="$(/usr/bin/setconf -g h)" type="range">
+        <form id="formTimelapse" action="cgi-bin/action.cgi?cmd=conf_timelapse" method="post">
+        <div class="field is-horizontal">
+            <div class="field-label is-normal">
+                <label class="label">Interval</label>
+            </div>
+            <div class="field-body">
+                <div class="field">
+                    <div class="control">
+                        <input class="input" id="tlinterval" name="tlinterval" type="text" size="5" value="$(source /opt/config/timelapse.conf && echo "$TIMELAPSE_INTERVAL")"/> seconds
                     </div>
                 </div>
             </div>
-            <p class="control">
-                <input id="audioinSubmit" class="button is-primary" type="submit" value="Set" />
-            </p>
+        </div>
+        <div class="field is-horizontal">
+            <div class="field-label is-normal">
+                <label class="label">Duration</label>
+            </div>
+            <div class="field-body">
+                <div class="field">
+                    <div class="control">
+                        <input class="input" id="tlduration" name="tlduration" type="text" size="5" value="$(source /opt/config/timelapse.conf && echo "$TIMELAPSE_DURATION")"/> minutes
+                    </div>
+                    <p class="help">Set to 0 for unlimited</p>
+                </div>
+            </div>
+        </div>
+        <div class="field is-horizontal">
+            <div class="field-label is-normal">
+            </div>
+            <div class="field-body">
+                <div class="field">
+                <div class="control">
+                    <input id="tlSubmit" class="button is-primary" type="submit" value="Set" />
+                </div>
+                </div>
+            </div>
+        </div>
         </form>
     </div>
 </div>
+
+  </div>
+  <div class="container_item" data-item="3">
 
 <!-- OSD -->
 <div class='card status_card'>
@@ -628,7 +540,6 @@ cat << EOF
     </div>
 </div>
 
-
 <!-- OSD Debug -->
 <div class='card status_card'>
     <header class='card-header'><p class='card-header-title'>Display debug info on OSD</p></header>
@@ -638,48 +549,272 @@ cat << EOF
     </div>
 </div>
 
-<!-- Timelapse -->
+  </div>
+  <div class="container_item" data-item="4">
+
+<!-- Audio Settings -->
 <div class='card status_card'>
-    <header class='card-header'><p class='card-header-title'>Timelapse</p></header>
+    <header class='card-header'>
+        <p class='card-header-title'>Audio Settings</p>
+    </header>
     <div class='card-content'>
-        <form id="formTimelapse" action="cgi-bin/action.cgi?cmd=conf_timelapse" method="post">
-        <div class="field is-horizontal">
-            <div class="field-label is-normal">
-                <label class="label">Interval</label>
-            </div>
-            <div class="field-body">
-                <div class="field">
-                    <div class="control">
-                        <input class="input" id="tlinterval" name="tlinterval" type="text" size="5" value="$(source /opt/config/timelapse.conf && echo "$TIMELAPSE_INTERVAL")"/> seconds
+        <form id="formaudioin" action="cgi-bin/action.cgi?cmd=conf_audioin" method="post">
+            <div class="columns">
+                <div class="column">
+                    <div class="field is-horizontal">
+                        <div class="field-label is-normal">
+                            <label class="label">Select audio format</label>
+                        </div>
+
+                        <div class="field-body">
+                            <div class="select">
+                                <select name="audioinFormat">
+                                       <option value="OFF" $(source /opt/config/rtspserver.conf; if [ "$(echo $AUDIOFORMAT | grep OFF)" != "" ]; then echo selected; fi)>OFF</option>
+                                       <option value="OPUS" $(source /opt/config/rtspserver.conf; if [ "$(echo $AUDIOFORMAT | grep OPUS)" != "" ]; then echo selected; fi)>OPUS</option>
+                                       <option value="PCM"  $(source /opt/config/rtspserver.conf; if [ "$(echo $AUDIOFORMAT | grep -w PCM)" != "" ]; then echo selected; fi)>PCM</option>
+                                       <option value="PCMU" $(source /opt/config/rtspserver.conf; if [ "$(echo $AUDIOFORMAT | grep -w PCMU)" != "" ]; then echo selected; fi)>PCMU</option>
+                                       <option value="MP3-8000" $(source /opt/config/rtspserver.conf; if [ "$(echo $AUDIOFORMAT$AUDIOOUTB | grep -w MP38000)" != "" ]; then echo selected; fi)>MP3-8000</option>
+                                       <option value="MP3-44100" $(source /opt/config/rtspserver.conf; if [ "$(echo $AUDIOFORMAT$AUDIOOUTBR | grep -w MP344100)" != "" ]; then echo selected; fi)>MP3-44100</option>
+                                </select>
+                            </div>
+                            <span class="help">
+                                Needs a restart to become active.
+                            </span>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-label is-normal">
+                            <label class="label">Filter (low filter)</label>
+                        </div>
+                        <div class="field-body">
+                            <div class="select">
+                                <select name="audioinFilter">
+                                       <option value="0" $(if [ "$(/usr/bin/setconf -g q)" == "0" ]; then echo selected; fi)>No filter</option>
+                                       <option value="1" $(if [ "$(/usr/bin/setconf -g q)" == "1" ]; then echo selected; fi)>Filter 1</option>
+                                       <option value="2" $(if [ "$(/usr/bin/setconf -g q)" == "2" ]; then echo selected; fi)>Filter 2</option>
+                                       <option value="3" $(if [ "$(/usr/bin/setconf -g q)" == "3" ]; then echo selected; fi)>NS Filter LOW</option>
+                                       <option value="4" $(if [ "$(/usr/bin/setconf -g q)" == "4" ]; then echo selected; fi)>NS Filter MODERATE</option>
+                                       <option value="5" $(if [ "$(/usr/bin/setconf -g q)" == "5" ]; then echo selected; fi)>NS Filter HIGH</option>
+                                       <option value="6" $(if [ "$(/usr/bin/setconf -g q)" == "6" ]; then echo selected; fi)>NS Filter VERY HIGH</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-label is-normal">
+                            <label class="label">High pass filter</label>
+                        </div>
+                        <div class="field-body">
+                            <p class="control">
+                                <input type="checkbox" name="HFEnabled" value="enabled" $(if [ "$(/usr/bin/setconf -g l)" == "true" ]; then echo checked; fi)/>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="field is-horizontal">
+                        <div class="field-label is-normal">
+                            <label class="label">Volume</label>
+                        </div>
+                        <input class="slider is-fullwidth" name="audioinVol" step="1" min="-1" max="120" value="$(/usr/bin/setconf -g h)" type="range">
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="field is-horizontal">
-            <div class="field-label is-normal">
-                <label class="label">Duration</label>
-            </div>
-            <div class="field-body">
-                <div class="field">
-                    <div class="control">
-                        <input class="input" id="tlduration" name="tlduration" type="text" size="5" value="$(source /opt/config/timelapse.conf && echo "$TIMELAPSE_DURATION")"/> minutes
-                    </div>
-                    <p class="help">Set to 0 for unlimited</p>
-                </div>
-            </div>
-        </div>
-        <div class="field is-horizontal">
-            <div class="field-label is-normal">
-            </div>
-            <div class="field-body">
-                <div class="field">
-                <div class="control">
-                    <input id="tlSubmit" class="button is-primary" type="submit" value="Set" />
-                </div>
-                </div>
-            </div>
-        </div>
+            <p class="control">
+                <input id="audioinSubmit" class="button is-primary" type="submit" value="Set" />
+            </p>
         </form>
+    </div>
+</div>
+
+<!-- Audio / Image -->
+<div class='card status_card'>
+    <header class='card-header'><p class='card-header-title'>Tests</p></header>
+    <div class='card-content'>
+
+        <div class="columns">
+        <div class="column">
+            <form id="formAudio" action="cgi-bin/action.cgi?cmd=audio_test" method="post">
+                <label>Audio Output Test</label>
+                <div class="select">
+                    <select name="audioSource">
+                        $(
+                           for i in `find /usr/share/notify/ -name *.wav`
+                           do
+                                echo  "<option value=$i> `basename $i` </option>"
+                           done
+                           for i in `find /usr/share/notify/ -name *.mp3`
+                           do
+                                echo  "<option value=$i> `basename $i` </option>"
+                           done
+                        )
+                    </select>
+                </div>
+                <input class="slider is-fullwidth" name="audiotestVol" step="1" min="0" max="120" value="50" type="range">
+
+                <div class="field-body">
+                    <div class="field">
+                        <div class="control">
+                            <input id="AudioTestSubmit" class="button is-primary" type="submit" value="Test" />
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="column">
+            <label>Image</label>
+            <div class="buttons">
+                <a class="button is-link" href='cgi-bin/currentpic.cgi' target='_blank'>Get</a>
+            </div>
+        </div>
+
+        </div>
+    </div>
+</div>
+
+  </div>
+
+  <div class="container_item" data-item="5">
+
+<!-- Motion Detection -->
+<div class='card status_card'>
+    <header class='card-header'><p class='card-header-title'>Motion Detection</p></header>
+    <div class='card-content'>
+<!-- Use http://odyniec.net/projects/imgareaselect/ -->
+<p>
+    Select motion detection region.
+</p>
+
+<div id="motion_img_container" style="margin: 1em 0; position:relative;">
+    <img id="motion_picture" src="cgi-bin/currentpic.cgi" />
+    <span id="region_disabled" class="has-text-danger is-size-1" style="display: none; position: absolute; top: 10%; left: 30%; padding: 0.25em 0.5em; background-color: rgba(20, 20, 20, 0.5); border-radius: 0.25em;">
+        Region disabled
+    </span>
+</div>
+
+<div class="column is-two-thirds">
+    <form id="confMotionForm" action="cgi-bin/action.cgi?cmd=set_region_of_interest" method="post">
+        <input id="x0" name="x0" type="hidden" />
+        <input id="y0" name="y0" type="hidden" />
+        <input id="x1" name="x1" type="hidden" />
+        <input id="y1" name="y1" type="hidden" />
+        <input id="restart_server" name="restart_server" type="hidden" />
+
+        <div class="field">
+            <label class="label">Region Boundaries</label>
+            <div class="control">
+                <span id="region_xy"></span>
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="label">Set sensitivity or deactivate</label>
+            <div class="control">
+                <div class="select">
+                    <select name="motion_sensitivity" id="motion_sensitivity">
+                        <option value="-1">Motion deactivated</option>
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="label">Display motion indicator if motion is detected</label>
+            <div class="control">
+                <div class="select">
+                    <select name="motion_indicator_color" id="motion_indicator_color">
+                        <option value="-1">Deactivated</option>
+                        <option value="0">White</option>
+                        <option value="1">Black</option>
+                        <option value="2">Red</option>
+                        <option value="3">Green</option>
+                        <option value="4">Blue</option>
+                        <option value="5">Cyan</option>
+                        <option value="6">Yellow</option>
+                        <option value="7">Purple</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="field">
+            <div class="control">
+                <label class="checkbox">
+                    <input type="checkbox" name="motion_tracking" id="motion_tracking" onchange="setTracking(this, false)"> Enable motion tracking (when enabled no region of interest is no more used)
+                </label>
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="label">Motion Timeout</label>
+            <div class="control">
+                <input class="input" id="motion_timeout" name="motion_timeout" type="number" size="6">
+            </div>
+            <p class="help">Restore camera position after x seconds, -1 to deactivate</p>
+        </div>
+        <div class="field">
+            <div class="control">
+                <input id="configMotionSubmit" class="button is-primary" type="submit" value="Configure motion" />
+            </div>
+        </div>
+    </form>
+</div>
+    </div>
+</div>
+
+<!-- Motor -->
+<div class='card status_card'>
+    <header class='card-header'><p class='card-header-title'>Motor</p></header>
+    <div class='card-content'>
+        <table class="motor_control">
+            <tr>
+                <td></td>
+                <td>
+                    <button class="button is-link" onclick="call('cgi-bin/action.cgi?cmd=motor_up&val='+document.getElementById('val').value)">&uarr; Up</button>
+                </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>
+                    <button class="button is-link" onclick="call('cgi-bin/action.cgi?cmd=motor_left&val='+document.getElementById('val').value)">&larr; Left</button>
+                </td>
+                <td>
+                    <input class="input has-text-centered" type="text" id="val" name="val" value="100">
+                </td>
+                <td>
+                    <button class="button is-link" onclick="call('cgi-bin/action.cgi?cmd=motor_right&val='+document.getElementById('val').value)">Right &rarr;</button>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <button class="button is-link" onclick="call('cgi-bin/action.cgi?cmd=motor_down&val='+document.getElementById('val').value)">&darr; Down</button>
+                </td>
+                <td></td>
+            </tr>
+        </table>
+        <div class="buttons">
+        <button class="button is-warning" onclick="call('cgi-bin/action.cgi?cmd=motor_vcalibrate')">Calibrate Vertical</button>
+        <button class="button is-warning" onclick="call('cgi-bin/action.cgi?cmd=motor_hcalibrate')">Calibrate Horizontal</button>
+        </div>
+    </div>
+</div>
+
+  </div>
+
+  <div class="container_item" data-item="6">
+
+<!-- System controls -->
+<div class='card status_card'>
+    <header class='card-header'><p class='card-header-title'>Actions</p></header>
+    <div class='card-content'>
+<button class="button" onclick="call('cgi-bin/action.cgi?cmd=shutdown')">Shutdown</button>
     </div>
 </div>
 
@@ -691,13 +826,72 @@ cat << EOF
     </div>
 </div>
 
-<!-- Mounts -->
+<!-- Mount Points -->
 <div class='card status_card'>
-    <header class='card-header'><p class='card-header-title'>Mounts</p></header>
+    <header class='card-header'><p class='card-header-title'>Mount Points</p></header>
     <div class='card-content'>
         <pre>$(mount)</pre>
     </div>
 </div>
+
+EOF
+source func.cgi
+if [ -e "/etc/fang_hacks.cfg" ]; then source /etc/fang_hacks.cfg; fi
+PATH="/bin:/sbin:/usr/bin:/system/bin"
+
+cat << EOF
+<!-- Network Information -->
+<div class='card status_card'>
+    <header class='card-header'><p class='card-header-title'>Network Information</p></header>
+    <div class='card-content'>
+        <pre>Interfaces:<br/>$(ifconfig; iwconfig)</pre>
+        <pre>Routes:<br/>$(route)</pre>
+        <pre>DNS:<br/>$(cat /etc/resolv.conf)</pre>
+    </div>
+</div>
+
+
+  </div>
+
+  <div class="container_item" data-item="7">
+
+<!-- Change Theme -->
+<div class='card status_card'>
+    <header class='card-header'><p class='card-header-title'>Network Information</p></header>
+    <div class='card-content'>
+                        <div class="dropdown-content">
+                            <a id="theme_choice_0" href="javascript: setTheme('0')" class="theme_choice dropdown-item" data-css="css/bulma.0.6.2.min.css">
+                                Light
+                            </a>
+                            <a id="theme_choice_1" href="javascript: setTheme('1')" class="theme_choice dropdown-item" data-css="https://cdn.jsdelivr.net/npm/bulmaswatch@0.6.2/slate/bulmaswatch.min.css">
+                                Dark
+                            </a>
+<a id="theme_choice_2" href="javascript: setTheme('2')" class="theme_choice dropdown-item" data-css="css/bulma-flat.min.css">
+                                Flat
+                            </a>
+<a id="theme_choice_3" href="javascript: setTheme('3')" class="theme_choice dropdown-item" data-css="css/bulma-flatty-nm.min.css">
+                                Flaty Night
+                            </a>
+                        </div>
+    </div>
+</div>
+
+  </div>
+
+</div>
+
+
+
+
+<script>
+    function call(url){
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', url, true);
+            xhr.send();
+    }
+
+</script>
+
 
 EOF
 script=$(cat /var/www/scripts/status.cgi.js)

@@ -189,7 +189,12 @@ if [ -n "$F_cmd" ]; then
           if [ "$F_audioSource" == "" ]; then
               F_audioSource="/usr/share/notify/CN/init_ok.wav"
           fi
-          /system/sdcard/bin/busybox nohup /system/sdcard/bin/audioplay $F_audioSource $F_audiotestVol >> "/var/log/update.log" &
+          extension="${F_audioSource##*.}"
+          if [ $extension == "wav" ]; then
+            ossplay $F_audioSource $F_audiotestVol >> "/var/log/update.log" &
+          else
+            ffmpeg -i $F_audioSource -f wav - | ossplay - $F_audiotestVol >> "/var/log/update.log" &
+          fi
           echo  "Play $F_audioSource at volume $F_audiotestVol"
           return
     ;;

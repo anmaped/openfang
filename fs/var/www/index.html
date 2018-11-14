@@ -12,12 +12,16 @@
     <link href="css/bulma-badge.1.0.1.min.css" rel="stylesheet">
     <link href="css/bulma-quickview.1.0.1.min.css" rel="stylesheet">
 
+
     <!-- jQuery  -->
     <script src="scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
 
     <!-- For Config Motion -->
     <script src="scripts/jquery.imgareaselect.pack.js" type="text/javascript"></script>
     <link href="css/imgareaselect-animated.css" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 
     <style id="custom_css">
         body {
@@ -155,7 +159,11 @@
     <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
         <div class="container">
             <div class="navbar-brand">
-                <a class="navbar-item" href=".">Openfang 01</a>
+                <a class="navbar-item" href=".">
+<span class="icon">
+<i class="fas fa-video"></i>
+</span>
+<span>Openfang 01</span></a>
                 <a id="navbar_burger" role="button" class="navbar-burger" data-target="nav_menu" aria-label="menu" aria-expanded="false">
                     <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>
@@ -163,27 +171,27 @@
                 </a>
             </div>
             <div class="navbar-menu" id="nav_menu">
-                <!-- left menu -->
-                <div class="navbar-start" id="common_nav">
-                    <div class="navbar-item has-dropdown is-hoverable">
-                        <span class="navbar-link">Manage</span>
-                        <div class="navbar-dropdown is-boxed">
-                            <a id="status" class="navbar-item onpage" href="javascript: void(0)" data-target="cgi-bin/status.cgi">Settings</a>
-                            <a id="scripts" class="navbar-item onpage" href="javascript: void(0)" data-target="cgi-bin/scripts.cgi">Services</a>
-                            <a id="configmotion" class="navbar-item onpage" href="javascript: void(0)" data-target="configmotion.html">Motion Detection</a>
-                            <a id="network" class="navbar-item onpage" href="javascript: void(0)" data-target="cgi-bin/network.cgi">Network Information</a>
-                            <a id="logs" class="navbar-item onpage" href="javascript: void(0)" data-target="logs.html">Logs</a>
-                            <a id="update" class="navbar-item onpage" href="javascript: void(0)" data-target="update.html">Update</a>
-                            <a class="navbar-item prompt" href="javascript: void(0)" data-message="Are you sure you wish to reboot?" data-target="cgi-bin/action.cgi?cmd=reboot">Reboot</a>
-                            <a class="navbar-item prompt" href="javascript: void(0)" data-message="Are you sure you wish to shutdown?" data-target="cgi-bin/action.cgi?cmd=shutdown">Shutdown</a>
-                        </div>
-                    </div>
-                </div>
                 <!-- right menu -->
                 <div class="navbar-end">
+<div class="navbar-item has-dropdown is-hoverable">
+                        <span class="navbar-link">
+<span class="icon">
+<i class="fa fa-cog" aria-hidden="true"></i>
+</span>
+<span>Manage</span>
+</span>
+                        <div class="navbar-dropdown is-boxed">
+                            <a id="status" class="navbar-item onpage" href="javascript: void(0)" data-target="cgi-bin/settings.cgi">Settings</a>
+                            <a id="scripts" class="navbar-item onpage" href="javascript: void(0)" data-target="cgi-bin/scripts.cgi">Services</a>
+                            <a id="logs" class="navbar-item onpage" href="javascript: void(0)" data-target="logs.html">Logs</a>
+                            <a id="update" class="navbar-item onpage" href="javascript: void(0)" data-target="update.html">Auto-Update</a>
+                            <a class="navbar-item prompt" href="javascript: void(0)" data-message="Are you sure you wish to reboot?" data-target="cgi-bin/action.cgi?cmd=reboot">Reboot</a>
+                        </div>
+                    </div>
                     <div id="camcontrol_link" class="navbar-item has-dropdown">
                         <!-- Camera Movement Controls -->
-                        <span class="navbar-link">Camera Controls</span>
+                        <span class="navbar-link">
+<i class="fas fa-user-check"></i></span>
                         <div class="navbar-dropdown is-boxed is-right">
                             <!-- Led: IR -->
                             <span class="navbar-item">
@@ -200,17 +208,6 @@
                                 <input id="auto_night_detection" type="checkbox" name="auto_night_detection" class="switch" data-checked="cgi-bin/scripts.cgi?cmd=start&script=auto-night-detection"
                                     data-unchecked="cgi-bin/scripts.cgi?cmd=stop&script=auto-night-detection">
                                 <label for="auto_night_detection">Auto Night Detection</label>
-                            </span>
-                            <!-- LED: Blue -->
-                            <span class="navbar-item">
-                                <input id="blue_led" type="checkbox" name="blue_led" class="switch" data-checked="cgi-bin/action.cgi?cmd=blue_led_on" data-unchecked="cgi-bin/action.cgi?cmd=blue_led_off">
-                                <label for="blue_led">Blue LED</label>
-                            </span>
-                            <!-- LED: Yellow -->
-                            <span class="navbar-item">
-                                <input id="yellow_led" type="checkbox" name="yellow_led" class="switch" data-checked="cgi-bin/action.cgi?cmd=yellow_led_on"
-                                    data-unchecked="cgi-bin/action.cgi?cmd=yellow_led_off">
-                                <label for="yellow_led">Yellow LED</label>
                             </span>
                             <!-- Motion Detection -->
                             <span class="navbar-item">
@@ -299,9 +296,8 @@
                     <a href="https://github.com/anmaped/openfang" target="_blank">
                         <strong>openfang</strong>
                     </a> 01
-                    <a href="https://github.com/anmaped/openfang/issues" target="_blank">Issues?</a>
                 </p>
-                <div class="dropdown is-hoverable">
+                <div class="dropdown is-hoverable" style="display: none;">
                     <div class="dropdown-trigger">
                         <a class="is-small is-link" aria-haspopup="true" aria-controls="dropdown-menu">
                             <span>Theme</span>
@@ -314,6 +310,12 @@
                             </a>
                             <a id="theme_choice_1" href="javascript: setTheme('1')" class="theme_choice dropdown-item" data-css="https://cdn.jsdelivr.net/npm/bulmaswatch@0.6.2/slate/bulmaswatch.min.css">
                                 Dark
+                            </a>
+<a id="theme_choice_2" href="javascript: setTheme('2')" class="theme_choice dropdown-item" data-css="css/bulma-flat.min.css">
+                                Flat
+                            </a>
+<a id="theme_choice_3" href="javascript: setTheme('3')" class="theme_choice dropdown-item" data-css="css/bulma-flatty-nm.min.css">
+                                Flaty Night
                             </a>
                         </div>
                     </div>

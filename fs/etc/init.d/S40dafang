@@ -1,5 +1,9 @@
 #!/bin/sh
 
+case "$1" in
+	start|"")
+
+
 # Set Global Environment
 export PATH=/bin:/sbin:/usr/bin:/usr/sbin
 export PATH=$PATH:/opt/bin:/opt/sbin
@@ -97,4 +101,14 @@ autonight -D /dev/jz_adc_aux_0 -d 1 -O 600 -F 650 &
 # set solid yellow led
 echo none > /sys/class/leds/led_yellow/trigger
 echo 1 > /sys/class/leds/led_yellow/brightness
+
+  ;;
+
+stop)
+  ;;
+
+*)
+  ;;
+
+esac
 

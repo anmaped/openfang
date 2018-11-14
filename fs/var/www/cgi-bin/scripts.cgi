@@ -85,7 +85,7 @@ else
           badge="is-badge-danger"
           status="NOK"
         fi
-        echo "<span class='badge $badge' data-badge='$status'>$i</span>"
+        echo "<span>$i</span><span class="icon"><span class='badge $badge' data-badge='$status'></span></span>"
       else
         echo "$i"
       fi
