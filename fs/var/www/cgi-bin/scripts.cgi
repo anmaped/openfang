@@ -66,7 +66,7 @@ if [ ! -d "$SCRIPT_HOME" ]; then
   echo "<p>No scripts.cgi found in $SCRIPT_HOME</p>"
 else
   SCRIPTS=$(ls -A "$SCRIPT_HOME")
-
+  echo "<div class='box'>"
   for i in $SCRIPTS; do
     # Card - start
     echo "<div class='card script_card'>"
@@ -94,8 +94,9 @@ else
       echo "</p></header>"
 
       # Footer
-      echo "<footer class='card-footer'>"
-      echo "<span class='card-footer-item'>"
+      echo "<div class='card-content'>"
+      echo "<div class="columns">"
+      echo "<span class='column'>"
 
       # Start / Stop / Run buttons
       echo "<div class='buttons'>"
@@ -121,7 +122,7 @@ else
       echo "</span>"
 
       # Autostart Switch
-      echo "<span class='card-footer-item'>"
+      echo "<span class='column'>"
       echo "<input type='checkbox' id='autorun_$i' name='autorun_$i' class='switch is-rtl autostart' data-script='$i' "
         echo " data-unchecked='cgi-bin/scripts.cgi?cmd=disable&script=$i'"
         echo " data-checked='cgi-bin/scripts.cgi?cmd=enable&script=$i'"
@@ -133,12 +134,14 @@ else
       echo "</span>"
 
       # View link
-      echo "<a href='cgi-bin/scripts.cgi?cmd=view&script=$i' class='card-footer-item view_script' data-script="$i">View</a>"
-      echo "</footer>"
+      echo "<a href='cgi-bin/scripts.cgi?cmd=view&script=$i' class='column is-one-fifth view_script' data-script="$i">View</a>"
+      echo "</div>"
+      echo "</div>"
     fi
     # Card - End
     echo "</div>"
   done
+  echo "</div>"
 fi
 
 script=$(cat /var/www/scripts/scripts.cgi.js)

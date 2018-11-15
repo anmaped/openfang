@@ -20,7 +20,7 @@ cat << EOF
 }
 </style>
 
-<div class="tabs is-centered" id="tab_header">
+<div class="tabs is-toggle is-fullwidth" id="tab_header">
   <ul>
     <li class="item is-active" data-option="1"><a>General</a></li>
     <li class="item" data-option="2"><a>Video</a></li>
