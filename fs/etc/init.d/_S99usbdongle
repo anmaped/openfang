@@ -11,4 +11,3 @@ mknod /dev/ppp c 108 0
 pppd file /etc/ppp/peers/mobile-auth
 
 #wvdial Init1=ATZ Init2='ATQ0 V1 E1 +FCLASS=0' ISDN=0 Modem=/dev/ttyUSB3 Baud=9600 Phone='*99#' Username=eplus Password=web Init3='AT+CGDCONT=1,"IP","internet.eplus.de"'
-

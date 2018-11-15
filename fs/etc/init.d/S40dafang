@@ -1,114 +1,125 @@
 #!/bin/sh
 
 case "$1" in
-	start|"")
+start | "")
 
+	# Set Global Environment
+	export PATH=/bin:/sbin:/usr/bin:/usr/sbin
+	export PATH=$PATH:/opt/bin:/opt/sbin
 
-# Set Global Environment
-export PATH=/bin:/sbin:/usr/bin:/usr/sbin
-export PATH=$PATH:/opt/bin:/opt/sbin
+	# Enable network loopback
+	ifconfig lo up
 
-# Enable network loopback
-ifconfig lo up
+	# Set the GPIO PC13 to high, make the USB Disk usable
+	echo 77 >/sys/class/gpio/export
+	echo out >/sys/class/gpio/gpio77/direction
+	echo 0 >/sys/class/gpio/gpio77/active_low
+	echo 1 >/sys/class/gpio/gpio77/value
 
-# Set the GPIO PC13 to high, make the USB Disk usable
-echo 77 > /sys/class/gpio/export
-echo out > /sys/class/gpio/gpio77/direction
-echo 0 > /sys/class/gpio/gpio77/active_low
-echo 1 > /sys/class/gpio/gpio77/value
+	# Mount params partition
+	mount -t jffs2 /dev/mtdblock9 /params
 
-# Mount params partition
-mount -t jffs2 /dev/mtdblock9 /params
+	# Detect other partitions available in the microSD
+	[[ -f "/dev/mmcblk0p2" ]] || {
+		mkdir -p /mnt/mmcblk0p2
+		mount /dev/mmcblk0p2 /mnt/mmcblk0p2
+	}
+	[[ -f "/dev/mmcblk0p3" ]] || {
+		mkdir -p /mnt/mmcblk0p3
+		mount /dev/mmcblk0p3 /mnt/mmcblk0p3
+	}
+	[[ -f "/dev/mmcblk0p4" ]] || {
+		mkdir -p /mnt/mmcblk0p4
+		mount /dev/mmcblk0p4 /mnt/mmcblk0p4
+	}
+	[[ -f "/dev/mmcblk0p5" ]] || {
+		mkdir -p /mnt/mmcblk0p5
+		mount /dev/mmcblk0p5 /mnt/mmcblk0p5
+	}
 
-# Detect other partitions available in the microSD
-[[ -f "/dev/mmcblk0p2" ]] || { mkdir -p /mnt/mmcblk0p2; mount /dev/mmcblk0p2 /mnt/mmcblk0p2; }
-[[ -f "/dev/mmcblk0p3" ]] || { mkdir -p /mnt/mmcblk0p3; mount /dev/mmcblk0p3 /mnt/mmcblk0p3; }
-[[ -f "/dev/mmcblk0p4" ]] || { mkdir -p /mnt/mmcblk0p4; mount /dev/mmcblk0p4 /mnt/mmcblk0p4; }
-[[ -f "/dev/mmcblk0p5" ]] || { mkdir -p /mnt/mmcblk0p5; mount /dev/mmcblk0p5 /mnt/mmcblk0p5; }
+	# Try to find wpa_supplicant.conf in one of the available partitions
+	PATH_TO_WPACONF=$(find /mnt -name "wpa_supplicant.conf")
+	[[ -z "$PATH_TO_WPACONF" ]] || {
+		echo "Copying wpa_supplicant.conf ..."
+		cp $PATH_TO_WPACONF /etc
+	}
+	dos2unix /etc/wpa_supplicant.conf
 
-# Try to find wpa_supplicant.conf in one of the available partitions
-PATH_TO_WPACONF=$(find /mnt -name "wpa_supplicant.conf")
-[[ -z "$PATH_TO_WPACONF" ]] || { echo "Copying wpa_supplicant.conf ..."; cp $PATH_TO_WPACONF /etc; }
-dos2unix /etc/wpa_supplicant.conf
+	# Start Network:
+	MAC=$(grep MAC </params/config/.product_config | cut -c16-27 | sed 's/\(..\)/\1:/g;s/:$//')
 
-# Start Network:
-MAC=$(grep MAC < /params/config/.product_config | cut -c16-27 | sed 's/\(..\)/\1:/g;s/:$//')
+	modprobe 8189es rtw_initmac="$MAC"
+	modprobe 8189fs rtw_initmac="$MAC"
 
-modprobe 8189es rtw_initmac="$MAC"
-modprobe 8189fs rtw_initmac="$MAC"
+	wpa_supplicant -B -i wlan0 -c /etc/wpa_supplicant.conf -P /var/run/wpa_supplicant.pid
+	udhcpc -i wlan0 -p /var/run/udhcpc.pid -s /etc/udhcpc.script -b -x hostname:"$(hostname)"
 
-wpa_supplicant -B -i wlan0 -c /etc/wpa_supplicant.conf -P /var/run/wpa_supplicant.pid
-udhcpc -i wlan0 -p /var/run/udhcpc.pid -s /etc/udhcpc.script -b -x hostname:"$(hostname)"
+	# Start Motor:
+	modprobe sample_motor
 
-# Start Motor:
-modprobe sample_motor
+	# Determine the image sensor model:
+	modprobe sinfo
+	echo 1 >/proc/jz/sinfo/info
+	sensor=$(grep -m1 -oE 'jxf[0-9]*$' /proc/jz/sinfo/info)
 
-# Determine the image sensor model:
-modprobe sinfo
-echo 1 >/proc/jz/sinfo/info
-sensor=$(grep -m1 -oE 'jxf[0-9]*$' /proc/jz/sinfo/info)
+	# Start the image sensor:
+	modprobe tx-isp isp_clk=100000000
+	if [ $sensor = 'jxf22' ]; then
+		modprobe sensor_jxf22 data_interface=2 pwdn_gpio=-1 reset_gpio=18 sensor_gpio_func=0
+	else
+		modprobe sensor_jxf23 data_interface=2 pwdn_gpio=-1 reset_gpio=18 sensor_gpio_func=0
+	fi
 
-# Start the image sensor:
-modprobe tx-isp isp_clk=100000000
-if [ $sensor = 'jxf22' ]; then
-  modprobe sensor_jxf22 data_interface=2 pwdn_gpio=-1 reset_gpio=18 sensor_gpio_func=0
-else
-  modprobe sensor_jxf23 data_interface=2 pwdn_gpio=-1 reset_gpio=18 sensor_gpio_func=0
-fi
+	# Start User Applications:
 
-# Start User Applications:
+	CONFIGPATH=/etc
 
-CONFIGPATH=/etc
+	## Sync the via NTP:
+	ntp_srv="$(cat "$CONFIGPATH/ntp.conf")"
+	timeout -t 30 sh -c "until ping -c1 \"google.com\" &>/dev/null; do sleep 3; done" # wait for available connection
+	ntpd -p "$ntp_srv"
 
-## Sync the via NTP:
-ntp_srv="$(cat "$CONFIGPATH/ntp.conf")"
-timeout -t 30 sh -c "until ping -c1 \"google.com\" &>/dev/null; do sleep 3; done"; # wait for available connection
-ntpd -p "$ntp_srv"
+	## Create a certificate for the webserver
+	if [ ! -f $CONFIGPATH/ssl/lighttpd.pem ]; then
+		export OPENSSL_CONF=$CONFIGPATH/ssl/openssl.cnf
+		openssl req -new -x509 -keyout $CONFIGPATH/ssl/lighttpd.pem -out $CONFIGPATH/ssl/lighttpd.pem -days 365 -nodes -subj "/C=DE/ST=.../L=.../O=.../OU=.../CN=.../emailAddress=..."
+		chmod 400 $CONFIGPATH/ssl/lighttpd.pem
+	fi
 
+	# Disable motion:
+	setconf -k m -v -1
 
-## Create a certificate for the webserver
-if [ ! -f $CONFIGPATH/ssl/lighttpd.pem ]; then
-  export OPENSSL_CONF=$CONFIGPATH/ssl/openssl.cnf
-  openssl req -new -x509 -keyout $CONFIGPATH/ssl/lighttpd.pem -out $CONFIGPATH/ssl/lighttpd.pem -days 365 -nodes -subj "/C=DE/ST=.../L=.../O=.../OU=.../CN=.../emailAddress=..."
-  chmod 400 $CONFIGPATH/ssl/lighttpd.pem
-fi
+	# Detect maximum sensor resolution (mem=87M@0x0 ispmem=9M@0x5700000 rmem=32M@0x6000000)
+	RMEM=$(cat /uEnv.txt | grep -o 'rmem=[^@]*' | cut -c 6- -)
+	ISPMEM=$(cat /uEnv.txt | grep -o 'ispmem=[^@]*' | cut -c 8- -)
 
-# Disable motion:
-setconf -k m -v -1
+	# Start RTSP-Server:
+	if [ $RMEM == "32M" ] && [ $ISPMEM == "9M" ]; then
+		v4l2rtspserver-v0.0.8 -W 1920 -H 1080 &
+	else
+		v4l2rtspserver-v0.0.8 -W 1280 -H 960 &
+	fi
 
-# Detect maximum sensor resolution (mem=87M@0x0 ispmem=9M@0x5700000 rmem=32M@0x6000000)
-RMEM=$(cat /uEnv.txt | grep -o  'rmem=[^@]*' | cut -c 6- -)
-ISPMEM=$(cat /uEnv.txt | grep -o  'ispmem=[^@]*' | cut -c 8- -)
+	# enable gpio 25 26 49
+	echo 25 >/sys/class/gpio/export
+	echo 26 >/sys/class/gpio/export
+	echo 49 >/sys/class/gpio/export
+	echo out >/sys/class/gpio/gpio25/direction
+	echo out >/sys/class/gpio/gpio26/direction
+	echo out >/sys/class/gpio/gpio49/direction
+	echo 1 >/sys/class/gpio/gpio49/active_low
 
-# Start RTSP-Server:
-if [ $RMEM == "32M" ] && [ $ISPMEM == "9M" ]; then
-  v4l2rtspserver-v0.0.8 -W 1920 -H 1080 &
-else
-  v4l2rtspserver-v0.0.8 -W 1280 -H 960 &
-fi
+	autonight -D /dev/jz_adc_aux_0 -d 1 -O 600 -F 650 &
 
-# enable gpio 25 26 49
-echo 25 > /sys/class/gpio/export
-echo 26 > /sys/class/gpio/export
-echo 49 > /sys/class/gpio/export
-echo out > /sys/class/gpio/gpio25/direction
-echo out > /sys/class/gpio/gpio26/direction
-echo out > /sys/class/gpio/gpio49/direction
-echo 1 > /sys/class/gpio/gpio49/active_low
+	# set solid yellow led
+	echo none >/sys/class/leds/led_yellow/trigger
+	echo 1 >/sys/class/leds/led_yellow/brightness
 
-autonight -D /dev/jz_adc_aux_0 -d 1 -O 600 -F 650 &
+	;;
 
-# set solid yellow led
-echo none > /sys/class/leds/led_yellow/trigger
-echo 1 > /sys/class/leds/led_yellow/brightness
+stop) ;;
 
-  ;;
-
-stop)
-  ;;
-
-*)
-  ;;
+\
+	*) ;;
 
 esac
-

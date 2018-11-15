@@ -1,38 +1,34 @@
 #!/bin/sh
 
-filename=/etc/init.d/S90config
+filename=/opt/config/autostart/sound-on-startup
 
-status()
-{
-  if [ -f $filename ]; then
-    echo "enabled"
-  fi
+status() {
+	if [ -f $filename ]; then
+		echo "enabled"
+	fi
 }
 
-start()
-{
-  UPTIME=$( sed 's/\..*//g' < /proc/uptime )
+start() {
+	UPTIME=$(sed 's/\..*//g' </proc/uptime)
 
-  if [ ! -f $filename ] ; then
-    echo "#!/bin/sh" > $filename
-    echo "ossplay /usr/share/notify/oringz-w447.wav &" >> $filename
-    chmod +x $filename
-    echo "enabling sound on startup"
-  fi
+	if [ ! -f $filename ]; then
+		echo "#!/bin/sh" >$filename
+		echo "ossplay /usr/share/notify/oringz-w447.wav &" >>$filename
+		chmod +x $filename
+		echo "enabling sound on startup"
+	fi
 }
 
-stop()
-{
-  echo "disabling sound on startup"
-  rm -f $filename
+stop() {
+	echo "disabling sound on startup"
+	rm -f $filename
 }
 
 if [ $# -eq 0 ]; then
-  start
+	start
 else
-  case $1 in start|stop|status)
-    $1
-    ;;
-  esac
+	case $1 in start | stop | status)
+		$1
+		;;
+	esac
 fi
-

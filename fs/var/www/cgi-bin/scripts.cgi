@@ -34,6 +34,7 @@ if [ -n "$F_script" ]; then
       enable)
         echo "#!/bin/sh" > "/opt/config/autostart/$script"
         echo "$SCRIPT_HOME$script" >> "/opt/config/autostart/$script"
+        chmod +x "/opt/config/autostart/$script"
         echo "Content-type: application/json"
         echo ""
         echo "{\"status\": \"ok\"}"
