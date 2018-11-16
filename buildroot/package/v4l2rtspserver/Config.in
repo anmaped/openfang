@@ -1,7 +1,4 @@
 config BR2_PACKAGE_V4L2RTSPSERVER
 	bool "v4l2rtspserver"
-	depends on BR2_LARGEFILE
-	depends on BR2_USE_WCHAR
-	select BR2_PACKAGE_GETTEXT if BR2_NEEDS_GETTEXT_IF_LOCALE
 	help
 	  v4l2rtspserver

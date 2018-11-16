@@ -6,7 +6,7 @@
 
 OSS_VERSION = v4.2-build2017
 OSS_SOURCE = oss-$(OSS_VERSION)-src-gpl.tar.bz2
-OSS_SITE = http://www.4front-tech.com/developer/sources/stable/gpl/
+OSS_SITE = http://www.4front-tech.com/developer/sources/stable/gpl
 #OSS_SITE_METHOD = git
 #OSS_GIT_SUBMODULES = YES
 OSS_DEPENDENCIES =

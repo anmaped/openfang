@@ -25,16 +25,21 @@ sed -i "s/ID=.*/ID=\"$SHORTID\"/g" $DIR/fs/opt/autoupdate.sh
 
 cd $DIR
 
-[[ -d "buildroot-2014.08" ]] || {
-wget https://buildroot.org/downloads/buildroot-2014.08.tar.gz;
-tar xvf buildroot-2014.08.tar.gz;
-rm buildroot-2014.08.tar.gz;
+BUILDROOT_VERSION=2016.02
+
+[[ -d "buildroot-$BUILDROOT_VERSION" ]] || {
+wget https://buildroot.org/downloads/buildroot-$BUILDROOT_VERSION.tar.gz;
+tar xvf buildroot-$BUILDROOT_VERSION.tar.gz;
+rm buildroot-$BUILDROOT_VERSION.tar.gz;
+cd buildroot-$BUILDROOT_VERSION
+patch -p1 < $CPW/patches/add_fp_no_fused_madd.patch
+cd ..
 }
 
-cd buildroot-2014.08
+cd buildroot-$BUILDROOT_VERSION
 
 # update config files
-cp --preserve=context $CPW/config/.config_buildroot ./.config
+cp --preserve=context $CPW/config/buildroot.config ./.config
 cp --preserve=context $CPW/config/busybox.config ./package/busybox
 cp --preserve=context $CPW/config/uClibc-ng.config ./package/uclibc
 
@@ -43,17 +48,14 @@ cp --preserve=context $CPW/config/uClibc-ng.config ./package/uclibc
 cp --preserve=context ../../kernel-3.10.14.tar.xz dl/
 cp --preserve=context ../../uboot-v2013.07.tar.xz dl/
 
-WDIR=$CPW/$DIR/buildroot-2014.08
+WDIR=$CPW/$DIR/buildroot-$BUILDROOT_VERSION
 
 # Patch buildroot if gcc >= 5
 #
 GCCVER=$(gcc -dumpversion)
 echo "GCC version: $GCCVER"
 if [ "$GCCVER" -ge "5" ]; then
-  cp $CPW/patches/patch-gcc_cp_cfns.h.patch $WDIR/package/gcc/gcc-final
   cp $CPW/patches/automake.in.patch $WDIR/package/automake
-  cp $CPW/patches/ncurses-5.9-gcc-5.patch $WDIR/package/ncurses
-  cp $CPW/patches/hashtable_itr.patch $WDIR/package/mtd
   cp $CPW/patches/python2.7_gcc8__fix.patch $WDIR/package/python
   cp $CPW/patches/lzop-gcc6.patch $WDIR/package/lzop
 fi
