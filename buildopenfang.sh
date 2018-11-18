@@ -61,7 +61,10 @@ if [ "$GCCVER" -ge "5" ]; then
 fi
 
 # copy custom opendafang packages to buildroot directory
+rm -r $WDIR/package/ffmpeg # use updated package version instead
 cp --preserve=context $CPW/buildroot/* . -rf
+
+cp $CPW/v4l2rtspserver-v0.0.8.tar.gz $WDIR/dl/
 
 make
 

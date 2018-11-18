@@ -1,0 +1,47 @@
+#!/bin/sh
+
+# Get memory settings
+RMEM=$(cat /uEnv.txt | grep -o 'rmem=[^@]*' | cut -c 6- -)
+ISPMEM=$(cat /uEnv.txt | grep -o 'ispmem=[^@]*' | cut -c 8- -)
+
+## Set/unset HD settings
+status() {
+
+	if [ $RMEM == "32M" ] && [ $ISPMEM == "9M" ]; then
+		echo "FHD enabled"
+	else
+		return 0
+	fi
+
+}
+
+start() {
+
+	if [ ! $RMEM == "32M" ] && [ ! $ISPMEM == "9M" ]; then
+		# replace settings using sed (mem=87M@0x0 ispmem=9M@0x5700000 rmem=32M@0x6000000)
+		sed -i "s/ mem=[^[:space:]]*/ mem=87M@0x0/g" /uEnv.txt
+		sed -i "s/ ispmem=[^[:space:]]*/ ispmem=9M@0x5700000/g" /uEnv.txt
+		sed -i "s/ rmem=[^[:space:]]*/ rmem=32M@0x6000000/g" /uEnv.txt
+	fi
+
+}
+
+stop() {
+
+	if [ $RMEM == "32M" ] && [ $ISPMEM == "9M" ]; then
+		# replace settings using sed (mem=104M@0x0 ispmem=8M@0x6800000 rmem=16M@0x7000000)
+		sed -i "s/ mem=[^[:space:]]*/ mem=104M@0x0/g" /uEnv.txt
+		sed -i "s/ ispmem=[^[:space:]]*/ ispmem=8M@0x6800000/g" /uEnv.txt
+		sed -i "s/ rmem=[^[:space:]]*/ rmem=16M@0x7000000/g" /uEnv.txt
+	fi
+
+}
+
+if [ $# -eq 0 ]; then
+	start
+else
+	case $1 in start | stop | status)
+		$1
+		;;
+	esac
+fi
