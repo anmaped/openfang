@@ -238,11 +238,11 @@ http_server() {
 
 # Set a new http password
 http_password() {
-	user="root" # by default root until we have proper user management
-	realm="all" # realm is defined in the lightppd.conf
+	user="admin" # by default root until we have proper user management
+	realm="Password Required" # realm is defined in the lightppd.conf
 	pass=$1
 	hash=$(echo -n "$user:$realm:$pass" | md5sum | cut -b -32)
-	echo "$user:$realm:$hash" >/system/sdcard/config/lighttpd.user
+	echo "$user:$realm:$hash" > /etc/lighttpd/lighttpd.user
 }
 
 # Control the RTSP h264 server

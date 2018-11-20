@@ -257,9 +257,9 @@ if [ -n "$F_cmd" ]; then
         fi
       fi
       hst=$(printf '%b' "${F_hostname//%/\\x}")
-      if [ "$(cat /etc/hostname.conf)" != "$hst" ]; then
+      if [ "$(cat /etc/hostname)" != "$hst" ]; then
         echo "<p>Setting hostname to '$hst'...</p>"
-        echo "$hst" > /etc/hostname.conf
+        echo "$hst" > /etc/hostname
         if hostname "$hst"; then
           echo "<p>Success</p>"
         else echo "<p>Failed</p>"
@@ -487,11 +487,7 @@ if [ -n "$F_cmd" ]; then
         then
             echo "===============" >> /var/log/update.log
             date >> /var/log/update.log
-            if [ "$F_login" != "" ]; then
-                busybox nohup /opt/autoupdate.sh -s -v -f -u $F_login  >> "/var/log/update.log" &
-            else
-                busybox nohup /opt/autoupdate.sh -s -v -f >> "/var/log/update.log" &
-            fi
+            /opt/autoupdate.sh  >> "/var/log/update.log" &
             processId=$(ps | grep autoupdate.sh | grep -v grep)
         fi
         echo $processId
