@@ -7,7 +7,7 @@ set -e
 CPW=$(pwd)
 
 DIR=_build
-[[ -d $DIR ]] || { printf '%s does not exist!\n' "$DIR"; mkdir $DIR; }
+[ -d $DIR ] || { printf '%s does not exist!\n' "$DIR"; mkdir $DIR; }
 
 date=`date +"%Y-%m-%d %H:%M"`
 ID="(`git rev-parse HEAD`) $date"
@@ -21,13 +21,13 @@ sed -i "s/VERSION=.*/VERSION=\"$date\"/g" $DIR/fs/opt/autoupdate.sh
 sed -i "s/TAG=.*/TAG=\"$TAG\"/g" $DIR/fs/opt/autoupdate.sh
 sed -i "s/ID=.*/ID=\"$SHORTID\"/g" $DIR/fs/opt/autoupdate.sh
 
-[[ "$1" = "stamp" ]] && { exit 0; }
+[ "$1" = "stamp" ] && { exit 0; }
 
 cd $DIR
 
 BUILDROOT_VERSION=2016.02
 
-[[ -d "buildroot-$BUILDROOT_VERSION" ]] || {
+[ -d "buildroot-$BUILDROOT_VERSION" ] || {
 wget https://buildroot.org/downloads/buildroot-$BUILDROOT_VERSION.tar.gz;
 tar xvf buildroot-$BUILDROOT_VERSION.tar.gz;
 rm buildroot-$BUILDROOT_VERSION.tar.gz;
@@ -43,7 +43,7 @@ cp --preserve=context $CPW/config/buildroot.config ./.config
 cp --preserve=context $CPW/config/busybox.config ./package/busybox
 cp --preserve=context $CPW/config/uClibc-ng.config ./package/uclibc
 
-[[ -d "dl" ]] || { mkdir dl; }
+[ -d "dl" ] || { mkdir dl; }
 
 cp --preserve=context ../../kernel-3.10.14.tar.xz dl/
 cp --preserve=context ../../uboot-v2013.07.tar.xz dl/
