@@ -56,9 +56,14 @@ GCCVER=$(gcc -dumpversion)
 echo "GCC version: $GCCVER"
 if [ "$GCCVER" -ge "5" ]; then
   cp "$CPW"/patches/automake.in.patch "$WDIR"/package/automake
-  cp "$CPW"/patches/python2.7_gcc8__fix.patch "$WDIR"/package/python
+  cp "$CPW"/patches/python/python2.7_gcc8__fix.patch "$WDIR"/package/python
   cp "$CPW"/patches/lzop-gcc6.patch "$WDIR"/package/lzop
 fi
+
+# copy python patches to address host-python build failing
+# when host has openssl 1.1.0 headers installed
+cp -f "$CPW"/patches/python/111-optional-ssl.patch "$WDIR"/package/python
+cp "$CPW"/patches/python/019-force-internal-hash-if-ssl-disabled.patch "$WDIR"/package/python
 
 # copy custom opendafang packages to buildroot directory
 rm -r "$WDIR"/package/ffmpeg # use updated package version instead
