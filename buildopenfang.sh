@@ -15,7 +15,7 @@ SHORTID=$(git rev-parse --short HEAD)
 
 echo "$ID" > fs/opt/version
 
-cp --preserve=context fs $DIR/ -r;
+cp fs $DIR/ -r;
 
 sed -i "s/VERSION=.*/VERSION=\"$date\"/g" $DIR/fs/opt/autoupdate.sh
 sed -i "s/TAG=.*/TAG=\"$TAG\"/g" $DIR/fs/opt/autoupdate.sh
@@ -39,14 +39,14 @@ cd ..
 cd buildroot-$BUILDROOT_VERSION
 
 # update config files
-cp --preserve=context "$CPW"/config/buildroot.config ./.config
-cp --preserve=context "$CPW"/config/busybox.config ./package/busybox
-cp --preserve=context "$CPW"/config/uClibc-ng.config ./package/uclibc
+cp "$CPW"/config/buildroot.config ./.config
+cp "$CPW"/config/busybox.config ./package/busybox
+cp "$CPW"/config/uClibc-ng.config ./package/uclibc
 
 [ -d "dl" ] || { mkdir dl; }
 
-cp --preserve=context ../../kernel-3.10.14.tar.xz dl/
-cp --preserve=context ../../uboot-v2013.07.tar.xz dl/
+cp ../../kernel-3.10.14.tar.xz dl/
+cp ../../uboot-v2013.07.tar.xz dl/
 
 WDIR=$CPW/$DIR/buildroot-$BUILDROOT_VERSION
 
@@ -62,7 +62,7 @@ fi
 
 # copy custom opendafang packages to buildroot directory
 rm -r "$WDIR"/package/ffmpeg # use updated package version instead
-cp --preserve=context "$CPW"/buildroot/* . -rf
+cp "$CPW"/buildroot/* . -rf
 
 cp "$CPW"/v4l2rtspserver-v0.0.8.tar.gz "$WDIR"/dl/
 
