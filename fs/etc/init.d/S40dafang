@@ -20,26 +20,26 @@ start | "")
 	mount -t jffs2 /dev/mtdblock9 /params
 
 	# Detect other partitions available in the microSD
-	[[ -f "/dev/mmcblk0p2" ]] || {
+	[ -b "/dev/mmcblk0p2" ] && {
 		mkdir -p /mnt/mmcblk0p2
 		mount /dev/mmcblk0p2 /mnt/mmcblk0p2
 	}
-	[[ -f "/dev/mmcblk0p3" ]] || {
+	[ -b "/dev/mmcblk0p3" ] && {
 		mkdir -p /mnt/mmcblk0p3
 		mount /dev/mmcblk0p3 /mnt/mmcblk0p3
 	}
-	[[ -f "/dev/mmcblk0p4" ]] || {
+	[ -b "/dev/mmcblk0p4" ] && {
 		mkdir -p /mnt/mmcblk0p4
 		mount /dev/mmcblk0p4 /mnt/mmcblk0p4
 	}
-	[[ -f "/dev/mmcblk0p5" ]] || {
+	[ -b "/dev/mmcblk0p5" ] && {
 		mkdir -p /mnt/mmcblk0p5
 		mount /dev/mmcblk0p5 /mnt/mmcblk0p5
 	}
 
 	# Try to find wpa_supplicant.conf in one of the available partitions
 	PATH_TO_WPACONF=$(find /mnt -name "wpa_supplicant.conf")
-	[[ -z "$PATH_TO_WPACONF" ]] || {
+	[ -z "$PATH_TO_WPACONF" ] || {
 		echo "Copying wpa_supplicant.conf ..."
 		cp $PATH_TO_WPACONF /etc
 	}
