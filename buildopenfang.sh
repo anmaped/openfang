@@ -15,7 +15,7 @@ SHORTID=$(git rev-parse --short HEAD)
 
 echo "$ID" > fs/opt/version
 
-cp --preserve=context fs $DIR/ -r;
+cp fs $DIR/ -r;
 
 sed -i "s/VERSION=.*/VERSION=\"$date\"/g" $DIR/fs/opt/autoupdate.sh
 sed -i "s/TAG=.*/TAG=\"$TAG\"/g" $DIR/fs/opt/autoupdate.sh
@@ -39,14 +39,14 @@ cd ..
 cd buildroot-$BUILDROOT_VERSION
 
 # update config files
-cp --preserve=context "$CPW"/config/buildroot.config ./.config
-cp --preserve=context "$CPW"/config/busybox.config ./package/busybox
-cp --preserve=context "$CPW"/config/uClibc-ng.config ./package/uclibc
+cp "$CPW"/config/buildroot.config ./.config
+cp "$CPW"/config/busybox.config ./package/busybox
+cp "$CPW"/config/uClibc-ng.config ./package/uclibc
 
 [ -d "dl" ] || { mkdir dl; }
 
-cp --preserve=context ../../kernel-3.10.14.tar.xz dl/
-cp --preserve=context ../../uboot-v2013.07.tar.xz dl/
+cp ../../kernel-3.10.14.tar.xz dl/
+cp ../../uboot-v2013.07.tar.xz dl/
 
 WDIR=$CPW/$DIR/buildroot-$BUILDROOT_VERSION
 
@@ -56,13 +56,18 @@ GCCVER=$(gcc -dumpversion)
 echo "GCC version: $GCCVER"
 if [ "$GCCVER" -ge "5" ]; then
   cp "$CPW"/patches/automake.in.patch "$WDIR"/package/automake
-  cp "$CPW"/patches/python2.7_gcc8__fix.patch "$WDIR"/package/python
+  cp "$CPW"/patches/python/python2.7_gcc8__fix.patch "$WDIR"/package/python
   cp "$CPW"/patches/lzop-gcc6.patch "$WDIR"/package/lzop
 fi
 
+# copy python patches to address host-python build failing
+# when host has openssl 1.1.0 headers installed
+cp -f "$CPW"/patches/python/111-optional-ssl.patch "$WDIR"/package/python
+cp "$CPW"/patches/python/019-force-internal-hash-if-ssl-disabled.patch "$WDIR"/package/python
+
 # copy custom opendafang packages to buildroot directory
 rm -r "$WDIR"/package/ffmpeg # use updated package version instead
-cp --preserve=context "$CPW"/buildroot/* . -rf
+cp "$CPW"/buildroot/* . -rf
 
 cp "$CPW"/v4l2rtspserver-v0.0.8.tar.gz "$WDIR"/dl/
 
