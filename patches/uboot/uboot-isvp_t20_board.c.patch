@@ -38,7 +38,7 @@
  int checkboard(void)
  {
 -	puts("Board: ISVP (Ingenic XBurst T20 SoC)\n");
-+	puts("Board: Xiaomi Dafang 128MB (Ingenic XBurst T20 SoC)\n");
++	puts("Board: Openfang compatible board (Ingenic XBurst T20 SoC)\n");
  	return 0;
  }
  

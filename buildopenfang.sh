@@ -65,13 +65,31 @@ fi
 cp -f "$CPW"/patches/python/111-optional-ssl.patch "$WDIR"/package/python
 cp "$CPW"/patches/python/019-force-internal-hash-if-ssl-disabled.patch "$WDIR"/package/python
 
-# copy custom opendafang packages to buildroot directory
+# copy custom openfang packages to buildroot directory
 rm -r "$WDIR"/package/ffmpeg # use updated package version instead
+#rm -r "$WDIR"/package/python # use updated package version instead
+#rm -r "$WDIR"/package/uclibc # use updated package version instead
 cp "$CPW"/buildroot/* . -rf
 
 cp "$CPW"/v4l2rtspserver-v0.0.8.tar.gz "$WDIR"/dl/
 
 make
+
+#
+# compile different versions of uboot
+#
+[ -f "output/images/u-boot-lzo-with-spl.bin" ] && mv output/images/u-boot-lzo-with-spl.bin output/images/u-boot-lzo-with-spl_t20_128M.bin
+
+# change uboot configuration
+sed -i "s/BR2_TARGET_UBOOT_BOARDNAME=.*/BR2_TARGET_UBOOT_BOARDNAME=\"isvp_t20_sfcnor\"/g" .config
+
+make uboot-dirclean
+make uboot
+
+[ -f "output/images/u-boot-lzo-with-spl.bin" ] && mv output/images/u-boot-lzo-with-spl.bin output/images/u-boot-lzo-with-spl_t20_64M.bin
+
+# end uboot compilation
+
 
 # constructs release with git hash label
 echo "Compressing toolchain..."
