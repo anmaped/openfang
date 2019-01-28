@@ -41,7 +41,7 @@
 +	gpio set 47; \
 +	echo \"Enables SDCARD\"; \
 +	gpio set 43; \
-+	gpio clear 48; \
++	gpio clear 48; gpio set 60;\
 +	if mmc rescan; then " \
 +		"echo MMC Found; " \
 +		"echo Trying to find EXT3 uEnv.txt; " \

@@ -81,7 +81,7 @@ start | "")
 
 	## Sync the via NTP:
 	ntp_srv="$(cat "$CONFIGPATH/ntp.conf")"
-	timeout -t 30 sh -c "until ping -c1 \"google.com\" &>/dev/null; do sleep 3; done" # wait for available connection
+	timeout -t 30 sh -c "until ping -4 -c1 \"google.com\" &>/dev/null; do sleep 3; done" # wait for available connection
 	ntpd -p "$ntp_srv"
 
 	## Create a certificate for the webserver
