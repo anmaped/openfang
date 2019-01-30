@@ -2870,7 +2870,9 @@ diff -Nura kernel-3.10.14_tx-isp/drivers/media/platform/sensors/sensor_info/sens
 +
 +enum SENSOR_TYPE
 +{
-+	SENSOR_TYPE_OV9712=0,
++	SENSOR_TYPE_JXF22=0,
++	SENSOR_TYPE_PS5250,
++	SENSOR_TYPE_OV9712,
 +	SENSOR_TYPE_OV9732,
 +	SENSOR_TYPE_OV9750,
 +	SENSOR_TYPE_JXH42,
@@ -2892,7 +2894,6 @@ diff -Nura kernel-3.10.14_tx-isp/drivers/media/platform/sensors/sensor_info/sens
 +	SENSOR_TYPE_JXH62,
 +	SENSOR_TYPE_BG0806,
 +	SENSOR_TYPE_OV4689,
-+	SENSOR_TYPE_JXF22,
 +	SENSOR_TYPE_IMX322,
 +	SENSOR_TYPE_IMX291,
 +	SENSOR_TYPE_OV2735,
@@ -2904,7 +2905,6 @@ diff -Nura kernel-3.10.14_tx-isp/drivers/media/platform/sensors/sensor_info/sens
 +	SENSOR_TYPE_OV2735B,
 +	SENSOR_TYPE_JXV01,
 +	SENSOR_TYPE_PS5230,
-+	SENSOR_TYPE_PS5250,
 +	SENSOR_TYPE_OV2718,
 +	SENSOR_TYPE_OV2732,
 +	SENSOR_TYPE_SC2235,

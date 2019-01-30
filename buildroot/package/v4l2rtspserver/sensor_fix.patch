@@ -1,0 +1,19 @@
+diff -Nura v4l2rtspserver-v0.0.8/src/ImpEncoder.cpp v4l2rtspserver-v0.0.8_mod/src/ImpEncoder.cpp
+--- v4l2rtspserver-v0.0.8/src/ImpEncoder.cpp	2018-09-20 00:40:42.000000000 +0200
++++ v4l2rtspserver-v0.0.8_mod/src/ImpEncoder.cpp	2019-01-29 23:30:36.227767100 +0100
+@@ -990,10 +990,13 @@
+     int sensorId = getSensorName();
+     int sensorAddr;
+ 
+-    //LOG_S(INFO) << "Found Sensor with ID:"<<  sensorId;
+-    if(sensorId == SENSOR_TYPE_JXF22){
++    LOG_S(INFO) << "Found Sensor with ID:"<<  sensorId;
++    if(sensorId == 0){
+         strcpy(sensorName,"jxf22");
+         sensorAddr = 0x40;
++    } else if(sensorId == 1){
++        strcpy(sensorName,"ps5250");
++        sensorAddr = 0x48;
+     } else if(sensorId == SENSOR_TYPE_JXH62){
+         strcpy(sensorName,"jxh62");
+         sensorAddr = 0x30;
