@@ -119,6 +119,8 @@ start | "")
 	# set solid yellow led
 	echo none >/sys/class/leds/led_yellow/trigger
 	echo 1 >/sys/class/leds/led_yellow/brightness
+	echo none >/sys/class/leds/led_yellow1/trigger
+	echo 1 >/sys/class/leds/led_yellow1/brightness
 
 	;;
 
