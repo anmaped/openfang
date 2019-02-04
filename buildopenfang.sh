@@ -71,8 +71,6 @@ rm -r "$WDIR"/package/ffmpeg # use updated package version instead
 #rm -r "$WDIR"/package/uclibc # use updated package version instead
 cp "$CPW"/buildroot/* . -rf
 
-cp "$CPW"/v4l2rtspserver-v0.0.8.tar.gz "$WDIR"/dl/
-
 make
 
 #
