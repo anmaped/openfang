@@ -18,7 +18,7 @@ If you have a classic XiaoFang with a ARM-Processor, consider using https://gith
 
 Before installing openfang, we sugest you to carefully read the [FAQ](/doc/faq.md).
 
-After that, continue to the [Installation](/doc/install.md) procedure.
+After that, continue to the [Installation](/doc/install.md) procedure. More details on [troubleshooting](doc/troubleshooting.md).
 
 
 ### Issues and support ###

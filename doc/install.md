@@ -7,7 +7,7 @@ The modification of Xiaomi Dafang's firmware is composed of three steps. The fir
 - [Resize the written filesystem](#resize-the-rootfs-image)
 
 
-## Dowload bootloader
+## 1. Dowload bootloader
 
 :heavy_exclamation_mark:WARNING!! You may brick your device in this step. Be cautious.
 
@@ -15,6 +15,8 @@ The modification of Xiaomi Dafang's firmware is composed of three steps. The fir
 - The bootloader for Xiaomi Dafang with 128M SOC can be found [here](https://github.com/anmaped/openfang/releases)
 
 ### Flash the bootloader
+
+This step assumes that you have got a ssh access to the device. More details on to get it [here](troubleshooting.md).
 
 Please perform the following steps.
 1) Download the file into the device using ssh.
@@ -33,7 +35,7 @@ flash_eraseall /dev/mtd0
 dd if=<filename.bin> of=/dev/mtd0
 ```
 
-## Download rootfs
+## 2. Download rootfs
 
 - ROOTFS for Xiaomi Xiofang S1 [Link](https://github.com/anmaped/openfang/releases)
 - ROOTFS for Xiaomi Dafang 64M and 128M versions [Link](https://github.com/anmaped/openfang/releases)
@@ -75,12 +77,17 @@ Device     Boot    Start       End   Sectors  Size Id Type
 The first partition is the boot partition and is where we should store the rootfs. For that use the command
 
 ```
-dd if=/path/to/image/rootfs.ext3 of=/dev/sdb1
+dd if=/path/to/image/rootfs.ext2 of=/dev/sdb1
 ```
 to flash the rootfs image.
 
+### Flash rootfs using MacOS
 
-### Resize the rootfs image
+Follow the same instructions for Linux.
+
+## 3. Resize the rootfs image
+
+This step should be performed after flashing the device through the ssh connection. Before starting this step ensure that you get a steady light from your device. It should start blinking and later on stop, which means you have got a successful initialization. More detail on troubleshooting [here](troubleshooting.md).
 
 The rootfs image is smaller than the available partition where we have written the rootfs directories. To be able to use all the available space we allocated for the partition, we have to resize the filesystem using the command
 ```
