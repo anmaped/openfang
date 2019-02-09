@@ -13123,7 +13123,7 @@ diff -Nura v4l2rtspserver_imp_tools/src/ImpEncoder.cpp v4l2rtspserver-master/src
 +
 +
 +bool m_osdOn = false;
-+bool m_jpegOn = false;
++bool m_jpegOn = true;
 +bool m_motionOn = false;
 +
 +
