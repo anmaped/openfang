@@ -11,7 +11,7 @@ start | "")
 	depmod
 
 	# Enable network loopback
-	ifconfig lo up
+	#ifconfig lo up
 
 	# Set the GPIO PC13 to high, make the USB Disk usable
 	echo 77 >/sys/class/gpio/export
@@ -41,21 +41,22 @@ start | "")
 	}
 
 	# Try to find wpa_supplicant.conf in one of the available partitions
-	PATH_TO_WPACONF=$(find /mnt -name "wpa_supplicant.conf")
-	[ -z "$PATH_TO_WPACONF" ] || {
-		echo "Copying wpa_supplicant.conf ..."
-		cp $PATH_TO_WPACONF /etc
-	}
-	dos2unix /etc/wpa_supplicant.conf
+	#PATH_TO_WPACONF=$(find /mnt -name "wpa_supplicant.conf")
+	#[ -z "$PATH_TO_WPACONF" ] || {
+	#	echo "Copying wpa_supplicant.conf ..."
+	#	cp $PATH_TO_WPACONF /etc
+	#}
+	#dos2unix /etc/wpa_supplicant.conf
 
 	# Start Network:
-	MAC=$(grep MAC </params/config/.product_config | cut -c16-27 | sed 's/\(..\)/\1:/g;s/:$//')
+	#MAC=$(grep MAC </params/config/.product_config | cut -c16-27 | sed 's/\(..\)/\1:/g;s/:$//')
+	#[ "$MAC" = "" ] && MAC=00:E0:4C:F7:B9:BD
 
-	modprobe 8189es rtw_initmac="$MAC"
-	modprobe 8189fs rtw_initmac="$MAC"
+	#modprobe 8189es rtw_initmac="$MAC"
+	#modprobe 8189fs rtw_initmac="$MAC"
 
-	wpa_supplicant -B -i wlan0 -c /etc/wpa_supplicant.conf -P /var/run/wpa_supplicant.pid
-	udhcpc -i wlan0 -p /var/run/udhcpc.pid -s /etc/udhcpc.script -b -x hostname:"$(hostname)"
+	#wpa_supplicant -B -i wlan0 -c /etc/wpa_supplicant.conf -P /var/run/wpa_supplicant.pid
+	#udhcpc -i wlan0 -p /var/run/udhcpc.pid -s /etc/udhcpc.script -b -x hostname:"$(hostname)"
 
 	# Start Motor:
 	modprobe sample_motor
@@ -64,7 +65,7 @@ start | "")
 	modprobe sinfo
 	echo 1 >/proc/jz/sinfo/info
 	sensor=$(grep -m1 -oE 'jxf[0-9]*$' /proc/jz/sinfo/info)
-	sensor2=$(grep -m1 -oE 'ps[0-9]*$' /proc/jz/sinfo/info)
+	[ "$sensor" = "" ] && sensor=$(grep -m1 -oE 'ps[0-9]*$' /proc/jz/sinfo/info)
 
 	# Start the image sensor:
 	modprobe tx-isp isp_clk=100000000
@@ -73,16 +74,19 @@ start | "")
 
 	[ "$sensor" = "jxf23" ] && modprobe sensor_jxf23 data_interface=2 pwdn_gpio=-1 reset_gpio=18 sensor_gpio_func=0
 
-	[ "$sensor2" = "ps5250" ] && modprobe sensor_ps5250 pwdn_gpio=-1 reset_gpio=18 sensor_gpio_func=0
+	[ "$sensor" = "ps5250" ] && modprobe sensor_ps5250 pwdn_gpio=-1 reset_gpio=18 sensor_gpio_func=0
 
 	# Start User Applications:
 
 	CONFIGPATH=/etc
 
-	## Sync the via NTP:
-	ntp_srv="$(cat "$CONFIGPATH/ntp.conf")"
-	timeout -t 30 sh -c "until ping -4 -c1 \"google.com\" &>/dev/null; do sleep 3; done" # wait for available connection
-	ntpd -p "$ntp_srv"
+	wmode=`fw_nvram get wmode`
+	if [ "$wmode" == "STA" ]; then
+		## Sync the via NTP:
+		ntp_srv="$(cat '$CONFIGPATH/ntp.conf')"
+		timeout -t 30 sh -c "until ping -4 -c1 \"google.com\" &>/dev/null; do sleep 3; done" # wait for available connection
+		ntpd -p "$ntp_srv"
+	fi
 
 	## Create a certificate for the webserver
 	if [ ! -f $CONFIGPATH/ssl/lighttpd.pem ]; then
@@ -100,9 +104,9 @@ start | "")
 
 	# Start RTSP-Server:
 	if [ $RMEM == "32M" ] && [ $ISPMEM == "9M" ]; then
-		v4l2rtspserver-v0.0.8 -W 1920 -H 1080 &
+		v4l2rtspserver-v0.1.3 -W 1920 -H 1080 &
 	else
-		v4l2rtspserver-v0.0.8 -W 1280 -H 960 &
+		v4l2rtspserver-v0.1.3 -W 1280 -H 960 &
 	fi
 
 	# enable gpio 25 26 49

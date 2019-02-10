@@ -1,0 +1,151 @@
+#!/bin/sh
+#
+# Start the wifi...
+#
+
+WPA_SUPPLICANT_CONFIG_FILE="/tmp/wpa_supplicant.conf"
+interface=wlan0
+
+wifi_ap_mode()
+{
+
+    echo "Enabling wifi AP mode"
+
+    # wifi stop
+    ifconfig $interface down
+    killall -9 udhcpc wpa_supplicant hostapd udhcpd
+    ifconfig $interface up
+    ifconfig $interface 192.168.14.1 netmask 255.255.255.0
+
+    # AP mode
+	#MODEL=`factory get model`
+	#vendor=`echo ${MODEL} | cut -d '.' -f 1`
+	#product=`echo ${MODEL} | cut -d '.' -f 2`
+	#version=`echo ${MODEL} | cut -d '.' -f 3`
+	#echo "ssid=${vendor}-${product}-${version}_miap$1"
+	#MODEL=`echo $MODEL| sed 's/\./-/g'`
+	#echo $MODEL
+    cp /etc/hostapd.conf /tmp/
+    echo "ssid=openfang$1" >> /tmp/hostapd.conf
+    mkdir -p /var/run/hostapd
+    hostapd /tmp/hostapd.conf -B
+
+    mkdir -p /var/lib/misc
+    touch /var/lib/misc/udhcpd.leases
+    udhcpd
+}
+
+wifi_sta_mode()
+{
+    echo "Enabling wifi STA mode"
+
+    get_ssid_passwd
+    update_wpa_conf "$ssid" "$passwd"
+
+    #stop uap interface
+    killall -9 udhcpc wpa_supplicant hostapd udhcpd
+    ifconfig $interface down
+    
+    ifconfig $interface up
+    iwconfig $interface mode Managed
+    mkdir -p /var/run/wpa_supplicant
+    wpa_supplicant -Dnl80211 -i$interface -c $WPA_SUPPLICANT_CONFIG_FILE -B
+	wpa_cli -i $interface -B -a /etc/init.d/wpa_event.sh
+
+	MODEL=`fw_nvram get model`
+	hname=`echo $MODEL| sed "s/\./_/g"`
+	echo $hname
+    if [ x"$wifi_ready" = x"ok" ]; then
+        udhcpc -i $interface -S -x hostname:$hname
+    else
+        udhcpc -i $interface -t 10 -T 2 -n -S -x hostname:$hname
+    fi
+    echo 3 > /proc/sys/kernel/printk
+    # check if we've got ip
+    echo "get ip addr :"
+	ip=`wpa_cli status | grep ip_address | cut -d '=' -f 2`
+    echo $ip
+    if [ x"$ip" == x ];then
+        return 1
+    else
+        return 0
+    fi
+}
+
+get_ssid_passwd()
+{
+    key_mgmt=`fw_nvram get wkeymgmt`
+    if [ "$key_mgmt" == "" ]; then
+    passwd=""
+    else
+    passwd=`fw_nvram get wpassword`
+    fi
+    ssid=`fw_nvram get wssid`
+
+    echo $ssid
+    #echo $passwd
+    echo $key_mgmt
+}
+
+update_wpa_conf()
+{
+    if [ x"$2" = x ]; then
+    cat <<EOF > $WPA_SUPPLICANT_CONFIG_FILE
+ctrl_interface=/var/run/wpa_supplicant
+update_config=1
+network={
+        ssid="$1"
+        key_mgmt=NONE
+    scan_ssid=1
+}
+EOF
+    else
+    cat <<EOF > $WPA_SUPPLICANT_CONFIG_FILE
+ctrl_interface=/var/run/wpa_supplicant
+update_config=1
+network={
+        ssid="$1"
+        psk="$2"
+        key_mgmt=WPA-PSK
+    proto=WPA WPA2
+    scan_ssid=1
+}
+EOF
+    fi
+}
+
+case "$1" in
+  start)
+		echo "Initializing wlan driver...."
+		macstring=$(grep MAC </params/config/.product_config | cut -c16-27 | sed 's/\(..\)/\1:/g;s/:$//')
+		[ "$macstring" = "" ] && macstring=00:E0:4C:F7:B9:BD
+
+		modprobe 8189es rtw_initmac="$macstring"
+		modprobe 8189fs rtw_initmac="$macstring"
+
+		mac=`echo ${macstring} | cut -d ':' -f 5`
+		mode=`fw_nvram get wmode`
+    		if [ "$mode" == "" ]; then
+    			wifi_ap_mode $mac
+    		else
+    			wifi_sta_mode $mac
+    		fi
+		
+		;;
+  stop)
+        printf "Stopping wifi..."
+	/usr/bin/killall wpa_supplicant hostapd dhcpd
+	/sbin/ifconfig wlan0 down
+	/sbin/modprobe -r wlan
+        ;;
+  restart|reload)
+        "$0" stop
+        "$0" start
+        ;;
+  *)
+        echo "Usage: $0 {start|stop|restart}"
+        exit 1
+esac
+
+exit $?
+
