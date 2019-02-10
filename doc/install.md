@@ -1,10 +1,13 @@
 # Installation
 
-The modification of Xiaomi Dafang's firmware is composed of three steps. The first one consists on flashing a new bootloader capable to load all the ROOTFS directories entirely from the SD card partition, the second one consists on partitioning the SD cards into two partitions and writing the new ROOTFS in one of the partitions, and the third one consists on resizing the ROOTFS filesystem.
+The installation of openfang is mainly composed of three steps. The first one consists on flashing a new bootloader capable to load all the ROOTFS directories entirely from the SD card partition, the second one consists on partitioning the SD cards into two partitions and writing the new ROOTFS in one of the partitions, and the third one consists on resizing the ROOTFS filesystem.
 
 - [Download and flash the bootloader](#dowload-bootloader)
 - [Download and write the rootfs image](#download-rootfs)
 - [Resize the written filesystem](#resize-the-rootfs-image)
+
+More specific install guides can be found in the following links
+- [Wyze Pan Cam (WYZECP1)](wyzecp1_instructions.md) (thanks to M@ SWARTZ)
 
 
 ## 1. Dowload bootloader
