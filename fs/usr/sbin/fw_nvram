@@ -7,7 +7,7 @@ case "$1" in
   set)
 	echo "Setting $2...."
 	# check if $2 and $3 is valid
-	fw_setenv $2 $3
+	#fw_setenv $2 $3
 	;;
   get)
 	out=`fw_printenv $2`
