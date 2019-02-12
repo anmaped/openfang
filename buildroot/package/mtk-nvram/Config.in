@@ -1,0 +1,6 @@
+menu "nvram Features"
+
+config BR2_PACKAGE_MTD_NVRAM
+	string "mtd name for nvram"
+	default "Config"
+endmenu
