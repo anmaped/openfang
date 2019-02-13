@@ -6,7 +6,7 @@ var timeoutJobs = {};
 
 function refreshLiveImage() {
    var ts = new Date().getTime();
-   $("#liveview").attr("src", "cgi-bin/currentpic.cgi?" + ts);
+   //$("#liveview").attr("src", "controller/action.php?jpegimage=true;" + ts);
 }
 
 function scheduleRefreshLiveImage(interval) {
@@ -83,11 +83,11 @@ $(document).ready(function() {
       var b = $(this);
       $.get("cgi-bin/action.cgi?cmd=" + b.data('cmd')).done(
          function(data) {
-            setTimeout(refreshLiveImage, 500);
+            //setTimeout(refreshLiveImage, 500);
          });
    });
    // Switch controls
-   $(".switch").click(function() {
+   /*$(".switch").click(function() {
       var e = $(this);
       e.prop('disabled', true);
       $.get("cgi-bin/state.cgi", {
@@ -104,9 +104,9 @@ $(document).ready(function() {
          }
          e.prop('disabled', false);
       });
-   });
+   });*/
    // Initial syncing of switches
-   timeoutJobs['syncSwitches'] = setTimeout(syncSwitches, 10);
+   //timeoutJobs['syncSwitches'] = setTimeout(syncSwitches, 10);
    $('#camcontrol_link').hover(function() {
       // for desktop
       var e = $(this);
@@ -115,10 +115,10 @@ $(document).ready(function() {
          return;
       }
       // refresh switches on hover over Camera Controls menu
-      if (timeoutJobs['syncSwitches'] != undefined) {
-         clearTimeout(timeoutJobs['syncSwitches']);
-      }
-      timeoutJobs['syncSwitches'] = setTimeout(syncSwitches, 10);
+      //if (timeoutJobs['syncSwitches'] != undefined) {
+      //   clearTimeout(timeoutJobs['syncSwitches']);
+      //}
+      //timeoutJobs['syncSwitches'] = setTimeout(syncSwitches, 10);
    }, function() {
       $(this).toggleClass('is-active');
    });
@@ -132,11 +132,12 @@ $(document).ready(function() {
          return;
       }
       // refresh switches on burger is tapped
-      if (timeoutJobs['syncSwitches'] != undefined) {
-         clearTimeout(timeoutJobs['syncSwitches']);
-      }
-      timeoutJobs['syncSwitches'] = setTimeout(syncSwitches, 10);
+      //if (timeoutJobs['syncSwitches'] != undefined) {
+      //   clearTimeout(timeoutJobs['syncSwitches']);
+      //}
+      //timeoutJobs['syncSwitches'] = setTimeout(syncSwitches, 10);
    });
+
    // Close action for quickview
    $("#quickViewClose").click(function() {
       $("#quickviewDefault").removeClass("is-active");
@@ -146,7 +147,7 @@ $(document).ready(function() {
       $(document.location.hash).click();
    }
    // Make liveview self refresh
-   $("#liveview").attr("onload", "scheduleRefreshLiveImage(1000);");
+   //$("#liveview").attr("onload", "scheduleRefreshLiveImage(1000);");
 });
 // set theme cookie
 function setCookie(name, value) {

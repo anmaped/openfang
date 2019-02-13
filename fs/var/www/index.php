@@ -203,55 +203,55 @@ header('location:login.php');
               <div class="navbar-dropdown is-boxed is-right">
                 <!-- Led: IR -->
                 <span class="navbar-item">
-                  <input class="switch" data-checked="cgi-bin/action.cgi?cmd=ir_led_on" data-unchecked="cgi-bin/action.cgi?cmd=ir_led_off" id="ir_led" name="ir_led" type="checkbox"> 
+                  <input class="switch is-small" data-checked="cgi-bin/action.cgi?cmd=ir_led_on" data-unchecked="cgi-bin/action.cgi?cmd=ir_led_off" id="ir_led" name="ir_led" type="checkbox" <?php if (exec ('. /opt/scripts/common_functions.sh; echo $(ir_led status);') == "ON" ) echo "checked=\"checked\""; ?> > 
                   <label for="ir_led">IR Led
                   </label>
                 </span> 
                 <!-- IR Cut -->
                 <span class="navbar-item">
-                  <input class="switch" data-checked="cgi-bin/action.cgi?cmd=ir_cut_on" data-unchecked="cgi-bin/action.cgi?cmd=ir_cut_off" id="ir_cut" name="ir_cut" type="checkbox"> 
+                  <input class="switch is-small" data-checked="cgi-bin/action.cgi?cmd=ir_cut_on" data-unchecked="cgi-bin/action.cgi?cmd=ir_cut_off" id="ir_cut" name="ir_cut" type="checkbox" <?php if (exec ('. /opt/scripts/common_functions.sh; echo $(ir_cut status);') == "ON" ) echo "checked=\"checked\""; ?> > 
                   <label for="ir_cut">IR-Cut
                   </label>
                 </span> 
                 <!-- Auto Night Detect -->
                 <span class="navbar-item">
-                  <input class="switch" data-checked="cgi-bin/scripts.cgi?cmd=start&script=auto-night-detection" data-unchecked="cgi-bin/scripts.cgi?cmd=stop&script=auto-night-detection" id="auto_night_detection" name="auto_night_detection" type="checkbox"> 
+                  <input class="switch is-small" data-checked="cgi-bin/scripts.cgi?cmd=start&script=auto-night-detection" data-unchecked="cgi-bin/scripts.cgi?cmd=stop&script=auto-night-detection" id="auto_night_detection" name="auto_night_detection" type="checkbox" <?php if (exec ('. /opt/scripts/common_functions.sh; echo $(auto_night_mode status);') == "ON" ) echo "checked=\"checked\""; ?> > 
                   <label for="auto_night_detection">Auto Night Detection
                   </label>
                 </span> 
                 <!-- Motion Detection -->
                 <span class="navbar-item">
-                  <input class="switch" data-checked="cgi-bin/action.cgi?cmd=motion_detection_on" data-unchecked="cgi-bin/action.cgi?cmd=motion_detection_off" id="motion_detection" name="motion_detection" type="checkbox"> 
+                  <input class="switch is-small" data-checked="cgi-bin/action.cgi?cmd=motion_detection_on" data-unchecked="cgi-bin/action.cgi?cmd=motion_detection_off" id="motion_detection" name="motion_detection" type="checkbox" <?php if (exec ('. /opt/scripts/common_functions.sh; echo $(motion_detection status);') == "ON" ) echo "checked=\"checked\""; ?> > 
                   <label for="motion_detection">Motion Detection
                   </label>
                 </span> 
                 <!-- RTSP H264 -->
                 <span class="navbar-item">
-                  <input class="switch" data-checked="cgi-bin/scripts.cgi?cmd=start&script=rtsp-h264" data-unchecked="cgi-bin/scripts.cgi?cmd=stop&script=rtsp-h264" id="rtsp_h264" name="rtsp_h264" type="checkbox"> 
+                  <input class="switch is-small" data-checked="cgi-bin/scripts.cgi?cmd=start&script=rtsp-h264" data-unchecked="cgi-bin/scripts.cgi?cmd=stop&script=rtsp-h264" id="rtsp_h264" name="rtsp_h264" type="checkbox" <?php if (exec ('. /opt/scripts/common_functions.sh; echo $(rtsp_h264_server status);') == "ON" ) echo "checked=\"checked\""; ?> > 
                   <label for="rtsp_h264">RTSP H264 Server
                   </label>
                 </span> 
                 <!-- RTSP MJPEG -->
                 <span class="navbar-item">
-                  <input class="switch" data-checked="cgi-bin/scripts.cgi?cmd=start&script=rtsp-mjpeg" data-unchecked="cgi-bin/scripts.cgi?cmd=stop&script=rtsp-mjpeg" id="rtsp_mjpeg" name="rtsp_mjpeg" type="checkbox"> 
+                  <input class="switch is-small" data-checked="cgi-bin/scripts.cgi?cmd=start&script=rtsp-mjpeg" data-unchecked="cgi-bin/scripts.cgi?cmd=stop&script=rtsp-mjpeg" id="rtsp_mjpeg" name="rtsp_mjpeg" type="checkbox" <?php if (exec ('. /opt/scripts/common_functions.sh; echo $(rtsp_mjpeg status);') == "ON" ) echo "checked=\"checked\""; ?> > 
                   <label for="rtsp_mjpeg">RTSP MJPEG Server
                   </label>
                 </span> 
                 <!-- MQTT Status -->
                 <span class="navbar-item">
-                  <input class="switch" data-checked="cgi-bin/scripts.cgi?cmd=start&script=mqtt-status" data-unchecked="cgi-bin/scripts.cgi?cmd=stop&script=mqtt-status" id="mqtt_status" name="mqtt_status" type="checkbox"> 
+                  <input class="switch is-small" data-checked="cgi-bin/scripts.cgi?cmd=start&script=mqtt-status" data-unchecked="cgi-bin/scripts.cgi?cmd=stop&script=mqtt-status" id="mqtt_status" name="mqtt_status" type="checkbox"> 
                   <label for="mqtt_status">MQTT Status Server
                   </label>
                 </span> 
                 <!-- MQTT Control -->
                 <span class="navbar-item">
-                  <input class="switch" data-checked="cgi-bin/scripts.cgi?cmd=start&script=mqtt-control" data-unchecked="cgi-bin/scripts.cgi?cmd=stop&script=mqtt-control" id="mqtt_control" name="mqtt_control" type="checkbox"> 
+                  <input class="switch is-small" data-checked="cgi-bin/scripts.cgi?cmd=start&script=mqtt-control" data-unchecked="cgi-bin/scripts.cgi?cmd=stop&script=mqtt-control" id="mqtt_control" name="mqtt_control" type="checkbox"> 
                   <label for="mqtt_control">MQTT Control Server
                   </label>
                 </span> 
                 <!-- Startup Sound -->
                 <span class="navbar-item">
-                  <input class="switch" data-checked="cgi-bin/scripts.cgi?cmd=start&script=sound-on-startup" data-unchecked="cgi-bin/scripts.cgi?cmd=stop&script=sound-on-startup" id="sound_on_startup" name="sound_on_startup" type="checkbox"> 
+                  <input class="switch is-small" data-checked="cgi-bin/scripts.cgi?cmd=start&script=sound-on-startup" data-unchecked="cgi-bin/scripts.cgi?cmd=stop&script=sound-on-startup" id="sound_on_startup" name="sound_on_startup" type="checkbox"> 
                   <label for="sound_on_startup">Sound on Startup
                   </label>
                 </span>
@@ -275,7 +275,7 @@ header('location:login.php');
       </p>
       <div class='box'>
         <div class="container" id="content">
-          <img id="liveview" onerror="this.src='css/unable_load.png';" src="cgi-bin/currentpic.cgi">
+          <img id="liveview" onerror="this.src='css/unable_load.png';" src="controller/action.php?jpegimage=1">
           <div id="dpad_container">
             <div id="dpad">
               <div class="dpad_button up">
@@ -341,9 +341,51 @@ header('location:login.php');
       var notifications = new Notifications();
       notifications.init();
 
-function hidenotification(id) {
-$(id).addClass('is-hidden');
-}
+      function hidenotification(id) {
+          $(id).addClass('is-hidden');
+      }
+
+      (function worker() {
+          var ts = new Date().getTime();
+          //console.log("S");
+
+          $('#liveview').attr("src", "controller/action.php?jpegimage=" + ts);
+
+          setTimeout(worker, 1000);
+      })();
+
+
+      /*(function worker() {
+        $.ajax({
+          url: 'controller/action.php',
+          type: 'get',
+          data: "jpegimage=1",
+          success: function(data) {
+            console.log( data );
+            //var ts = new Date().getTime();
+            $('#liveview').attr("src", data );
+          },
+          complete: function() {
+            // Schedule the next request when the current one's complete
+            setTimeout(worker, 1000);
+          }
+        });
+      })();*/
+
+      $(".switch").click(function() {
+          var sw = $(this);
+          sw.prop('disabled', true);
+          if ( !sw.prop("checked") )
+              $.get(sw.data('unchecked')).done(function(data) {
+                  sw.prop('disabled', false);
+              });
+          else
+              $.get(sw.data('checked')).done(function(data) {
+                  sw.prop('disabled', false);
+              });
+
+      });
+
     </script>
   </body>
 </html>

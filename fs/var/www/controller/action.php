@@ -1,5 +1,8 @@
 <?php
 
+require '../session.php';
+
+
 if( isset($_POST["hardware_model"]) ) {
 
   exec('fw_nvram set model ' . $_POST["hardware_model"] );
@@ -31,6 +34,14 @@ else if ( isset($_POST["wireless_mode"]) && isset($_POST["wssid"]) && isset($_PO
   }
 
   echo "success: " . $_POST["wireless_mode"] . " writes " . $i;
+}
+else if ( isset($_GET["jpegimage"]) )
+{
+  header('Content-Type: image/jpeg');
+  passthru('getimage');
+
+  //echo "data:image/jpg;base64," . base64_encode ( shell_exec('getimage') );
+
 }
 else
 {

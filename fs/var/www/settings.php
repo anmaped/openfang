@@ -1,12 +1,5 @@
 <?php
-session_start();
-if ( !isset($_SESSION['user']) and !isset($_SESSION['password']) )
-{
-session_destroy();
-unset ($_SESSION['user']);
-unset ($_SESSION['password']);
-header('location:login.php');
-}
+require 'session.php';
 ?>
 <?php
 $IP = shell_exec('echo -n $(ifconfig wlan0 |grep "inet addr" |awk \'{print $2}\' |awk -F: \'{print $2}\')');
