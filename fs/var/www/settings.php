@@ -50,12 +50,16 @@ $IP = shell_exec('echo -n $(ifconfig wlan0 |grep "inet addr" |awk \'{print $2}\'
       <a>Wireless
       </a>
     </li>
+    <li class="item" data-option="9">
+      <a>Terminal
+      </a>
+    </li>
   </ul>
 </div>
 <div class="box" id="tab_container">
   <div class="container_item is-active" data-item="1">
     <!-- Model -->
-    <div class='card status_card' id="hwmodel">
+    <div class='card ' id="hwmodel">
       <header class='card-header'>
         <p class='card-header-title'>Hardware
         </p>
@@ -94,7 +98,7 @@ $IP = shell_exec('echo -n $(ifconfig wlan0 |grep "inet addr" |awk \'{print $2}\'
       </div>
     </div>
     <!-- Date -->
-    <div class='card status_card'>
+    <div class='card '>
       <header class='card-header'>
         <p class='card-header-title'>System
         </p>
@@ -158,7 +162,7 @@ $IP = shell_exec('echo -n $(ifconfig wlan0 |grep "inet addr" |awk \'{print $2}\'
       </div>
     </div>
     <!-- HTTP Password -->
-    <div class='card status_card'>
+    <div class='card '>
       <header class='card-header'>
         <p class='card-header-title'>HTTP Password
         </p>
@@ -193,7 +197,7 @@ $IP = shell_exec('echo -n $(ifconfig wlan0 |grep "inet addr" |awk \'{print $2}\'
       </div>
     </div>
     <!-- Blue / Yellow LED -->
-    <div class='card status_card'>
+    <div class='card '>
       <header class='card-header'>
         <p class='card-header-title'>LED
         </p>
@@ -224,7 +228,7 @@ $IP = shell_exec('echo -n $(ifconfig wlan0 |grep "inet addr" |awk \'{print $2}\'
       </div>
     </div>
     <!-- Version -->
-    <div class='card status_card'>
+    <div class='card '>
       <header class='card-header'>
         <p class='card-header-title'>Version (last commit date from GitHub/autoupdate script)
         </p>
@@ -238,7 +242,7 @@ $IP = shell_exec('echo -n $(ifconfig wlan0 |grep "inet addr" |awk \'{print $2}\'
   </div>
   <div class="container_item" data-item="2">
     <!-- IR LED / Cut-->
-    <div class='card status_card'>
+    <div class='card '>
       <header class='card-header'>
         <p class='card-header-title'>IR
         </p>
@@ -269,7 +273,7 @@ $IP = shell_exec('echo -n $(ifconfig wlan0 |grep "inet addr" |awk \'{print $2}\'
       </div>
     </div>
     <!-- Auto Night Mode -->
-    <div class='card status_card'>
+    <div class='card '>
       <header class='card-header'>
         <p class='card-header-title'>Auto Night Mode
         </p>
@@ -326,7 +330,7 @@ $IP = shell_exec('echo -n $(ifconfig wlan0 |grep "inet addr" |awk \'{print $2}\'
 </div>
 </div>
 <!-- RTSP -->
-<div class='card status_card'>
+<div class='card '>
   <header class='card-header'>
     <p class='card-header-title'>RTSP
     </p>
@@ -357,7 +361,7 @@ $IP = shell_exec('echo -n $(ifconfig wlan0 |grep "inet addr" |awk \'{print $2}\'
   </div>
 </div>
 <!-- Video settings -->
-<div class='card status_card'>
+<div class='card '>
   <header class='card-header'>
     <p class='card-header-title'>Video Settings
     </p>
@@ -456,7 +460,7 @@ $IP = shell_exec('echo -n $(ifconfig wlan0 |grep "inet addr" |awk \'{print $2}\'
 </div>
 </div>
 <!-- H264 RTSP -->
-<div class='card status_card'>
+<div class='card '>
   <header class='card-header'>
     <p class='card-header-title'>Start H264 RTSP
     </p>
@@ -484,7 +488,7 @@ $IP = shell_exec('echo -n $(ifconfig wlan0 |grep "inet addr" |awk \'{print $2}\'
   </div>
 </div>
 <!-- MJPEG RTSP -->
-<div class='card status_card'>
+<div class='card '>
   <header class='card-header'>
     <p class='card-header-title'>Start MJPEG RTSP
     </p>
@@ -502,7 +506,7 @@ $IP = shell_exec('echo -n $(ifconfig wlan0 |grep "inet addr" |awk \'{print $2}\'
   </div>
 </div>
 <!-- Timelapse -->
-<div class='card status_card'>
+<div class='card '>
   <header class='card-header'>
     <p class='card-header-title'>Timelapse
     </p>
@@ -554,7 +558,7 @@ $IP = shell_exec('echo -n $(ifconfig wlan0 |grep "inet addr" |awk \'{print $2}\'
 </div>
 <div class="container_item" data-item="3">
   <!-- OSD -->
-  <div class='card status_card'>
+  <div class='card '>
     <header class='card-header'>
       <p class='card-header-title'>OSD Display
       </p>
@@ -724,7 +728,7 @@ $IP = shell_exec('echo -n $(ifconfig wlan0 |grep "inet addr" |awk \'{print $2}\'
 </div>
 </div>
 <!-- OSD Debug -->
-<div class='card status_card'>
+<div class='card '>
   <header class='card-header'>
     <p class='card-header-title'>Display debug info on OSD
     </p>
@@ -739,7 +743,7 @@ $IP = shell_exec('echo -n $(ifconfig wlan0 |grep "inet addr" |awk \'{print $2}\'
 </div>
 <div class="container_item" data-item="4">
   <!-- Audio Settings -->
-  <div class='card status_card'>
+  <div class='card '>
     <header class='card-header'>
       <p class='card-header-title'>Audio Settings
       </p>
@@ -844,7 +848,7 @@ $IP = shell_exec('echo -n $(ifconfig wlan0 |grep "inet addr" |awk \'{print $2}\'
 </div>
 </div>
 <!-- Audio / Image -->
-<div class='card status_card'>
+<div class='card '>
   <header class='card-header'>
     <p class='card-header-title'>Tests
     </p>
@@ -897,7 +901,7 @@ done
 </div>
 <div class="container_item" data-item="5">
   <!-- Motion Detection -->
-  <div class='card status_card'>
+  <div class='card '>
     <header class='card-header'>
       <p class='card-header-title'>Motion Detection
       </p>
@@ -1004,7 +1008,7 @@ done
     </div>
   </div>
   <!-- Motor -->
-  <div class='card status_card'>
+  <div class='card '>
     <header class='card-header'>
       <p class='card-header-title'>Motor
       </p>
@@ -1056,7 +1060,7 @@ done
 </div>
 <div class="container_item" data-item="6">
   <!-- System controls -->
-  <div class='card status_card'>
+  <div class='card '>
     <header class='card-header'>
       <p class='card-header-title'>Actions
       </p>
@@ -1067,7 +1071,7 @@ done
     </div>
   </div>
   <!-- Process List -->
-  <div class='card status_card'>
+  <div class='card '>
     <header class='card-header'>
       <p class='card-header-title'>Process List
       </p>
@@ -1079,7 +1083,7 @@ done
     </div>
   </div>
   <!-- Mount Points -->
-  <div class='card status_card'>
+  <div class='card '>
     <header class='card-header'>
       <p class='card-header-title'>Mount Points
       </p>
@@ -1091,7 +1095,7 @@ done
     </div>
   </div>
   <!-- Disk Status -->
-  <div class='card status_card'>
+  <div class='card '>
     <header class='card-header'>
       <p class='card-header-title'>Disk Status
       </p>
@@ -1107,7 +1111,7 @@ done
     </div>
   </div>
   <!-- Network Information -->
-  <div class='card status_card'>
+  <div class='card '>
     <header class='card-header'>
       <p class='card-header-title'>Network Information
       </p>
@@ -1130,7 +1134,7 @@ done
 </div>
 <div class="container_item" data-item="7">
   <!-- Change Theme -->
-  <div class='card status_card'>
+  <div class='card '>
     <header class='card-header'>
       <p class='card-header-title'>Select Theme
       </p>
@@ -1152,7 +1156,7 @@ done
 </div>
 <div class="container_item" data-item="8">
   <!-- Change Wireless Settings -->
-  <div class='card status_card' id="wrlmode">
+  <div class='card ' id="wrlmode">
     <header class='card-header'>
       <p class='card-header-title'>Wireless Mode
       </p>
@@ -1223,6 +1227,22 @@ done
 </div>
 </div>
 </div>
+
+<div class="container_item" data-item="9">
+  <!-- Terminal -->
+  <div class='card ' id="terminal">
+    <header class='card-header'>
+      <p class='card-header-title'>Terminal
+      </p>
+    </header>
+    <div class='card-content'>
+
+<iframe id = "wiki_frame" src="term/webconsole.php" width="100%" height="400px"></iframe>
+
+</div>
+</div>
+</div>
+
 </div>
 <script>
   function update_theme()
