@@ -23,7 +23,7 @@
 
 
                <p class="subtitle has-text-grey">openfang
-               <?php echo shell_exec('fw_nvram get fw_version'); ?></p>
+               <?php echo shell_exec('nvram get rtdev fw_version'); ?></p>
 
 
                <div class="box">

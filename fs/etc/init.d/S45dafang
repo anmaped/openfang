@@ -80,7 +80,7 @@ start | "")
 
 	CONFIGPATH=/etc
 
-	wmode=`fw_nvram get wmode`
+	wmode=`nvram get wapi wmode`
 	if [ "$wmode" == "STA" ]; then
 		## Sync the via NTP:
 		ntp_srv="$(cat $CONFIGPATH/ntp.conf)"

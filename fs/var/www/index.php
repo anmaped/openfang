@@ -2,7 +2,7 @@
 session_start();
 $user = $_POST['user'];
 $password = $_POST['password'];
-if ($user == "admin" && $password == "admin" )
+if ($user == "admin" && $password == exec('nvram get wapi adminpasswd') )
 {
 $_SESSION['user'] = $user;
 $_SESSION['password'] = $password;
@@ -266,7 +266,7 @@ header('location:login.php');
       </div>
     </nav>
     <section class="section" id="main">
-      <?php $model = exec('fw_nvram get model');
+      <?php $model = exec('nvram get rtdev model');
       if ($model == "") {
       echo "<p class=\"notification is-warning\" role=\"alert\" style=\"float: right; clear: right;\" id=\"newnotification\">You are using this device for the first time. Please configure it <a class=\"onpage\" data-target=\"settings.php\" href=\"javascript:hidenotification('#newnotification')\">here</a>.
         <button class=\"delete\" type=\"button\">Close
@@ -314,7 +314,7 @@ header('location:login.php');
               <strong>openfang
               </strong>
             </a> 
-            <?php echo shell_exec('fw_nvram get fw_version'); ?>
+            <?php echo shell_exec('nvram get rtdev fw_version'); ?>
           </p>
         </div>
       </div>

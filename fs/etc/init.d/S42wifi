@@ -52,7 +52,7 @@ wifi_sta_mode()
     wpa_supplicant -Dnl80211 -i$interface -c $WPA_SUPPLICANT_CONFIG_FILE -B
 	wpa_cli -i $interface -B -a /etc/init.d/wpa_event.sh
 
-	MODEL=`fw_nvram get model`
+	MODEL=`nvram get rtdev model`
 	hname=`echo $MODEL| sed "s/\./_/g"`
 	echo $hname
     if [ x"$wifi_ready" = x"ok" ]; then
@@ -74,13 +74,13 @@ wifi_sta_mode()
 
 get_ssid_passwd()
 {
-    key_mgmt=`fw_nvram get wkeymgmt`
+    key_mgmt=`nvram get wapi wkeymgmt`
     if [ "$key_mgmt" == "" ]; then
     passwd=""
     else
-    passwd=`fw_nvram get wpassword`
+    passwd=`nvram get wapi wpassword`
     fi
-    ssid=`fw_nvram get wssid`
+    ssid=`nvram get wapi wssid`
 
     echo $ssid
     #echo $passwd
@@ -117,14 +117,16 @@ EOF
 case "$1" in
   start)
 		echo "Initializing wlan driver...."
-		macstring=$(grep MAC </params/config/.product_config | cut -c16-27 | sed 's/\(..\)/\1:/g;s/:$//')
-		[ "$macstring" = "" ] && macstring=00:E0:4C:F7:B9:BD
+		macstring=$(nvram get wapi mac)
 
 		modprobe 8189es rtw_initmac="$macstring"
 		modprobe 8189fs rtw_initmac="$macstring"
+		
+		[ "$macstring" == "" ] && { nvram set wapi mac "$(cat /sys/class/net/wlan0/address)";
+		nvram commit; macstring=$(cat /sys/class/net/wlan0/address); }
 
 		mac=`echo ${macstring} | cut -d ':' -f 5`
-		mode=`fw_nvram get wmode`
+		mode=`nvram get wapi wmode`
     		if [ "$mode" == "" ]; then
     			wifi_ap_mode $mac
     		else

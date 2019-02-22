@@ -76,17 +76,17 @@ $IP = shell_exec('echo -n $(ifconfig wlan0 |grep "inet addr" |awk \'{print $2}\'
               <div class="control">
                 <div class="select">
                   <select name="hardware_model" id="hardware_model" onchange="this.form.submit()">
-                    <option value="T20L_M" <?php if ( exec('fw_nvram get model') == "T20L_M" ) echo "selected" ?> >T20L Xiaomi Mijia 2018
+                    <option value="T20L_M" <?php if ( exec('nvram get rtdev model') == "T20L_M" ) echo "selected" ?> >T20L Xiaomi Mijia 2018
                     </option>
-                    <option value="T20L_WC" <?php if ( exec('fw_nvram get model') == "T20L_WC" ) echo "selected" ?> >T20L Wyze cam v2
+                    <option value="T20L_WC" <?php if ( exec('nvram get rtdev model') == "T20L_WC" ) echo "selected" ?> >T20L Wyze cam v2
                     </option>
-                  <option value="T20_D" <?php if ( exec('fw_nvram get model') == "T20_D" ) echo "selected" ?> >T20 Xiaomi Dafang
+                  <option value="T20_D" <?php if ( exec('nvram get rtdev model') == "T20_D" ) echo "selected" ?> >T20 Xiaomi Dafang
                   </option>
-                  <option value="T20_WP" <?php if ( exec('fw_nvram get model') == "T20_WP" ) echo "selected" ?> >T20 Wyze pan
+                  <option value="T20_WP" <?php if ( exec('nvram get rtdev model') == "T20_WP" ) echo "selected" ?> >T20 Wyze pan
                   </option>
-                <option value="T20_DEV_MD" <?php if ( exec('fw_nvram get model') == "T20_DEV_MD" ) echo "selected" ?> >T20 Medlar Dev Board
+                <option value="T20_DEV_MD" <?php if ( exec('nvram get rtdev model') == "T20_DEV_MD" ) echo "selected" ?> >T20 Medlar Dev Board
                 </option>
-                <option value="T20_DEV_MN" <?php if ( exec('fw_nvram get model') == "T20_DEV_MN" ) echo "selected" ?> >T20 Mango Dev Board
+                <option value="T20_DEV_MN" <?php if ( exec('nvram get rtdev model') == "T20_DEV_MN" ) echo "selected" ?> >T20 Mango Dev Board
                 </option>
               </select>
           </div>
@@ -168,7 +168,7 @@ $IP = shell_exec('echo -n $(ifconfig wlan0 |grep "inet addr" |awk \'{print $2}\'
         </p>
       </header>
       <div class='card-content'>
-        <form id="passwordForm" action="cgi-bin/action.cgi?cmd=set_http_password" method="post">
+        <form id="passwordForm" action="controller/action.php" method="post">
           <div class="field is-horizontal">
             <div class="field-label is-normal">
               <label class="label">New Password
@@ -177,7 +177,7 @@ $IP = shell_exec('echo -n $(ifconfig wlan0 |grep "inet addr" |awk \'{print $2}\'
             <div class="field-body">
               <div class="field">
                 <div class="control">
-                  <input class="input" id="password" name="password" type="password" size="12" value="*****"/>
+                  <input class="input" id="password" name="password" type="password" size="12" value="<?php echo preg_replace( '/./', '*', exec('nvram get wapi adminpasswd') ); ?>"/>
                 </div>
               </div>
             </div>
@@ -1110,6 +1110,18 @@ done
       </button>
     </div>
   </div>
+  <!-- Memory Stats -->
+  <div class='card '>
+    <header class='card-header'>
+      <p class='card-header-title'>Memory Statistics
+      </p>
+    </header>
+    <div class='card-content'>
+      <pre>
+<?php echo shell_exec('free'); ?>
+</pre>
+    </div>
+  </div>
   <!-- Network Information -->
   <div class='card '>
     <header class='card-header'>
@@ -1174,13 +1186,13 @@ done
                 <div class="select">
                   <select name="wireless_mode" id="wireless_mode">
                     <option value="DEACT" 
-                            <?php echo shell_exec('if [ "$(fw_nvram get wmode)" == "DEACT" ]; then echo selected; fi'); ?>>Disabled
+                            <?php echo shell_exec('if [ "$(nvram get wapi wmode)" == "DEACT" ]; then echo selected; fi'); ?>>Disabled
                     </option>
                   <option value="AP" 
-                          <?php echo shell_exec('if [ "$(fw_nvram get wmode)" == "AP" ]; then echo selected; fi'); ?>>AP
+                          <?php echo shell_exec('if [ "$(nvram get wapi wmode)" == "AP" ]; then echo selected; fi'); ?>>AP
                   </option>
                 <option value="STA" 
-                        <?php echo shell_exec('if [ "$(fw_nvram get wmode)" == "STA" ]; then echo selected; fi'); ?>>STA
+                        <?php echo shell_exec('if [ "$(nvram get wapi wmode)" == "STA" ]; then echo selected; fi'); ?>>STA
                 </option>
               </select>
           </div>
@@ -1196,7 +1208,7 @@ done
     <div class="field-body">
       <div class="field">
         <div class="control">
-          <input class="input" id="wssid" name="wssid" type="text" size="15" value="<?php echo shell_exec('fw_nvram get wssid'); ?>"/>
+          <input class="input" id="wssid" name="wssid" type="text" size="15" value="<?php echo shell_exec('nvram get wapi wssid'); ?>"/>
         </div>
         <p class="help">May not include non alphanumeric characters
         </p>
@@ -1211,7 +1223,7 @@ done
     <div class="field-body">
       <div class="field">
         <div class="control">
-          <input class="input" id="wpassword" name="wpassword" type="password" size="15" value="<?php echo shell_exec('fw_nvram get wpassword'); ?>"/>
+          <input class="input" id="wpassword" name="wpassword" type="password" size="15" value="<?php echo shell_exec('nvram get wapi wpassword'); ?>"/>
         </div>
       </div>
     </div>

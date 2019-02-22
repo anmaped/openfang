@@ -10,7 +10,8 @@ DIR=_build
 [ -d $DIR ] || { printf '%s does not exist!\n' "$DIR"; mkdir $DIR; }
 
 date=$(date +"%Y-%m-%d %H:%M")
-ID="($(git rev-parse HEAD)) $date"
+#ID="($(git rev-parse HEAD)) $date"
+ID="$(git describe --tags)"
 SHORTID=$(git rev-parse --short HEAD)
 
 echo "$ID" > fs/opt/version

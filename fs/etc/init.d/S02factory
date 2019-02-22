@@ -1,0 +1,46 @@
+#!/bin/sh
+
+case "$1" in 
+	start)
+		section_names=$(nvram layout | sed -n '/name:/p' | awk -F' ' '{print $3}')
+		factory=$(nvram get rtdev factory >&2)
+		if [ $? != 0 ]; then
+			for sec in $section_names
+			do
+				echo "Clearing sec: $sec"
+				nvram clear $sec
+			done
+			nvram set rtdev factory 1
+			nvram set rtdev fw_version "$(cat /opt/version)"
+			nvram set wapi adminpasswd "admin"
+			nvram commit
+		else
+			 [ "$(nvram get rtdev fw_version)" != "$(cat /opt/version)" ] && nvram set rtde
+v fw_version "$(cat /opt/version)"
+
+			[ "$(nvram get rtdev model)" == "T20_D" ] && {
+				nvram set 2860 blue_led_pin 39;
+				nvram set 2860 yellow_led_pin 39;
+				nvram set 2860 ir_pin 49;
+			}
+
+			[ "$(nvram get rtdev model)" == "T20L_M" ] && {
+				nvram set 2860 blue_led_pin led_blue1;
+				nvram set 2860 yellow_led_pin led_yellow1;
+				nvram set 2860 ir_pin 49;
+			}
+		fi
+		;;
+	stop)
+		echo "do nothing"
+		;;
+	restart|reload)
+		"$0" stop
+		"$0" start
+		;;
+	*)
+		echo "Usage: $0 {start|stop|restart}"
+		exit 1
+esac
+
+exit $?
