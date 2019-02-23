@@ -40,24 +40,6 @@ start | "")
 		mount /dev/mmcblk0p5 /mnt/mmcblk0p5
 	}
 
-	# Try to find wpa_supplicant.conf in one of the available partitions
-	#PATH_TO_WPACONF=$(find /mnt -name "wpa_supplicant.conf")
-	#[ -z "$PATH_TO_WPACONF" ] || {
-	#	echo "Copying wpa_supplicant.conf ..."
-	#	cp $PATH_TO_WPACONF /etc
-	#}
-	#dos2unix /etc/wpa_supplicant.conf
-
-	# Start Network:
-	#MAC=$(grep MAC </params/config/.product_config | cut -c16-27 | sed 's/\(..\)/\1:/g;s/:$//')
-	#[ "$MAC" = "" ] && MAC=00:E0:4C:F7:B9:BD
-
-	#modprobe 8189es rtw_initmac="$MAC"
-	#modprobe 8189fs rtw_initmac="$MAC"
-
-	#wpa_supplicant -B -i wlan0 -c /etc/wpa_supplicant.conf -P /var/run/wpa_supplicant.pid
-	#udhcpc -i wlan0 -p /var/run/udhcpc.pid -s /etc/udhcpc.script -b -x hostname:"$(hostname)"
-
 	# Start Motor:
 	modprobe sample_motor
 
@@ -86,13 +68,6 @@ start | "")
 		ntp_srv="$(cat $CONFIGPATH/ntp.conf)"
 		timeout -t 30 sh -c "until ping -4 -c1 \"google.com\" &>/dev/null; do sleep 3; done" # wait for available connection
 		ntpd -p "$ntp_srv"
-	fi
-
-	## Create a certificate for the webserver
-	if [ ! -f $CONFIGPATH/ssl/lighttpd.pem ]; then
-		export OPENSSL_CONF=$CONFIGPATH/ssl/openssl.cnf
-		openssl req -new -x509 -keyout $CONFIGPATH/ssl/lighttpd.pem -out $CONFIGPATH/ssl/lighttpd.pem -days 365 -nodes -subj "/C=DE/ST=.../L=.../O=.../OU=.../CN=.../emailAddress=..."
-		chmod 400 $CONFIGPATH/ssl/lighttpd.pem
 	fi
 
 	# Disable motion:

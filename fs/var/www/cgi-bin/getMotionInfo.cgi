@@ -4,37 +4,37 @@ echo "Pragma: no-cache"
 echo "Cache-Control: max-age=0, no-store, no-cache"
 echo
 
-motion_indicator_color=`/system/sdcard/bin/setconf -g z 2>/dev/null`
+motion_indicator_color=`setconf -g z 2>/dev/null`
 if [ "${motion_indicator_color}X" == "X" ]
 then
     motion_indicator_color="0"
 fi
 
-motion_sensitivity=`/system/sdcard/bin/setconf -g m 2>/dev/null`
+motion_sensitivity=`setconf -g m 2>/dev/null`
 if [ "${motion_sensitivity}X" == "X" ]
 then
     motion_sensitivity="0"
 fi
 
-region_of_interest=`/system/sdcard/bin/setconf -g r 2>/dev/null`
+region_of_interest=`setconf -g r 2>/dev/null`
 if [ "${region_of_interest}X" == "X" ]
 then
     region_of_interest="0,0,0,0"
 fi
 
-motion_tracking=`/system/sdcard/bin/setconf -g t 2>/dev/null`
+motion_tracking=`setconf -g t 2>/dev/null`
 if [ "${motion_tracking}X" == "X" ]
 then
     motion_tracking=false
 fi
 
-motion_timeout=`/system/sdcard/bin/setconf -g u 2>/dev/null`
+motion_timeout=`setconf -g u 2>/dev/null`
 if [ "${motion_timeout}X" == "X" ]
 then
     motion_timeout=60
 fi
 
-process=`ps -wl| grep v4l2rtspserver-master | grep -v grep`
+process=`ps -wl| grep v4l2rtspserver-v0.0.8 | grep -v grep`
 w=`echo ${process}| awk -F '-W' '{print $2}' | awk '{print $1}'`
 if [ "${w}X" == "X" ]
 then

@@ -13,15 +13,24 @@ case "$1" in
 			nvram set rtdev factory 1
 			nvram set rtdev fw_version "$(cat /opt/version)"
 			nvram set wapi adminpasswd "admin"
+
+			# Create a SSL certificate
+			export OPENSSL_CONF=$CONFIGPATH/ssl/openssl.cnf
+			openssl req -new -x509 -keyout /etc/ssl/lighttpd.pem -out /etc/ssl/lighttpd.pem -days 365 -nodes -subj "/C=DE/ST=.../L=.../O=.../OU=.../CN=.../emailAddress=..."
+			chmod 400 $CONFIGPATH/ssl/lighttpd.pem
+
+			nvram set rtdev certificate "$(cat /etc/ssl/lighttpd.pem)"
+
 			nvram commit
 		else
-			 [ "$(nvram get rtdev fw_version)" != "$(cat /opt/version)" ] && nvram set rtde
+			[ "$(nvram get rtdev fw_version)" != "$(cat /opt/version)" ] && nvram set rtde
 v fw_version "$(cat /opt/version)"
 
 			[ "$(nvram get rtdev model)" == "T20_D" ] && {
 				nvram set 2860 blue_led_pin 39;
 				nvram set 2860 yellow_led_pin 39;
 				nvram set 2860 ir_pin 49;
+				nvram set rtdev motor "true";
 			}
 
 			[ "$(nvram get rtdev model)" == "T20L_M" ] && {
@@ -29,6 +38,17 @@ v fw_version "$(cat /opt/version)"
 				nvram set 2860 yellow_led_pin led_yellow1;
 				nvram set 2860 ir_pin 49;
 			}
+
+			nvram set rtdev motion_script_on "sh /opt/scripts/motion-script-on.sh"
+			nvram set rtdev motion_script_off "sh /opt/scripts/motion-script-off.sh"
+
+			[ "$(nvram get rtdev motor)" == "true" ] && {
+				nvram set rtdev motion_tracking_script "sh /opt/scripts/motion-track-script.sh"
+			}
+			
+			# restore the SSL certifcate
+			nvram get rtdev certificate > "/etc/ssl/lighttpd.pem"
+			chmod 400 /etc/ssl/lighttpd.pem
 		fi
 		;;
 	stop)

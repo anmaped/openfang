@@ -28,13 +28,10 @@ header('location:login.php');
     <link href="css/bulma-switch.1.0.1.min.css" rel="stylesheet">
     <link href="css/bulma-badge.1.0.1.min.css" rel="stylesheet">
     <link href="css/bulma-quickview.1.0.1.min.css" rel="stylesheet">
-    <!-- jQuery  -->
-    <script src="scripts/jquery-3.3.1.min.js" type="text/javascript">
-    </script>
-    <!-- For Config Motion -->
-    <script src="scripts/jquery.imgareaselect.pack.js" type="text/javascript">
-    </script>
-    <link href="css/imgareaselect-animated.css" rel="stylesheet">
+    <!-- For Motion Detection -->
+    <link rel="stylesheet" type="text/css" href="css/imgareaselect-default.css" />
+    <script type="text/javascript" src="scripts/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="scripts/jquery.imgareaselect.pack.js"></script>
     <!-- Icons -->
     <link href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" rel="stylesheet">
     <link href="css/notifications.css" rel="stylesheet">
@@ -276,6 +273,9 @@ header('location:login.php');
       <div class='box'>
         <div class="container" id="content">
           <img id="liveview" onerror="this.src='css/unable_load.png';" src="controller/action.php?jpegimage=1">
+<?php
+          if ( exec('nvram get rtdev motor') == "true" )
+          echo '
           <div id="dpad_container">
             <div id="dpad">
               <div class="dpad_button up">
@@ -302,7 +302,8 @@ header('location:login.php');
           </div>
           <div id="dpad_indicator">
             &hArr;
-          </div>
+          </div>';
+?>
         </div>
       </div>
     </section>

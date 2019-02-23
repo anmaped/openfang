@@ -4,10 +4,6 @@ require 'session.php';
 <?php
 $IP = shell_exec('echo -n $(ifconfig wlan0 |grep "inet addr" |awk \'{print $2}\' |awk -F: \'{print $2}\')');
 ?>
-<script src="scripts/tab.js" type="text/javascript">
-</script>
-<script src="scripts/motion.js" type="text/javascript">
-</script>
 <style id="custom_css">
   #tab_container .container_item {
     display: none;
@@ -912,7 +908,7 @@ done
         Select motion detection region.
       </p>
       <div id="motion_img_container" style="margin: 1em 0; position:relative;">
-        <img id="motion_picture" src="cgi-bin/currentpic.cgi" />
+        <img id="motion_picture" />
         <span id="region_disabled" class="has-text-danger is-size-1" style="display: none; position: absolute; top: 10%; left: 30%; padding: 0.25em 0.5em; background-color: rgba(20, 20, 20, 0.5); border-radius: 0.25em;">
           Region disabled
         </span>
@@ -982,6 +978,9 @@ done
               </div>
             </div>
           </div>
+<?php
+          if ( exec('nvram get rtdev motor') == "true" )
+          echo '
           <div class="field">
             <div class="control">
               <label class="checkbox">
@@ -997,7 +996,8 @@ done
             </div>
             <p class="help">Restore camera position after x seconds, -1 to deactivate
             </p>
-          </div>
+          </div>';
+?>
           <div class="field">
             <div class="control">
               <input id="configMotionSubmit" class="button is-primary" type="submit" value="Configure motion" />
@@ -1007,19 +1007,22 @@ done
       </div>
     </div>
   </div>
+<?php
+  if ( exec('nvram get rtdev motor') == "true" )
+  echo '
   <!-- Motor -->
-  <div class='card '>
-    <header class='card-header'>
-      <p class='card-header-title'>Motor
+  <div class="card">
+    <header class="card-header">
+      <p class="card-header-title">Motor
       </p>
     </header>
-    <div class='card-content'>
+    <div class="card-content">
       <table class="motor_control">
         <tr>
           <td>
           </td>
           <td>
-            <button class="button is-link" onclick="call('cgi-bin/action.cgi?cmd=motor_up&val='+document.getElementById('val').value)">&uarr; Up
+            <button class="button is-link" onclick="call(\'cgi-bin/action.cgi?cmd=motor_up&val=\'+document.getElementById(\'val\').value)">&uarr; Up
             </button>
           </td>
           <td>
@@ -1027,14 +1030,14 @@ done
         </tr>
         <tr>
           <td>
-            <button class="button is-link" onclick="call('cgi-bin/action.cgi?cmd=motor_left&val='+document.getElementById('val').value)">&larr; Left
+            <button class="button is-link" onclick="call(\'cgi-bin/action.cgi?cmd=motor_left&val=\'+document.getElementById(\'val\').value)">&larr; Left
             </button>
           </td>
           <td>
             <input class="input has-text-centered" type="text" id="val" name="val" value="100">
           </td>
           <td>
-            <button class="button is-link" onclick="call('cgi-bin/action.cgi?cmd=motor_right&val='+document.getElementById('val').value)">Right &rarr;
+            <button class="button is-link" onclick="call(\'cgi-bin/action.cgi?cmd=motor_right&val=\'+document.getElementById(\'val\').value)">Right &rarr;
             </button>
           </td>
         </tr>
@@ -1042,7 +1045,7 @@ done
           <td>
           </td>
           <td>
-            <button class="button is-link" onclick="call('cgi-bin/action.cgi?cmd=motor_down&val='+document.getElementById('val').value)">&darr; Down
+            <button class="button is-link" onclick="call(\'cgi-bin/action.cgi?cmd=motor_down&val=\'+document.getElementById(\'val\').value)">&darr; Down
             </button>
           </td>
           <td>
@@ -1050,13 +1053,14 @@ done
         </tr>
       </table>
       <div class="buttons">
-        <button class="button is-warning" onclick="call('cgi-bin/action.cgi?cmd=motor_vcalibrate')">Calibrate Vertical
+        <button class="button is-warning" onclick="call(\'cgi-bin/action.cgi?cmd=motor_vcalibrate\')">Calibrate Vertical
         </button>
-        <button class="button is-warning" onclick="call('cgi-bin/action.cgi?cmd=motor_hcalibrate')">Calibrate Horizontal
+        <button class="button is-warning" onclick="call(\'cgi-bin/action.cgi?cmd=motor_hcalibrate\')">Calibrate Horizontal
         </button>
       </div>
     </div>
-  </div>
+  </div>';
+?>
 </div>
 <div class="container_item" data-item="6">
   <!-- System controls -->
@@ -1291,6 +1295,10 @@ done
     xhr.open('GET', url, true);
     xhr.send();
   }
+</script>
+<script src="scripts/tab.js" type="text/javascript">
+</script>
+<script src="scripts/motion.js" type="text/javascript">
 </script>
 <script src="scripts/status.cgi.js" type="text/javascript">
 </script>
