@@ -3,15 +3,8 @@
 case "$1" in
 start | "")
 
-	# Set Global Environment
-	export PATH=/bin:/sbin:/usr/bin:/usr/sbin
-	export PATH=$PATH:/opt/bin:/opt/sbin
-
 	# update module dependencies
 	depmod
-
-	# Enable network loopback
-	#ifconfig lo up
 
 	# Set the GPIO PC13 to high, make the USB Disk usable
 	echo 77 >/sys/class/gpio/export
