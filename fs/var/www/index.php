@@ -28,6 +28,8 @@ header('location:login.php');
     <link href="css/bulma-switch.1.0.1.min.css" rel="stylesheet">
     <link href="css/bulma-badge.1.0.1.min.css" rel="stylesheet">
     <link href="css/bulma-quickview.1.0.1.min.css" rel="stylesheet">
+    <link href="css/bulma-pageloader.min.css" rel="stylesheet">
+
     <!-- For Motion Detection -->
     <link rel="stylesheet" type="text/css" href="css/imgareaselect-default.css" />
     <script type="text/javascript" src="scripts/jquery-3.3.1.min.js"></script>
@@ -187,7 +189,7 @@ header('location:login.php');
                 </a> 
                 <a class="navbar-item onpage" data-target="update.php" href="javascript:%20void(0)" id="update">FW Update
                 </a> 
-                <a class="navbar-item prompt" data-message="Are you sure you wish to reboot?" data-target="cgi-bin/action.cgi?cmd=reboot" href="javascript:%20void(0)">Reboot
+                <a class="navbar-item prompt" data-message="Are you sure you wish to reboot?" data-target="reboot.php" href="javascript:%20void(0)">Reboot
                 </a>
               </div>
             </div>

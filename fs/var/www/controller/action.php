@@ -5,9 +5,13 @@ require '../session.php';
 
 if( isset($_POST["hardware_model"]) ) {
 
-  exec('nvram set rtdev model ' . $_POST["hardware_model"] );
-  exec('nvram commit');
-  echo "success: " . $_POST["hardware_model"];
+  // set settings based on the selected model
+  $v = exec('setmodel ' . $_POST["hardware_model"]);
+
+  if ($v == "ok")
+    echo "success: " . $_POST["hardware_model"];
+  else
+    echo "nosuccess: " . $_POST["hardware_model"];
 
 }
 else if ( isset($_POST["wireless_mode"]) && isset($_POST["wssid"]) && isset($_POST["wpassword"]) )

@@ -1,0 +1,39 @@
+#!/bin/sh
+
+model=$1
+
+# console=ttyS1,115200n8 mem=40M@0x0 ispmem=8M@0x2800000 rmem=16M@0x3000000 init=/linuxrc root=/dev/mmcblk0p1 rootwait rootfstype=ext3 rw
+
+nvram set rtdev model "$model"
+
+nvram set rtdev motion_script_on "sh /opt/scripts/motion-script-on.sh"
+nvram set rtdev motion_script_off "sh /opt/scripts/motion-script-off.sh"
+
+[ "$(nvram get rtdev motor)" == "true" ] && {
+	nvram set rtdev motion_tracking_script "sh /opt/scripts/motion-track-script.sh"
+}
+
+# mtdparts=jz_sfc:256k(boot),2048k(kernel),3392k(root),640k(driver),4736k(appfs),2048k(backupk),640k(backupd),2048k(backupa),256k(config),256k(para),-(flag)
+( [ "$model" == "T20_D" ] || [ "$model" == "T20_WP" ] ) && {
+	nvram set 2860 blue_led_pin led_blue;
+	nvram set 2860 yellow_led_pin led_yellow;
+	nvram set 2860 ir_pin 49;
+	nvram set rtdev motor "true";
+	cp -f /uEnv_128.txt /uEnv.txt;
+	#check if mtd partitions are right for this model
+	[ "$(cat /proc/mtd | grep 'mtd8: 00040000 00008000 "config"')" != "" ] && { nvram commit; echo "ok"; exit 0; }
+}
+
+# mtdparts=jz_sfc:256k(boot),2560k(kernel),7104k(rootfs),6336k(data),64k(config),64k(factory),-(flag)
+( [ "$model" == "T20L_M" ] || [ "$model" == "T20L_WC" ] ) && {
+	nvram set 2860 blue_led_pin led_blue1;
+	nvram set 2860 yellow_led_pin led_yellow1;
+	nvram set 2860 ir_pin 49;
+	nvram set rtdev motor "false";
+	cp -f /uEnv_64.txt /uEnv.txt;
+	#check if mtd partitions are right for this model
+	[ "$(cat /proc/mtd | grep 'mtd4: 00010000 00008000 "config"')" != "" ] && { nvram commit; echo "ok"; exit 0; }
+}
+
+echo "nok"
+exit 10

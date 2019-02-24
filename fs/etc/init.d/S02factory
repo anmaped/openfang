@@ -21,32 +21,10 @@ case "$1" in
 
 			nvram set rtdev certificate "$(cat /etc/ssl/lighttpd.pem)"
 
-			nvram commit
+			#nvram commit
 		else
 			[ "$(nvram get rtdev fw_version)" != "$(cat /opt/version)" ] && nvram set rtde
 v fw_version "$(cat /opt/version)"
-
-			[ "$(nvram get rtdev model)" == "T20_D" ] && {
-				nvram set 2860 blue_led_pin 39;
-				nvram set 2860 yellow_led_pin 39;
-				nvram set 2860 ir_pin 49;
-				nvram set rtdev motor "true";
-				cp -f /uEnv_128.txt /uEnv.txt
-			}
-
-			[ "$(nvram get rtdev model)" == "T20L_M" ] && {
-				nvram set 2860 blue_led_pin led_blue1;
-				nvram set 2860 yellow_led_pin led_yellow1;
-				nvram set 2860 ir_pin 49;
-				cp -f /uEnv_64.txt /uEnv.txt
-			}
-
-			nvram set rtdev motion_script_on "sh /opt/scripts/motion-script-on.sh"
-			nvram set rtdev motion_script_off "sh /opt/scripts/motion-script-off.sh"
-
-			[ "$(nvram get rtdev motor)" == "true" ] && {
-				nvram set rtdev motion_tracking_script "sh /opt/scripts/motion-track-script.sh"
-			}
 			
 			# restore the SSL certifcate
 			nvram get rtdev certificate > "/etc/ssl/lighttpd.pem"

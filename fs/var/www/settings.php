@@ -72,6 +72,8 @@ $IP = shell_exec('echo -n $(ifconfig wlan0 |grep "inet addr" |awk \'{print $2}\'
               <div class="control">
                 <div class="select">
                   <select name="hardware_model" id="hardware_model" onchange="this.form.submit()">
+                    <option value="Unknown" >Unknown
+                    </option>
                     <option value="T20L_M" <?php if ( exec('nvram get rtdev model') == "T20L_M" ) echo "selected" ?> >T20L Xiaomi Mijia 2018
                     </option>
                     <option value="T20L_WC" <?php if ( exec('nvram get rtdev model') == "T20L_WC" ) echo "selected" ?> >T20L Wyze cam v2
@@ -1285,7 +1287,10 @@ done
       data:$(id).serialize(),
       success:function(data){
         console.log(data);
-        $(id).prepend("<p class=\"notification is-success\" role=\"alert\" data-close=\"self\" style=\"float: right; clear: right;\">Settings have been applied successfully.</p>");
+        if (data.indexOf("success") == 0)
+          $(id).prepend("<p class=\"notification is-success\" role=\"alert\" data-close=\"self\" style=\"float: right; clear: right;\">Settings have been applied successfully.</p>");
+        else
+          $(id).prepend("<p class=\"notification is-danger\" role=\"alert\" data-close=\"self\" style=\"float: right; clear: right;\">Settings have NOT been applied successfully.</p>");
       }
     }
           );
