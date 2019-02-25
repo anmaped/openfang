@@ -88,6 +88,12 @@ $IP = shell_exec('echo -n $(ifconfig wlan0 |grep "inet addr" |awk \'{print $2}\'
                 </option>
               </select>
           </div>
+<?php     if ( exec('nvram get rtdev model') == "" )
+          echo '<p class="help is-danger">The model is not recognized!!! Please select it here before proceed.
+          </p>';
+?>
+          <p class="help is-warning" id="mtdpartitionswarning" hidden>The MTD partition table does not corresponds to the selected model. Please be sure that you have selected the right model and reboot the device <a href="reboot.php">here</a>.
+          </p>
         </div>
         </div>
     </div>
@@ -1288,9 +1294,15 @@ done
       success:function(data){
         console.log(data);
         if (data.indexOf("success") == 0)
-          $(id).prepend("<p class=\"notification is-success\" role=\"alert\" data-close=\"self\" style=\"float: right; clear: right;\">Settings have been applied successfully.</p>");
+        {
+          $(id).attr('data-state', 'success');
+          $(id).prepend("<p class=\"notification is-success\" role=\"alert\" data-close=\"self\" style=\"float: right; clear: right; position:relative; z-index:1000;\">Settings have been applied successfully.</p>");
+        }
         else
-          $(id).prepend("<p class=\"notification is-danger\" role=\"alert\" data-close=\"self\" style=\"float: right; clear: right;\">Settings have NOT been applied successfully.</p>");
+        {
+          $(id).attr('data-state', 'fail');
+          $(id).prepend('<p class="notification is-danger" role="alert" style="float: right; clear: right; position:relative; z-index:1000;">Settings have NOT been applied successfully.<button class="delete" type="button">Close</button></p>');
+        }
       }
     }
           );
@@ -1300,6 +1312,27 @@ done
     xhr.open('GET', url, true);
     xhr.send();
   }
+
+$("#mtdpartitionswarning").hide();
+var targetNode = document.getElementById('hwForm');
+var config = { attributes: true };
+var callback = function(mutationsList) {
+  for (var mutation of mutationsList) {
+    if (mutation.type == 'attributes') {
+      console.log('The ' + mutation.attributeName + ' attribute was modified.');
+      if ($('#hwForm').attr('data-state') == "fail") {
+        console.log("#hwform failed.");
+        $('#mtdpartitionswarning').show();
+      } else {
+        console.log("#hwform succeeded.");
+        $('#mtdpartitionswarning').hide();
+      }
+    }
+  }
+};
+var observer = new MutationObserver(callback);
+observer.observe(targetNode, config);
+
 </script>
 <script src="scripts/tab.js" type="text/javascript">
 </script>

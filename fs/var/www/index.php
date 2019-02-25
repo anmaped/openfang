@@ -145,6 +145,18 @@ header('location:login.php');
       #content:hover #dpad_indicator {
         display: none;
       }
+      .notification {
+        animation-name: fadein;
+        animation-duration: 1s;
+      }
+      @keyframes fadein {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
     </style>
   </head>
   <body>
@@ -341,7 +353,7 @@ header('location:login.php');
     <script src="scripts/notifications.js">
     </script> 
     <script>
-      var notifications = new Notifications();
+      var notifications = new Notifications(".notification", {animationInName: "fadein"});
       notifications.init();
 
       function hidenotification(id) {

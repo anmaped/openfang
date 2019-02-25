@@ -127,7 +127,7 @@ case "$1" in
 
 		mac=`echo ${macstring} | cut -d ':' -f 5`
 		mode=`nvram get wapi wmode`
-    		if [ "$mode" == "" ]; then
+    		if [ "$mode" == "" ] || [ "$mode" == "AP" ]; then
     			wifi_ap_mode $mac
     		else
     			wifi_sta_mode $mac
