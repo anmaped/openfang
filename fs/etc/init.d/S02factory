@@ -23,8 +23,7 @@ case "$1" in
 
 			#nvram commit
 		else
-			[ "$(nvram get rtdev fw_version)" != "$(cat /opt/version)" ] && nvram set rtde
-v fw_version "$(cat /opt/version)"
+			[ "$(nvram get rtdev fw_version)" != "$(cat /opt/version)" ] && nvram set rtdev fw_version "$(cat /opt/version)"
 			
 			# restore the SSL certifcate
 			nvram get rtdev certificate > "/etc/ssl/lighttpd.pem"
