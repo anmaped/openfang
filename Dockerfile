@@ -5,18 +5,14 @@ RUN \
   apt install -y \
   build-essential \
   git \
-  gcc-mips-linux-gnu \
   autoconf \
-  libtool \
   cmake \
   python \
   unzip \
   cpio \
   wget \
-  nano \
+  vim \
   locales \
-  gawk \
-  libgtk2.0-dev \
   lzop \
   bc
 
