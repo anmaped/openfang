@@ -1,19 +1,19 @@
 #!/bin/sh
 
+. /opt/scripts/common_functions.sh
+
 case "$1" in
 start | "")
 
 	# update module dependencies
 	depmod
 
-	# Set the GPIO PC13 to high, make the USB Disk usable
-	echo 77 >/sys/class/gpio/export
-	echo out >/sys/class/gpio/gpio77/direction
-	echo 0 >/sys/class/gpio/gpio77/active_low
-	echo 1 >/sys/class/gpio/gpio77/value
+	# Set the GPIO PC13 (77) to high to enable the USB power
+	USB_EN_GPIO=$(nvram get 2860 usb_en_pin)
+	[ "$USB_EN_GPIO" != ""  ] && init_gpio "$USB_EN_GPIO" "out"
 
 	# Mount params partition
-	mount -t jffs2 /dev/mtdblock9 /params
+	# mount -t jffs2 /dev/mtdblock9 /params
 
 	# Detect other partitions available in the microSD
 	[ -b "/dev/mmcblk0p2" ] && {
@@ -53,25 +53,23 @@ start | "")
 
 	# Start User Applications:
 
-	CONFIGPATH=/etc
-
-	wmode=`nvram get wapi wmode`
-	if [ "$wmode" == "STA" ]; then
+	wmode=$(nvram get wapi wmode)
+	if [ "$wmode" = "STA" ]; then
 		## Sync the via NTP:
-		ntp_srv="$(cat $CONFIGPATH/ntp.conf)"
+		ntp_srv="$(cat /etc/ntp.conf)"
 		timeout -t 30 sh -c "until ping -4 -c1 \"google.com\" &>/dev/null; do sleep 3; done" # wait for available connection
 		ntpd -p "$ntp_srv"
 	fi
 
 	# Disable motion:
-	setconf -k m -v -1
+	# setconf -k m -v -1
 
 	# Detect maximum sensor resolution (mem=87M@0x0 ispmem=9M@0x5700000 rmem=32M@0x6000000)
 	RMEM=$(cat /uEnv.txt | grep -o 'rmem=[^@]*' | cut -c 6- -)
 	ISPMEM=$(cat /uEnv.txt | grep -o 'ispmem=[^@]*' | cut -c 8- -)
 
 	# Start RTSP-Server:
-	if [ $RMEM == "32M" ] && [ $ISPMEM == "9M" ]; then
+	if [ "$RMEM" = "32M" ] && [ "$ISPMEM" = "9M" ]; then
                 [ "$sensor" = "jxf22"  ] && v4l2rtspserver-v0.0.8 -W 1920 -H 1080 -A -N jxf22 -D 64 &
                 [ "$sensor" = "jxf23"  ] && v4l2rtspserver-v0.0.8 -W 1920 -H 1080 -A -N jxf23 -D 64 &
 		[ "$sensor" = "ps5250" ] && v4l2rtspserver-v0.0.8 -W 1920 -H 1080 -A -N ps5250 -D 72 &
@@ -81,14 +79,10 @@ start | "")
 		[ "$sensor" = "ps5250" ] && v4l2rtspserver-v0.0.8 -W 1280 -H 960 -A -N ps5250 -D 72 &
 	fi
 
-	# enable gpio 25 26 49
-	echo 25 >/sys/class/gpio/export
-	echo 26 >/sys/class/gpio/export
-	echo 49 >/sys/class/gpio/export
-	echo out >/sys/class/gpio/gpio25/direction
-	echo out >/sys/class/gpio/gpio26/direction
-	echo out >/sys/class/gpio/gpio49/direction
-	echo 1 >/sys/class/gpio/gpio49/active_low
+	# enable ir-filter and ir-led gpio
+	init_gpio "$(nvram get 2860 ir_filter_pin1)" "out"
+	init_gpio "$(nvram get 2860 ir_filter_pin2)" "out"
+	init_gpio "$(nvram get 2860 ir_pin)" "out"
 
 	autonight -D /dev/jz_adc_aux_0 -d 1 -O 600 -F 650 &
 
