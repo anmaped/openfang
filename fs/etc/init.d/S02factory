@@ -15,9 +15,9 @@ case "$1" in
 			nvram set wapi adminpasswd "admin"
 
 			# Create a SSL certificate
-			export OPENSSL_CONF=$CONFIGPATH/ssl/openssl.cnf
+			export OPENSSL_CONF=/etc/ssl/openssl.cnf
 			openssl req -new -x509 -keyout /etc/ssl/lighttpd.pem -out /etc/ssl/lighttpd.pem -days 365 -nodes -subj "/C=DE/ST=.../L=.../O=.../OU=.../CN=.../emailAddress=..."
-			chmod 400 $CONFIGPATH/ssl/lighttpd.pem
+			chmod 400 /etc/ssl/lighttpd.pem
 
 			nvram set rtdev certificate "$(cat /etc/ssl/lighttpd.pem)"
 
