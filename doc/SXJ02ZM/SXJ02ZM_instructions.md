@@ -18,7 +18,7 @@ You will need:
 ## 1. Case disassembly
 
 - Remove the back of the camera, starting from the botton.
-<img src="/doc/SXJ02ZM/img/opencase.jpg" width="600">
+<img src="/doc/SXJ02ZM/img/opencase.jpg" width="300">
 
 - After the back has been losen, carefully remove the speaker/mic connector before removing the back.
 <img src="/doc/SXJ02ZM/img/speakercable.jpg" width="300">
@@ -35,21 +35,21 @@ You will need:
 
 ### Desoldering
 - Desolder the VCC leg (Leg 8) of the SOP8 chip.
-<img src="/doc/SXJ02ZM/img/W25Q128JVSQ.jpg" width="600">
+<img src="/doc/SXJ02ZM/img/W25Q128JVSQ.jpg" width="300">
 <img src="/doc/SXJ02ZM/img/desolderedleg.jpg" width="300">
 
 - Put a piece of plastic foil between the desoldered leg and the PCB. We do this to avoid powering-up the whole PCB through the chip+programmer, as the chip would net be flashable like this.
-<img src="/doc/SXJ02ZM/img/foilundersop.jpg" width="600">
+<img src="/doc/SXJ02ZM/img/foilundersop.jpg" width="300">
 
 
 ### Conecting the SOP to the programmer
 - Put the programmer clip tight on the SOP, having in mind that the red cable is always for PIN1. Make sure it sits tight on the SOP.
-<img src="/doc/SXJ02ZM/img/clamponsop.jpg" width="600">
+<img src="/doc/SXJ02ZM/img/clamponsop.jpg" width="300">
 
-<img src="/doc/SXJ02ZM/img/clamponsop2.jpg" width="400">
+<img src="/doc/SXJ02ZM/img/clamponsop2.jpg" width="300">
 
 - Connect the clip cable to the programmer as seen in here.
-<img src="/doc/SXJ02ZM/img/c341a_position.jpg" width="600">
+<img src="/doc/SXJ02ZM/img/c341a_position.jpg" width="300">
 
 - Plug in the programer to the computer and start the flashing process.
 
@@ -67,13 +67,13 @@ You will need:
 
 ### Flashing under Windows
 - Download the "CH341A programm v1.29.zip" from the tools directory, extract it somewhere and run it.
-- you will get an error message, which you can ignore: <img src="/doc/SXJ02ZM/img/windows_flasher_1.jpg" width="300">
-- If everything is connected correctly, you will be prompted to select your flash memory. Select any of the two. <img src="/doc/SXJ02ZM/img/windows_flasher_2.jpg" width="300">
-- click on erase at the top icons and wait for the process to finish. <img src="/doc/SXJ02ZM/img/windows_flasher_3.jpg" width="300">
-- If the erasing has been completed, you will be prompted with a message. <img src="/doc/SXJ02ZM/img/windows_flasher_4.jpg" width="300">
-- click on read at the top icons and make sure that everything is set to FF. <img src="/doc/SXJ02ZM/img/windows_flasher_5.jpg" width="300">
-- Click on File -> open and select the u-boot-lzo-with-spl_t20_64M.bin file. Do not select the 128m one. <img src="/doc/SXJ02ZM/img/windows_flasher_6.jpg" width="300">
-- After the flashing, click on read at the top icons and see is something was written to the flash. <img src="/doc/SXJ02ZM/img/windows_flasher_7.jpg" width="300">
+- you will get an error message, which you can ignore: <img src="/doc/SXJ02ZM/img/windows_flasher_1.png" width="300">
+- If everything is connected correctly, you will be prompted to select your flash memory. Select any of the two. <img src="/doc/SXJ02ZM/img/windows_flasher_2.png" width="300">
+- click on erase at the top icons and wait for the process to finish. <img src="/doc/SXJ02ZM/img/windows_flasher_3.png" width="300">
+- If the erasing has been completed, you will be prompted with a message. <img src="/doc/SXJ02ZM/img/windows_flasher_4.png" width="300">
+- click on read at the top icons and make sure that everything is set to FF. <img src="/doc/SXJ02ZM/img/windows_flasher_5.png" width="300">
+- Click on File -> open and select the u-boot-lzo-with-spl_t20_64M.bin file. Do not select the 128m one. <img src="/doc/SXJ02ZM/img/windows_flasher_6.png" width="300">
+- After the flashing, click on read at the top icons and see is something was written to the flash. <img src="/doc/SXJ02ZM/img/windows_flasher_7.png" width="300">
 
 
 
