@@ -3,7 +3,7 @@
 
 The Xiaomi Mijia 1080p model v3 is the snow-white model which was released in 2018, and has a T20L SOC with 64MB RAM
 Unfortunately there is no known Firmware-exploit which allows us to easily edit the firmware to gain ssh-access to the camera.
-In order to get OPenFang on the camera, we need to program a custom bootloader to the camera by using a ch341a programmer.
+In order to get OpenFang on the camera, we need to program a custom bootloader to the camera by using a ch341a programmer.
 
 
 
@@ -28,7 +28,7 @@ You will need:
 
 
 
-- Unscrew the 3 black screws to separate the board from the front cover.
+- Unscrew the 3 black screws to separate the board from the front cover. Leave the middle screws in there!
 <img src="/doc/SXJ02ZM/img/screws.jpg" width="300">
 
 
@@ -76,13 +76,13 @@ You will need:
 
 
 
-### Flashing under MacOS / Linux
+#### Flashing under MacOS / Linux
 - Use ch341prog to first erase the SOP: ``` ./ch341prog -e ```
 - Use ch341prog to write the custom bootloader to the SOP: ``` ./ch341prog -w u-boot-lzo-with-spl_t20_64M.bin ```  Caution: flash the 64M binary file!
 
 
 
-### Flashing under Windows
+#### Flashing under Windows
 - Download the "CH341A programm v1.29.zip" from the tools directory, extract it somewhere and run it.
 - you will get an error message, which you can ignore: 
 <img src="/doc/SXJ02ZM/img/windows_flasher_1.png" width="300">
@@ -169,7 +169,7 @@ When you connect to the OpenFang access point, you can open a browser and call h
 
 
 ### Create a certificate and boot the webserice in case of problems.
-- Log on a SSh shell to 192.168.14.1 with username admin / admin.
+- Log on a SSH shell to 192.168.14.1 with username admin / admin.
 - On the shell type ``` su ``` press return.
 - Afterwards type ``` openssl req -new -x509 -keyout /etc/ssl/lighttpd.pem -out /etc/ssl/lighttpd.pem -days 365 -nodes -subj "/C=DE/ST=.../L=.../O=.../OU=.../CN=.../emailAddress=..." ``` press return.
 - Type ``` cd /etc/init.d/ ``` press return.
@@ -181,7 +181,7 @@ When you connect to the OpenFang access point, you can open a browser and call h
 ### Resize the rootfs image
 The rootfs image is smaller than the available partition where we have written the rootfs directories. To be able to use all the available space we allocated for the partition, we have to resize the filesystem.
 
-- Log on a SSh shell to 192.168.14.1 with username admin / admin.
+- Log on a SSH shell to 192.168.14.1 with username admin / admin.
 - On the shell type ``` su ``` press return.
 - Type ``` resize2fs /dev/mmcblk0p1 ``` press return.
 - It will take a short while. Note that the time it takes depends of the size of the partition you are resizing.
