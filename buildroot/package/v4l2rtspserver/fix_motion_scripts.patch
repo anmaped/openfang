@@ -1,0 +1,40 @@
+--- a/src/ImpEncoder.cpp	2019-02-23 19:53:55.627118533 +0100
++++ b/src/ImpEncoder.cpp	2019-02-23 19:52:13.148886000 +0100
+@@ -58,9 +58,9 @@
+ bool ismotionActivated = true;
+ char fontMono[256] = {0};
+ char fontSans[256] = {0};
+-char detectionScriptOn[256] = {0};
+-char detectionScriptOff[256]= {0};
+-char detectionTracking[256]= {0};
++char detectionScriptOn[256] = "$(nvram get rtdev motion_script_on)";
++char detectionScriptOff[256]= "$(nvram get rtdev motion_script_off)";
++char detectionTracking[256]= "$(nvram get rtdev motion_tracking_script)";
+ 
+ 
+ 
+@@ -398,8 +398,8 @@
+ 
+ static void exec_command(const char *command, char param[4][2])
+  {
+-     if (file_exist(command))
+-     {
++     /*if (file_exist(command))
++     {*/
+       if (param == NULL) {
+          LOG_S(INFO) << "Will execute command " << command;
+          int retVal =  system(command);
+@@ -412,11 +412,11 @@
+          int retVal =  system(exe);
+          LOG_S(INFO) << "Execute " << exe << " returned:" << retVal;
+       }
+-     }
++     /*}
+      else
+      {
+          LOG_S(INFO) << "command " << command << " does not exist\n";
+-     }
++     }*/
+ 
+  }
+ 

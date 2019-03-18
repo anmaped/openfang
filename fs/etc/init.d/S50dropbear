@@ -11,6 +11,7 @@ start() {
 
 	echo -n "Starting dropbear sshd: "
 	umask 077
+	[ -L "/etc/dropbear" ] && { rm -f /etc/dropbear; mkdir /etc/dropbear; }
 	start-stop-daemon -S -q -p /var/run/dropbear.pid \
 		--exec /usr/sbin/dropbear -- $DROPBEAR_ARGS
 	[ $? == 0 ] && echo "OK" || echo "FAIL"

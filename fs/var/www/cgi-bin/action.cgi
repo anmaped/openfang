@@ -85,29 +85,27 @@ if [ -n "$F_cmd" ]; then
     ;;
 
     blue_led_on)
-      setgpio 38 1
-      setgpio 39 0
+      blue_led on
     ;;
 
     blue_led_off)
-      setgpio 39 1
+      blue_led off
     ;;
 
     yellow_led_on)
-      setgpio 38 0
-      setgpio 39 1
+      yellow_led on
     ;;
 
     yellow_led_off)
-      setgpio 38 1
+      yellow_led off
     ;;
 
     ir_led_on)
-      setgpio 49 0
+      ir_led on
     ;;
 
     ir_led_off)
-      setgpio 49 1
+      ir_led off
     ;;
 
     ir_cut_on)

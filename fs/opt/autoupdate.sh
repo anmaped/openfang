@@ -8,14 +8,26 @@ ID=
 
 WORKING_DIR=/mnt/mmcblk0p2
 
+create_swap()
+{
+	dd if=/dev/zero of="$1" bs=1024 count=262144 # 256Mb
+
+	chown root:root "$1"
+	chmod 0600 "$1"
+
+	mkswap "$1" # create swap file system
+
+	swapon "$1" # enable swap
+}
+
 update() {
 
 	echo "Update is starting..."
 
 	# check if there is enough memory available
-	[ $(free | head -3 | tail -1 | awk '{printf $4}') -gt 64000 ] || { echo "No free ram available! Try to disable HD mode first..."; exit 1; }
+	[ $(free | head -3 | tail -1 | awk '{printf $4}') -gt 64000 ] || { echo "No free ram available! Creating swap file..."; create_swap "$WORKING_DIR/swap" ; }
 
-	xz -cd images-$ID.tar.xz | pv -s $(printf "%.0f\n" $(xz -l images-$ID.tar.xz | tail -n 1 | awk '{print $5}'))m | tar xvf -
+	xz -cd "images-$1.tar.xz" | pv -s $(printf "%.0f\n" $(xz -l "images-$1.tar.xz" | tail -n 1 | awk '{print $5}'))m | tar xvf -
 
 	[ -d "/mnt/update" ] || { mkdir /mnt/update; }
 
@@ -25,6 +37,7 @@ update() {
 
 	umount /mnt/update/
 
+	swapoff -a
 	echo "Update Successful."
 }
 
@@ -38,7 +51,7 @@ version)
 	echo "$ID_NEW"
 	[ -f "$WORKING_DIR/images-$ID_NEW.tar.xz" ] && {
 		cd $WORKING_DIR
-		update
+		update $ID_NEW
 		exit 0
 	}
 	echo "File not found!"
@@ -91,7 +104,7 @@ version)
 	# check if file exists
 	[ -f "images-$ID.tar.xz" ] || { echo "Something wrong happen with the downloaded file."; exit 1; }
 
-	update
+	update $ID
 	;;
 
 esac

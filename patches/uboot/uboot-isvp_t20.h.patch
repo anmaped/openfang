@@ -33,8 +33,8 @@
  #ifdef CONFIG_SFC_NOR
 -	#define CONFIG_BOOTCOMMAND "sf probe;sf read 0x80600000 0x40000 0x280000; bootm 0x80600000"
 +	#define CONFIG_BOOTCOMMAND \
-+	"echo \"Sets yellow LED off\"; \
-+	gpio set 38; \
++	"if printenv soctype; then echo \"Settings are already stored!\"; else echo \"Storing settings ...\"; jzsoc; saveenv; echo \"Settings have been stored!\"; fi; \
++	echo \"Sets yellow LED off\"; gpio set 38; \
 +	echo \"Sets blue LED off\"; \
 +	gpio set 39; \
 +	echo \"Enables USB\"; \

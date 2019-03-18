@@ -1,0 +1,45 @@
+#!/bin/sh
+
+case "$1" in 
+	start)
+		section_names=$(nvram layout | sed -n '/name:/p' | awk -F' ' '{print $3}')
+		factory=$(nvram get rtdev factory >&2)
+		if [ $? != 0 ]; then
+			for sec in $section_names
+			do
+				echo "Clearing sec: $sec"
+				nvram clear $sec
+			done
+			nvram set rtdev factory 1
+			nvram set rtdev fw_version "$(cat /opt/version)"
+			nvram set wapi adminpasswd "admin"
+
+			# Create a SSL certificate
+			export OPENSSL_CONF=/etc/ssl/openssl.cnf
+			openssl req -new -x509 -keyout /etc/ssl/lighttpd.pem -out /etc/ssl/lighttpd.pem -days 365 -nodes -subj "/C=DE/ST=.../L=.../O=.../OU=.../CN=.../emailAddress=..."
+			chmod 400 /etc/ssl/lighttpd.pem
+
+			nvram set rtdev certificate "$(cat /etc/ssl/lighttpd.pem)"
+
+			#nvram commit
+		else
+			[ "$(nvram get rtdev fw_version)" != "$(cat /opt/version)" ] && nvram set rtdev fw_version "$(cat /opt/version)"
+			
+			# restore the SSL certifcate
+			nvram get rtdev certificate > "/etc/ssl/lighttpd.pem"
+			chmod 400 /etc/ssl/lighttpd.pem
+		fi
+		;;
+	stop)
+		echo "do nothing"
+		;;
+	restart|reload)
+		"$0" stop
+		"$0" start
+		;;
+	*)
+		echo "Usage: $0 {start|stop|restart}"
+		exit 1
+esac
+
+exit $?
