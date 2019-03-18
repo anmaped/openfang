@@ -5,9 +5,9 @@ The openfang is a bootloader, kernel and toolchain for devices using Ingenic T10
 
 At the present time, this repository only contains kernel and rootfs for cameras using Inegnic T20 SOC. To ease identifying these cameras please use the pictures below.
 
-![Xiaomi Mijia](doc/xiaomi_mijia.jpg) Xiaomi Mijia 2018 | ![Wyze Cam v2](doc/wyzecam_v2.jpg) Wyze Cam V2
+![Xiaomi Mijia](doc/SXJ02ZM/img/xiaomi_mijia_2018.jpg) Xiaomi Mijia 2018 | ![Wyze Cam v2](doc/wyzecam_v2/img/wyzecam_v2.jpg) Wyze Cam V2
 :-- | --:
-![Xiaomi Dafang](doc/xiaomi_dafang.jpg) Xiaomi Dafang | ![Wyze Cam Pan](doc/wyzecam_pan.jpg) Wyze Cam Pan
+![Xiaomi Dafang](doc/xiaomi_dafang/img/xiaomi_dafang.jpg) Xiaomi Dafang | ![Wyze Cam Pan](doc/WYZECP1/img/wyzecam_pan.jpg) Wyze Cam Pan
 
 If you have a device with a Ingenic T10 SOC, consider using for now https://github.com/EliasKotlyar/Xiaomi-Dafang-Hacks
 

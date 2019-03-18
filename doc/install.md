@@ -7,8 +7,8 @@ The installation of openfang is mainly composed of three steps. The first one co
 - [Resize the written filesystem](#resize-the-rootfs-image)
 
 More specific install guides can be found in the following links
-- [Wyze Pan Cam (WYZECP1)](wyzecp1_instructions.md) (thanks to M@ SWARTZ)
-
+- [Wyze Pan Cam (WYZECP1)](/doc/WYZECP1/wyzecp1_instructions.md) (thanks to M@ SWARTZ)
+- [Xiaomi Mijia V3 2018 (SXJ02ZM)](/doc/SXJ02ZM/SXJ02ZM_instructions.md) (thanks to TheRoss)
 
 ## 1. Dowload bootloader
 
@@ -47,11 +47,11 @@ dd if=<filename.bin> of=/dev/mtd0
 
 diskpart or disk management wizard can be used to make partitions.
 
-<img src="/doc/use_diskpart.png" width="600">
+<img src="/doc/img/use_diskpart.png" width="600">
 
 To flash the image in the first partition of the sd card use the tool DiskImage 1.6 ([link](http://www.roadkil.net/program.php/P12/Disk%20Image)).
 
-<img src="/doc/towrite.png" width="300">
+<img src="/doc/img/towrite.png" width="300">
 
 
 ### Flash rootfs using linux
