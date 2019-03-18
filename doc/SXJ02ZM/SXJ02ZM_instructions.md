@@ -1,8 +1,9 @@
 # Introduction and requirements
+<img src="/doc/SXJ02ZM/img/xiaomi_mijia_2018.jpg" width="300">
+
 The Xiaomi Mijia 1080p model v3 is the snow-white model which was released in 2018, and has a T20L SOC with 64MB RAM
 Unfortunately there is no known Firmware-exploit which allows us to easily edit the firmware to gain ssh-access to the camera.
 In order to get OPenFang on the camera, we need to program a custom bootloader to the camera by using a ch341a programmer.
-<img src="/doc/SXJ02ZM/img/xiaomi_mijia_2018.jpg" width="300">
 
 
 
@@ -20,14 +21,21 @@ You will need:
 - Remove the back of the camera, starting from the botton.
 <img src="/doc/SXJ02ZM/img/opencase.jpg" width="300">
 
+
+
 - After the back has been losen, carefully remove the speaker/mic connector before removing the back.
 <img src="/doc/SXJ02ZM/img/speakercable.jpg" width="300">
+
+
 
 - Unscrew the 3 black screws to separate the board from the front cover.
 <img src="/doc/SXJ02ZM/img/screws.jpg" width="300">
 
+
+
 - After removing the screws, carefully remove the 2 frontpanel LED connectors.
 <img src="/doc/SXJ02ZM/img/frontpanelcables.jpg" width="300">
+
 
 
 
@@ -36,6 +44,8 @@ You will need:
 - Desolder the VCC leg (Leg 8) of the SOP8 chip.
 <img src="/doc/SXJ02ZM/img/W25Q128JVSQ.jpg" width="300">
 <img src="/doc/SXJ02ZM/img/desolderedleg.jpg" width="300">
+
+
 
 
 - Put a piece of plastic foil between the desoldered leg and the PCB. We do this to avoid powering-up the whole PCB through the chip+programmer, as the chip would net be flashable like this.
@@ -47,6 +57,8 @@ You will need:
 - Put the programmer clip tight on the SOP, having in mind that the red cable is always for PIN1. Make sure it sits tight on the SOP.
 <img src="/doc/SXJ02ZM/img/clamponsop.jpg" width="300">
 <img src="/doc/SXJ02ZM/img/clamponsop2.jpg" width="300">
+
+
 
 
 - Connect the clip cable to the programmer as seen in here.
@@ -76,11 +88,11 @@ You will need:
 <img src="/doc/SXJ02ZM/img/windows_flasher_1.png" width="300">
 
 
-- If everything is connected correctly, you will be prompted to select your flash memory. Select any of the two. 
+- After clicking on connect, you will be prompted to select your flash memory. Select any of the two. 
 <img src="/doc/SXJ02ZM/img/windows_flasher_2.png" width="300">
 
 
-- click on erase at the top icons and wait for the process to finish. 
+- Click on erase at the top icons and wait for the process to finish. 
 <img src="/doc/SXJ02ZM/img/windows_flasher_3.png" width="300">
 
 
@@ -88,7 +100,7 @@ You will need:
 <img src="/doc/SXJ02ZM/img/windows_flasher_4.png" width="300">
 
 
-- click on read at the top icons and make sure that everything is set to FF. 
+- Click on read at the top icons and make sure that everything is set to FF. 
 <img src="/doc/SXJ02ZM/img/windows_flasher_5.png" width="300">
 
 
@@ -106,10 +118,10 @@ You will need:
 - Download and install any partitioning software. My favourite freeware for this is Active Partition Manager.
 - On active partiton manager erase all partitions of the sd-card.
 - Create one NTFS-Partition with about 4GB (4096 mbytes)
-- select edit params of the partition and make sure you assign a drive letter to it.
-- use the rest of the unallocated space to create one exFat partition.
-- select edit params of the partition and make sure you assign a drive letter to it.
-- open DiskImage 1.6 ([link](http://www.roadkil.net/program.php/P12/Disk%20Image)) and flash the rootfs.ext2 imagefile onto the 4GB NTFS partition you created. <img src="/doc/img/towrite.png" width="300">
+- Select edit params of the partition and make sure you assign a drive letter to it.
+- Use the rest of the unallocated space to create one exFat partition.
+- Select edit params of the partition and make sure you assign a drive letter to it.
+- Open DiskImage 1.6 ([link](http://www.roadkil.net/program.php/P12/Disk%20Image)) and flash the rootfs.ext2 imagefile onto the 4GB NTFS partition you created. <img src="/doc/img/towrite.png" width="300">
 
 
 
@@ -157,11 +169,11 @@ When you connect to the OpenFang access point, you can open a browser and call h
 
 
 ### Create a certificate and boot the webserice in case of problems.
-- log on a SSh shell to 192.168.14.1 with username admin / admin.
-- on the shell type ``` su ``` press return.
-- afterwards type ``` openssl req -new -x509 -keyout /etc/ssl/lighttpd.pem -out /etc/ssl/lighttpd.pem -days 365 -nodes -subj "/C=DE/ST=.../L=.../O=.../OU=.../CN=.../emailAddress=..." ``` press return.
+- Log on a SSh shell to 192.168.14.1 with username admin / admin.
+- On the shell type ``` su ``` press return.
+- Afterwards type ``` openssl req -new -x509 -keyout /etc/ssl/lighttpd.pem -out /etc/ssl/lighttpd.pem -days 365 -nodes -subj "/C=DE/ST=.../L=.../O=.../OU=.../CN=.../emailAddress=..." ``` press return.
 - Type ``` cd /etc/init.d/ ``` press return.
-- finally type ``` ./lighttpd.sh start ``` press return.
+- Finally type ``` ./lighttpd.sh start ``` press return.
 - The webservice should now start and you should be able to log on.
 
 
@@ -169,14 +181,14 @@ When you connect to the OpenFang access point, you can open a browser and call h
 ### Resize the rootfs image
 The rootfs image is smaller than the available partition where we have written the rootfs directories. To be able to use all the available space we allocated for the partition, we have to resize the filesystem.
 
-- log on a SSh shell to 192.168.14.1 with username admin / admin.
-- on the shell type ``` su ``` press return.
+- Log on a SSh shell to 192.168.14.1 with username admin / admin.
+- On the shell type ``` su ``` press return.
 - Type ``` resize2fs /dev/mmcblk0p1 ``` press return.
 - It will take a short while. Note that the time it takes depends of the size of the partition you are resizing.
 
 
 
 ### Confifg the cam on the WebUi
-- go to Settings and select the MOdel of the cam (in this case the Mijia 2018)
+- Go to Settings and select the MOdel of the cam (in this case the Mijia 2018)
 - Go to wireless in the settings, select the mode and insert your home router's network credentials. Don't chose the type AP, as it will create an AP and this is not what we want.
 
