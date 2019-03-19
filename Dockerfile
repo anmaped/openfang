@@ -14,7 +14,8 @@ RUN \
   vim \
   locales \
   lzop \
-  bc
+  bc \
+  libncurses5-dev
 
 RUN locale-gen --no-purge en_US.UTF-8
 RUN git clone https://github.com/anmaped/openfang/ /root/openfang

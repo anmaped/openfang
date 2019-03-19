@@ -1,7 +1,7 @@
 # Introduction and requirements
 <img src="/doc/SXJ02ZM/img/xiaomi_mijia_2018.jpg" width="300">
 
-The Xiaomi Mijia 1080p v3 model is the snow-white model that was released in 2018, and has a T20L SOC with 64MB of RAM.
+The Xiaomi Mijia 1080p v3 model is the snow-white model that was released in 2018, and has an Ingenic T20L SOC with 64MB of RAM.
 Unfortunately there is no known firmware exploit that allows us to easily edit the firmware to get ssh access to the camera.
 In order to install OpenFang on the camera, we need to program a custom bootloader for the camera using a ch341a programmer.
 
@@ -9,12 +9,12 @@ In order to install OpenFang on the camera, we need to program a custom bootload
 
 ### Requirements
 You will need:
-- USB CH341A programmer and Programmer Testing Clip SOP8
+- USB CH341A programmer ([amazon link](https://www.amazon.de/Programmer-CH341A-Burner-EEPROM-Writer/dp/B01D4CXYJE)) and Programmer Testing Clip for SOP8 packages ([amazon link](https://www.amazon.de/dp/B07GLB1M75/ref=cm_sw_r_tw_dp_U_x_aQdKCbTGZ0032))
 <img src="/doc/SXJ02ZM/img/c341a_clamp.jpg" width="400">
 
 - Soldering iron (any below 15w; you should avoid warming to much the SMD components)
 - Solder Flux (any rosin flux)
-- Torx Screwdrivers (sizes T03, T04, or T05)
+- Phillips Screwdrivers (size PH00, or PH0)
 - a piece of plastic foil (e.g. kapton tape) to isolate the vcc pin when programming the chip
 
 
@@ -55,7 +55,7 @@ You will need:
 
 
 
-### Conecting the SOC to the programmer
+### Conecting the SPI Flash to the programmer
 - Put the programmer clip tight on the SOP8 package, having in mind that the red cable is always for PIN1. Make sure it sits tight on the SOP8 package.
 <img src="/doc/SXJ02ZM/img/clamponsop.jpg" width="300">
 <img src="/doc/SXJ02ZM/img/clamponsop2.jpg" width="300">
@@ -71,24 +71,21 @@ You will need:
 
 
 
-## 3. Flashing the Ingenic T20L SOC (Windows / Mac / Linux)
+## 3. Flashing the SPI Flash (Windows / Mac / Linux)
 ### Downloading the needed files
 - Download the latest release package from [OpenFang/releases](https://github.com/anmaped/openfang/releases) and extract it somewhere.
-- Download the proper flashing software from the tools directory. It is recommended to flash the Ingenic T20L SOC under Linux / MacOS as I never had success in flashing it with windows! Feel free to report otherwise.
+- Download the proper flashing software from the tools directory. It is recommended to flash the SPI Flash under Linux / MacOS as I never had success in flashing it with windows! Feel free to report otherwise.
 - You might have to recompile CH341aprog. Download the latest release at [setarcos/ch341prog](https://github.com/setarcos/ch341prog)and compile it.
 
 
 #### Flashing under MacOS / Linux
-- Use ch341prog to first erase the SOC: ``` ./ch341prog -e ```
-- Use ch341prog to write the custom bootloader to the SOC: ``` ./ch341prog -w u-boot-lzo-with-spl_t20_64M.bin ```  Caution: flash the 64M binary file!
+- Use ch341prog to first erase the SPI Flash: ``` ./ch341prog -e ```
+- Use ch341prog to write the custom bootloader to the SPI Flash: ``` ./ch341prog -w u-boot-lzo-with-spl_t20_64M.bin ```  Caution: flash the 64M binary file!
 
 
 
 #### Flashing under Windows
 - Download the [CH341A programmer v1.29](https://www.bios-mods.com/forum/Thread-CH341A-v1-29), extract it somewhere and run it.
-- you will get an error message, which you can ignore: 
-<img src="/doc/SXJ02ZM/img/windows_flasher_1.png" width="300">
-
 
 - After clicking on connect, you will be prompted to select your flash memory. Select any of the two. 
 <img src="/doc/SXJ02ZM/img/windows_flasher_2.png" width="300">
@@ -163,20 +160,9 @@ Follow the same instructions for Linux.
 
 
 
-## 5. Configuring the cam
-If everything went well so far, your cam's front LED should be flashing in different colors, and after 1-2 minutes stay orange. If this is the case, you can now connect your computer to the temporary created hotspot from the camera for the initial setup.
-When you connect to the OpenFang access point, you can open a browser and call https://192.168.14.1 in the browser to access the panel. Use admin / admin in order to log on. If you get an error saying conection_refused, please proceed with this guide. Else please jump to "Resize the rootfs image".
-
-
-
-
-### Create a certificate and boot the webserice in case of problems.
-- Log on a SSH shell to 192.168.14.1 with username admin / admin.
-- On the shell type ``` su ``` press return.
-- Afterwards type ``` openssl req -new -x509 -keyout /etc/ssl/lighttpd.pem -out /etc/ssl/lighttpd.pem -days 365 -nodes -subj "/C=DE/ST=.../L=.../O=.../OU=.../CN=.../emailAddress=..." ``` press return.
-- Type ``` cd /etc/init.d/ ``` press return.
-- Finally type ``` ./lighttpd.sh start ``` press return.
-- The webservice should now start and you should be able to log on.
+## 5. Configuration of the camera
+If everything went well so far, your cam's front LED should be flashing in different colors, and after some couple of seconds should stay orange. If this is the case, you can now connect your computer to the temporary created hotspot from the camera for the initial setup.
+When you connect to the OpenFang access point, you can open a browser and call https://192.168.14.1 in the browser to access the panel. Use admin / admin in order to log on.
 
 
 
@@ -190,7 +176,7 @@ The rootfs image is smaller than the available partition where we have written t
 
 
 
-### Confifg the cam on the WebUi
-- Go to Settings and select the MOdel of the cam (in this case the Mijia 2018)
-- Go to wireless in the settings, select the mode and insert your home router's network credentials. Don't chose the type AP, as it will create an AP and this is not what we want.
+### Configure the camera on the WebUi
+- Go to Settings and select the Model of the cam (in this case the Mijia 2018)
+- Go to wireless in the settings, select the mode and insert your home router's network credentials. Don't chose the type AP, as it will create an acess point/hotspot and this is not what we want.
 
