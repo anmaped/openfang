@@ -62,7 +62,7 @@ start | "")
 	fi
 
 	# Disable motion:
-	# setconf -k m -v -1
+	setconf -k m -v -1
 
 	# Detect maximum sensor resolution (mem=87M@0x0 ispmem=9M@0x5700000 rmem=32M@0x6000000)
 	RMEM=$(cat /uEnv.txt | grep -o 'rmem=[^@]*' | cut -c 6- -)
