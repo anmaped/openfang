@@ -2790,7 +2790,7 @@ diff -Nura kernel-3.10.14_tx-isp/drivers/media/platform/sensors/sensor_info/samp
 diff -Nura kernel-3.10.14_tx-isp/drivers/media/platform/sensors/sensor_info/sensor_info.c kernel-3.10.14_sensors/drivers/media/platform/sensors/sensor_info/sensor_info.c
 --- kernel-3.10.14_tx-isp/drivers/media/platform/sensors/sensor_info/sensor_info.c	1970-01-01 01:00:00.000000000 +0100
 +++ kernel-3.10.14_sensors/drivers/media/platform/sensors/sensor_info/sensor_info.c	2018-03-20 12:23:26.000000000 +0100
-@@ -0,0 +1,676 @@
+@@ -0,0 +1,677 @@
 +/*
 + * sensor_info.c
 + *
@@ -2924,6 +2924,7 @@ diff -Nura kernel-3.10.14_tx-isp/drivers/media/platform/sensors/sensor_info/sens
 +SENSOR_INFO_T g_sinfo[] =
 +{
 +	{"jxf22",  0x40,  "cgu_cim", 24000000, {0x0f, 0x22}, 1, {0xa, 0xb}, 1, 2, NULL},
++	{"jxf23",  0x40,  "cgu_cim", 24000000, {0x0f, 0x23}, 1, {0xa, 0xb}, 1, 2, NULL},
 +	{"ps5250", 0x48,  "cgu_cim", 24000000, {0x52, 0x50}, 1, {0x00, 0x01}, 1, 2, NULL},
 +	{"ov9712", 0x30,  "cgu_cim", 24000000, {0x97, 0x11}, 1, {0xa, 0xb}, 1, 2, NULL},
 +	{"ov9732", 0x36,  "cgu_cim", 24000000, {0x97, 0x32}, 1, {0x300a, 0x300b}, 2, 2, NULL},
