@@ -14,8 +14,8 @@ More specific install guides can be found in the following links
 
 :heavy_exclamation_mark:WARNING!! You may brick your device in this step. Be cautious.
 
-- The bootloader for Xiaomi Dafang with 64M SOC can be found [here](https://github.com/anmaped/openfang/releases)
-- The bootloader for Xiaomi Dafang with 128M SOC can be found [here](https://github.com/anmaped/openfang/releases)
+- The bootloader for Xiaomi Dafang with 64M SOC can be found [here](https://github.com/anmaped/openfang/releases) (:heavy_exclamation_mark:WARNING!! Whait for RC6)
+- The bootloader for Xiaomi Dafang with 128M SOC can be found [here](https://github.com/anmaped/openfang/releases) (currently RC5)
 
 ### Flash the bootloader
 
