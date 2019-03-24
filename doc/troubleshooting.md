@@ -1,7 +1,7 @@
 
-# Troubleshoot
+# Troubleshooting
 
-### 1. I have the led blinking, what that means?
+### 1. My led is blinking, what does that mean?
 
 The led codes are:
 
@@ -11,15 +11,15 @@ The led codes are:
 
     * blue led: microsd card activity
 
-### 2. I don't know how to get ssh access before flashing, what I could do?
+### 2. I don't know how to get ssh access before flashing, what can I do?
 
 You have to upload a modified bootloader using a fw hack or ask xiaomi/wyzecam for the ssh credential (xiaomi allows it but I'm not sure about wyzecam).
 
-### 3. I have briked my device, how I could recover it?
+### 3. I have bricked my device, how can I recover it?
 
 [TODO]
 
-### 4. I don't know how to connect my device to my wireless newtwork, How I can configure it?
+### 4. I don't know how to connect my device to my wireless newtwork, how can I configure it?
 
 You can just use the following configuration.
 ```
