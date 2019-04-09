@@ -14,8 +14,8 @@ More specific install guides can be found in the following links
 
 :heavy_exclamation_mark:WARNING!! You may brick your device in this step. Be cautious.
 
-- The bootloader for Xiaomi Dafang with 64M SOC can be found [here](https://github.com/anmaped/openfang/releases)
-- The bootloader for Xiaomi Dafang with 128M SOC can be found [here](https://github.com/anmaped/openfang/releases)
+- The bootloader for devices with 64M DDR can be found [here](https://github.com/anmaped/openfang/releases) (:heavy_exclamation_mark:WARNING!! >= RC6)
+- The bootloader for devices with 128M DDR can be found [here](https://github.com/anmaped/openfang/releases)
 
 ### Flash the bootloader
 
@@ -40,8 +40,7 @@ dd if=<filename.bin> of=/dev/mtd0
 
 ## 2. Download rootfs
 
-- ROOTFS for Xiaomi Xiofang S1 [Link](https://github.com/anmaped/openfang/releases)
-- ROOTFS for Xiaomi Dafang 64M and 128M versions [Link](https://github.com/anmaped/openfang/releases)
+- ROOTFS for T20L (64Mb DDR) and T20X (128Mb DDR) devices [Link](https://github.com/anmaped/openfang/releases)
 
 ### Flash rootfs using windows 10
 
