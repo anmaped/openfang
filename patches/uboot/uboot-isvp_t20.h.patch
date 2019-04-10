@@ -1,5 +1,5 @@
 --- uboot/include/configs/isvp_t20.h	2018-09-28 03:16:07.000000000 +0200
-+++ uboot_/include/configs/isvp_t20.h	2018-10-14 05:43:27.064133800 +0200
++++ uboot_/include/configs/isvp_t20.h	2019-04-10 15:51:24.602353800 +0200
 @@ -98,7 +98,7 @@
  #else
  #define CONFIG_DDR2_M14D5121632A
@@ -27,40 +27,16 @@
  #endif
  
  /**
-@@ -137,7 +139,31 @@
+@@ -137,7 +139,7 @@
  #endif
  
  #ifdef CONFIG_SFC_NOR
 -	#define CONFIG_BOOTCOMMAND "sf probe;sf read 0x80600000 0x40000 0x280000; bootm 0x80600000"
-+	#define CONFIG_BOOTCOMMAND \
-+	"if printenv soctype; then echo \"Settings are already stored!\"; else echo \"Storing settings ...\"; jzsoc; saveenv; echo \"Settings have been stored!\"; fi; \
-+	echo \"Sets yellow LED off\"; gpio set 38; \
-+	echo \"Sets blue LED off\"; \
-+	gpio set 39; \
-+	echo \"Enables USB\"; \
-+	gpio set 47; \
-+	echo \"Enables SDCARD\"; \
-+	gpio set 43; \
-+	gpio clear 48; gpio set 60;\
-+	if mmc rescan; then " \
-+		"echo MMC Found; " \
-+		"echo Trying to find EXT3 uEnv.txt; " \
-+		"if ext4load mmc 0:1 0x80600000 uEnv.txt; then " \
-+			"echo uEnv found - Booting from microsd ...; " \
-+			"gpio clear 39;"\
-+			"env import -t 0x80600000 ${filesize};" \
-+			"boot;" \
-+		"fi;" \
-+        "else " \
-+		"echo MMC not found...; " \
-+	"fi;" \
-+	"echo Booting from Flash...; " \
-+	"gpio clear 38;"\
-+	"sf probe;sf read 0x80600000 0x40000 0x280000; bootm 0x80600000;"
++	#define CONFIG_BOOTCOMMAND "if printenv soctype; then echo \"Settings are already stored!\"; else jzsoc; saveenv; fi; gpio set 38; gpio set 39; gpio set 47; if test \"${soctype}\" = \"T20L\" && test \"${flashtype}\" = \"EN25QH128A\"; then gpio set 43; gpio clear 48; sleep 3; gpio clear 43; else gpio set 43; gpio clear 48; gpio set 60; fi; if mmc rescan; then echo \"MMC Found\"; if ext4load mmc 0:1 0x80600000 uEnv.txt; then gpio clear 39; env import -t 0x80600000 ${filesize}; boot; fi; else echo \"MMC not found...\"; fi; gpio clear 38; sf probe; sf read 0x80600000 0x40000 0x280000; bootm 0x80600000;"
  #endif /* CONFIG_SFC_NOR */
  
  /**
-@@ -255,9 +281,10 @@
+@@ -255,9 +257,10 @@
  #define CONFIG_CMDLINE_EDITING
  #define CONFIG_AUTO_COMPLETE
  /*#define CONFIG_CMD_I2C*/
@@ -72,7 +48,7 @@
  #ifdef CONFIG_CMD_USB
  #define CONFIG_USB_DWC2
  #define CONFIG_USB_DWC2_REG_ADDR 0x13500000
-@@ -266,7 +293,12 @@
+@@ -266,7 +269,12 @@
  /* #define CONFIG_USB_STORAGE */
  #endif
  
@@ -86,7 +62,7 @@
  #ifdef CONFIG_AUTO_UPDATE
  	#define CONFIG_CMD_SDUPDATE		1
  #endif
-@@ -363,7 +395,7 @@
+@@ -363,7 +371,7 @@
  
  #define CONFIG_SPL_MAX_SIZE		(26 * 1024)
  
