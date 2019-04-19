@@ -11,6 +11,7 @@ image: Ubuntu
 
 environment:
   APPVEYOR_SAVE_CACHE_ON_ERROR: true
+  CCACHE_DIR: /home/appveyor/.buildroot-ccache
 
 cache:
   - /home/appveyor/.buildroot-ccache
@@ -24,6 +25,8 @@ install:
 
 before_build:
   # Enable buildroot ccache
+  - ccache --set-config=max_size=1.0G
+  - ccache -s
   - sed "s/# BR2_CCACHE is not set/BR2_CCACHE=y/" config/buildroot.config > /tmp/buildroot.config
   - mv /tmp/buildroot.config config/buildroot.config
   - echo $(grep BR2_CCACHE config/buildroot.config)
