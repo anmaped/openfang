@@ -72,6 +72,8 @@ rm -r "$WDIR"/package/ffmpeg # use updated package version instead
 #rm -r "$WDIR"/package/uclibc # use updated package version instead
 cp "$CPW"/buildroot/* . -rf
 
+BUILDROOT_CHANGED=$(git diff --name-only config/buildroot.config)
+[ -n "$BUILDROOT_CHANGED" ] || make oldconfig
 make
 
 #

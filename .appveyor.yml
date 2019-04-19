@@ -1,0 +1,49 @@
+version: '{build}'
+
+branches:
+  only:
+    - master
+
+services:
+  - docker
+
+image: Ubuntu
+
+environment:
+  APPVEYOR_SAVE_CACHE_ON_ERROR: true
+
+cache:
+  - /home/appveyor/.buildroot-ccache
+
+init:
+  - echo _NPROCESSORS_ONLN=$(getconf _NPROCESSORS_ONLN)
+
+install:
+  - ps: $env:package_version = ("$(git rev-parse --short HEAD)").trim()
+  - ps: Update-AppveyorBuild -Version "$env:package_version-$env:APPVEYOR_BUILD_NUMBER"
+
+before_build:
+  # Enable buildroot ccache
+  - sed "s/# BR2_CCACHE is not set/BR2_CCACHE=y/" config/buildroot.config > /tmp/buildroot.config
+  - mv /tmp/buildroot.config config/buildroot.config
+  - echo $(grep BR2_CCACHE config/buildroot.config)
+  # Construct buildroot image
+  - docker build -f ./Dockerfile -t openfang/container .
+
+build_script:
+  # Run build within buildroot container
+  - docker run --name openfang -v /home/appveyor/.buildroot-ccache:/root/.buildroot-ccache openfang/container sh /root/openfang/buildopenfang.sh
+
+after_build:
+  # Extract artifacts from container for upload
+  - docker cp openfang:/root/openfang/fs/opt/autoupdate.sh .
+  - docker cp openfang:/root/openfang/toolchain*.tar.xz .
+  - docker cp openfang:/root/openfang/images*.tar.xz .
+
+artifacts:
+  - path: autoupdate.sh
+    name: Autoupdate Script
+  - path: toolchain*.tar.xz
+    name: Toolchain
+  - path: images*.tar.xz
+    name: Images

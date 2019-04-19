@@ -15,8 +15,9 @@ RUN \
   locales \
   lzop \
   bc \
-  libncurses5-dev
+  libncurses5-dev \
+  ccache
 
 RUN locale-gen --no-purge en_US.UTF-8
-RUN git clone https://github.com/anmaped/openfang/ /root/openfang
+COPY . /root/openfang/
 WORKDIR /root/openfang
