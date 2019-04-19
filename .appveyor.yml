@@ -22,6 +22,7 @@ init:
 install:
   - ps: $env:package_version = ("$(git rev-parse --short HEAD)").trim()
   - ps: Update-AppveyorBuild -Version "$env:package_version-$env:APPVEYOR_BUILD_NUMBER"
+  - apt install ccache
 
 before_build:
   # Enable buildroot ccache
