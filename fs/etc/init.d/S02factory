@@ -27,7 +27,7 @@ case "$1" in
 			[ "$model_name" = "" ] && { modprobe sinfo; echo 1 >/proc/jz/sinfo/info; sleep 10; reboot; }
 			# hardware was identified; commit the model changes
 			setmodel "$model_name"
-			nvram commit; echo "Settings have been applied acording to the model."; reboot
+			[ $? ] && { echo "Settings have been applied acording to the model."; reboot; }
 		else
 			[ "$(nvram get rtdev fw_version)" != "$(cat /opt/version)" ] && nvram set rtdev fw_version "$(cat /opt/version)"
 			
