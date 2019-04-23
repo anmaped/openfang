@@ -3,7 +3,7 @@ The openfang is a bootloader, kernel and toolchain for devices using Ingenic T10
 
 ## Overview
 
-At the present time, this repository only contains kernel and rootfs for cameras using Inegnic T20 SOC. To ease identifying these cameras please use the pictures below.
+At the present time, this repository only contains kernel and rootfs for cameras using Inegnic T20 SOC. To ease identifying these cameras please use the pictures below. A more detailed technical description can be found [here](doc/overview.md).
 
 Ingenic T20L (64Mb DDR) | &nbsp;
 :-- | --:
