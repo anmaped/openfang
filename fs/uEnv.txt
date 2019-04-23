@@ -1,5 +1,5 @@
 baudrate=115200
-bootargs=console=ttyS1,115200n8 mem=41472K@0x0 ispmem=8M@0x2880000 rmem=15872K@0x3080000 init=/linuxrc root=/dev/mmcblk0p1 rootwait rootfstype=ext3 rw
+bootargs=console=ttyS1,115200n8 mem=41472K@0x0 ispmem=8M@0x2880000 rmem=15872K@0x3080000 init=/linuxrc root=/dev/mmcblk0p1 rootdelay=1 rootfstype=ext3 rw
 bootcmd=ext4load mmc 0:1 0x80600000 /boot/uImage.lzma; bootm 0x80600000
 bootdelay=1
 stderr=serial
