@@ -7,7 +7,7 @@ require 'session.php';
 <script type="text/javascript" src="scripts/jquery-3.3.1.min.js"></script>
 </head>
 <html>
-<div class="pageloader is-active"><span class="title">Rebooting ...</span></div>
+<div class="pageloader is-active"><span class="title">Rebooting ... openfang will load automatically. Please be patient.</span></div>
 <script>
 $.ajax({
   url: "cgi-bin/action.cgi?cmd=reboot",

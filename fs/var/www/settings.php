@@ -338,7 +338,7 @@ $IP = shell_exec('echo -n $(ifconfig wlan0 |grep "inet addr" |awk \'{print $2}\'
 <!-- RTSP -->
 <div class='card '>
   <header class='card-header'>
-    <p class='card-header-title'>RTSP
+    <p class='card-header-title'>IMP
     </p>
   </header>
   <div class='card-content'>
@@ -373,7 +373,7 @@ $IP = shell_exec('echo -n $(ifconfig wlan0 |grep "inet addr" |awk \'{print $2}\'
     </p>
   </header>
   <div class='card-content'>
-    <form id="formResolution" action="cgi-bin/action.cgi?cmd=set_video_size" method="post">
+    <form id="formResolution" action="controller/action.php?cmd=set_video_settings" method="post">
       <div class="columns">
         <div class="column">
           <div class="field is-horizontal">
@@ -387,19 +387,19 @@ $IP = shell_exec('echo -n $(ifconfig wlan0 |grep "inet addr" |awk \'{print $2}\'
                   <div class="select">
                     <select name="video_size">
                       <option value="-W640 -H360" 
-                              <?php echo shell_exec('if [ "$(cat /opt/config/rtspserver.conf | grep 640)" != "" ]; then echo selected; fi'); ?>>640x360
+                              <?php echo shell_exec('if [ "$(nvram get 2860 video.resolution | grep 640)" != "" ]; then echo selected; fi'); ?>>640x360
                       </option>
                     <option value="-W960 -H540" 
-                            <?php echo shell_exec('if [ "$(cat /opt/config/rtspserver.conf | grep 960)" != "" ]; then echo selected; fi'); ?>>960x540
+                            <?php echo shell_exec('if [ "$(nvram get 2860 video.resolution  | grep 960)" != "" ]; then echo selected; fi'); ?>>960x540
                     </option>
                   <option value="-W1280 -H720" 
-                          <?php echo shell_exec('if [ "$(cat /opt/config/rtspserver.conf | grep 1280)" != "" ]; then echo selected; fi'); ?>>1280x720
+                          <?php echo shell_exec('if [ "$(nvram get 2860 video.resolution  | grep 1280)" != "" ]; then echo selected; fi'); ?>>1280x720
                   </option>
                 <option value="-W1600 -H900" 
-                        <?php echo shell_exec('if [ "$(cat /opt/config/rtspserver.conf | grep 1600)" != "" ]; then echo selected; fi'); ?>>1600x900
+                        <?php echo shell_exec('if [ "$(nvram get 2860 video.resolution  | grep 1600)" != "" ]; then echo selected; fi'); ?>>1600x900
                 </option>
               <option value="-W1920 -H1080" 
-                      <?php echo shell_exec('if [ "$(cat /opt/config/rtspserver.conf | grep 1920)" != "" ]; then echo selected; fi'); ?>>1920x1080
+                      <?php echo shell_exec('if [ "$(nvram get 2860 video.resolution  | grep 1920)" != "" ]; then echo selected; fi'); ?>>1920x1080
               </option>
             </select>
         </div>
@@ -419,16 +419,16 @@ $IP = shell_exec('echo -n $(ifconfig wlan0 |grep "inet addr" |awk \'{print $2}\'
           <select name="video_format">
             0 = FixedQp, 1 = CBR, 2 = VBR, 3 = SMART
             <option value="0" 
-                    <?php echo shell_exec('source /opt/config/rtspserver.conf; if [ "$(echo $VIDEOFORMAT | grep -w 0)" != "" ]; then echo selected; fi'); ?>>FixedQp
+                    <?php echo shell_exec('if [ "$(nvram get 2860 video.format | grep -w 0)" != "" ]; then echo selected; fi'); ?>>FixedQp
             </option>
           <option value="1" 
-                  <?php echo shell_exec('source /opt/config/rtspserver.conf; if [ "$(echo $VIDEOFORMAT | grep -w 1)" != "" ]; then echo selected; fi'); ?>>CBR
+                  <?php echo shell_exec('if [ "$(nvram get 2860 video.format | grep -w 1)" != "" ]; then echo selected; fi'); ?>>CBR
           </option>
         <option value="2" 
-                <?php echo shell_exec('source /opt/config/rtspserver.conf; if [ "$(echo $VIDEOFORMAT | grep -w 2)" != "" ]; then echo selected; fi'); ?>>VBR
+                <?php echo shell_exec('if [ "$(nvram get 2860 video.format | grep -w 2)" != "" ]; then echo selected; fi'); ?>>VBR
         </option>
       <option value="3" 
-              <?php echo shell_exec('source /opt/config/rtspserver.conf; if [ "$(echo $VIDEOFORMAT | grep -w 3)" != "" ]; then echo selected; fi'); ?>>SMART
+              <?php echo shell_exec('if [ "$(nvram get 2860 video.format | grep -w 3)" != "" ]; then echo selected; fi'); ?>>SMART
       </option>
     </select>
 </div>
@@ -446,7 +446,7 @@ $IP = shell_exec('echo -n $(ifconfig wlan0 |grep "inet addr" |awk \'{print $2}\'
     <div class="field-body">
       <div class="field">
         <div class="control">
-          <input class="input" id="brbitrate" name="brbitrate" type="text" size="5" value="<?php echo shell_exec('echo -n $(setconf -g b)'); ?>"/> kbps
+          <input class="input" id="brbitrate" name="brbitrate" type="text" size="5" value="<?php echo shell_exec('echo -n $(nvram get 2860 video.bitrate)'); ?>"/> kbps
         </div>
       </div>
     </div>
@@ -468,10 +468,74 @@ $IP = shell_exec('echo -n $(ifconfig wlan0 |grep "inet addr" |awk \'{print $2}\'
 <!-- H264 RTSP -->
 <div class='card '>
   <header class='card-header'>
-    <p class='card-header-title'>Start H264 RTSP
+    <p class='card-header-title'>RTSP Settings
     </p>
   </header>
   <div class='card-content'>
+    <form id="formRTSP" action="controller/action.php?cmd=set_rtsp_settings" method="post">
+    <div class="columns">
+      <div class="column">
+
+<div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">Enable Audio
+            </label>
+          </div>
+          <div class="field-body">
+            <div class="field is-grouped">
+              <p class="control">
+                <input type="checkbox" name="audio_enabled" id="audio_enabled" value="true" 
+                       <?php echo shell_exec('if [[ "$(nvram get 2860 rtsp.en_audio)" == "true" ]];then echo checked; fi'); ?> />
+              </p>
+            </div>
+          </div>
+        </div>
+
+<div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <label class="label">Stream
+    </label>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <div class="control">
+        <div class="select">
+          <select name="stream_format">
+            0 = H264, 1 = MJPEG
+            <option value="0" 
+                    <?php echo shell_exec('if [ "$(nvram get 2860 rtsp.stream | grep -w 0)" != "" ]; then echo selected; fi'); ?>>H264
+            </option>
+          <option value="1" 
+                  <?php echo shell_exec('if [ "$(nvram get 2860 rtsp.stream | grep -w 1)" != "" ]; then echo selected; fi'); ?>>MJPEG
+          </option>
+    </select>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <label class="label">Port
+      </label>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <div class="control">
+          <input class="input" id="rtsp_port" name="rtsp_port" type="text" size="5" value="<?php echo shell_exec('echo -n $(nvram get 2860 rtsp.port)'); ?>"/>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <label class="label">Daemon
+    </label>
+  </div>
+  <div class="field-body">
+    <div class="field">
     <button class="button is-link" onClick="call('cgi-bin/action.cgi?cmd=h264_start')">Start
     </button>
     <button class="button is-warning" onClick="call('cgi-bin/action.cgi?cmd=rtsp_stop')">Stop
@@ -493,8 +557,23 @@ $IP = shell_exec('echo -n $(ifconfig wlan0 |grep "inet addr" |awk \'{print $2}\'
     </p>
   </div>
 </div>
+</div>
+</div>
+</div>
+<div class="field is-horizontal">
+  <div class="field-body">
+    <div class="field">
+      <div class="control">
+        <input id="formRTSPSubmit" class="button is-primary" type="submit" value="Set" />
+      </div>
+    </div>
+  </div>
+</div>
+</form>
+</div>
+</div>
 <!-- MJPEG RTSP -->
-<div class='card '>
+<!--<div class='card '>
   <header class='card-header'>
     <p class='card-header-title'>Start MJPEG RTSP
     </p>
@@ -510,7 +589,7 @@ $IP = shell_exec('echo -n $(ifconfig wlan0 |grep "inet addr" |awk \'{print $2}\'
       </a>
     </p>
   </div>
-</div>
+</div>-->
 <!-- Timelapse -->
 <div class='card '>
   <header class='card-header'>

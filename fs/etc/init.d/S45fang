@@ -70,14 +70,16 @@ start | "")
 
 	# Start RTSP-Server:
 	if [ "$RMEM" = "32M" ] && [ "$ISPMEM" = "9M" ]; then
-                [ "$sensor" = "jxf22"  ] && v4l2rtspserver-v0.0.8 -W 1920 -H 1080 -A -N jxf22 -D 64 &
-                [ "$sensor" = "jxf23"  ] && v4l2rtspserver-v0.0.8 -W 1920 -H 1080 -A -N jxf23 -D 64 &
-		[ "$sensor" = "ps5250" ] && v4l2rtspserver-v0.0.8 -W 1920 -H 1080 -A -N ps5250 -D 72 &
+                [ "$sensor" = "jxf22"  ] && v4l2rtspserver-v0.0.8 -W 1920 -H 1080 $([ "$(nvram get 2860 rtsp.en_audio)" != "true" ] && echo "-A";) -N jxf22 -D 64 &> /var/log/v4l2rtspserver.log &
+                [ "$sensor" = "jxf23"  ] && v4l2rtspserver-v0.0.8 -W 1920 -H 1080 $([ "$(nvram get 2860 rtsp.en_audio)" != "true" ] && echo "-A";) -N jxf23 -D 64 &> /var/log/v4l2rtspserver.log &
+		[ "$sensor" = "ps5250" ] && v4l2rtspserver-v0.0.8 -W 1920 -H 1080 -A -N ps5250 -D 72 &> /var/log/v4l2rtspserver.log &
 	else
-                [ "$sensor" = "jxf22"  ] && v4l2rtspserver-v0.0.8 -W 1280 -H 960 -A -N jxf22 -D 64 &
-                [ "$sensor" = "jxf23"  ] && v4l2rtspserver-v0.0.8 -W 1280 -H 960 -A -N jxf23 -D 64 &
-		[ "$sensor" = "ps5250" ] && v4l2rtspserver-v0.0.8 -W 1280 -H 960 -A -N ps5250 -D 72 &
+                [ "$sensor" = "jxf22"  ] && v4l2rtspserver-v0.0.8 $(nvram get 2860 video.resolution) $([ "$(nvram get 2860 rtsp.en_audio)" != "true" ] && echo "-A";) -N jxf22 -D 64 &> /var/log/v4l2rtspserver.log &
+                [ "$sensor" = "jxf23"  ] && v4l2rtspserver-v0.0.8 $(nvram get 2860 video.resolution) $([ "$(nvram get 2860 rtsp.en_audio)" != "true" ] && echo "-A";) -N jxf23 -D 64 &> /var/log/v4l2rtspserver.log &
+		[ "$sensor" = "ps5250" ] && v4l2rtspserver-v0.0.8 $(nvram get 2860 video.resolution) -A -N ps5250 -D 72 &> /var/log/v4l2rtspserver.log &
 	fi
+
+	setconf -k b -v $(nvram get 2860 video.bitrate)
 
 	# enable ir-filter and ir-led gpio
 	init_gpio "$(nvram get 2860 ir_filter_pin1)" "out"

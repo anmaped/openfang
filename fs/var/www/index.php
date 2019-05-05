@@ -195,9 +195,9 @@ header('location:login.php');
               <div class="navbar-dropdown is-boxed">
                 <a class="navbar-item onpage" data-target="settings.php" href="javascript:%20void(0)" id="status">Settings
                 </a> 
-                <a class="navbar-item onpage" data-target="cgi-bin/scripts.cgi" href="javascript:%20void(0)" id="scripts">Services
+                <a class="navbar-item onpage" data-target="cgi-bin/scripts.cgi" href="javascript:%20void(0)" id="scripts">Service Panel
                 </a> 
-                <a class="navbar-item onpage" data-target="logs.html" href="javascript:%20void(0)" id="logs">Logs
+                <a class="navbar-item onpage" data-target="logs.html" href="javascript:%20void(0)" id="logs">Log Panel
                 </a> 
                 <a class="navbar-item onpage" data-target="update.php" href="javascript:%20void(0)" id="update">FW Update
                 </a> 

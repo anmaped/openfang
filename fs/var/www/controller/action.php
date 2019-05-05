@@ -56,6 +56,31 @@ else if ( isset($_POST["password"]) )
   exec('nvram set wapi adminpasswd ' . $_POST["password"]);
   exec('nvram commit');
 }
+else if ( isset($_GET["cmd"]) )
+{
+   //cmd=set_video_settings
+  if ( $_GET["cmd"] == "set_video_settings" )
+  {
+    echo "command 'set_video_settings' with parameters " . $_POST["video_size"] . " / " . $_POST["video_format"] . " / " . $_POST["brbitrate"];
+    exec('nvram set 2860 video.resolution "' . $_POST["video_size"] . '"');
+    exec('nvram set 2860 video.format ' . $_POST["video_format"]);
+    exec('nvram set 2860 video.bitrate ' . $_POST["brbitrate"]);
+    exec('nvram commit');
+  }
+  else if ( $_GET["cmd"] == "set_rtsp_settings" )
+  {
+    echo "command 'set_rtsp_settings' with parameters " . $_POST["rtsp_port"] . " / " . $_POST["stream_format"] . " / " . $_POST["audio_enabled"];
+    exec('nvram set 2860 rtsp.port "' . $_POST["rtsp_port"] . '"');
+    exec('nvram set 2860 rtsp.stream ' . $_POST["stream_format"]);
+    exec('nvram set 2860 rtsp.en_audio ' . $_POST["audio_enabled"]);
+    exec('nvram commit');
+  }
+  else
+  {
+    echo "unrecognized command.";
+  }
+
+}
 else
 {
   echo "unknown";
