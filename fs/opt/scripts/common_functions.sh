@@ -61,10 +61,10 @@ rewrite_config() {
 blue_led() {
 	case "$1" in
 	on)
-		setgpioled $(nvram get 2860 blue_led_pin) 0
+		setgpioled $(nvram get 2860 blue_led_pin) 1
 		;;
 	off)
-		setgpioled $(nvram get 2860 blue_led_pin) 1
+		setgpioled $(nvram get 2860 blue_led_pin) 0
 		;;
 	status)
 		status=$(getgpioled $(nvram get 2860 blue_led_pin))
@@ -84,10 +84,10 @@ blue_led() {
 yellow_led() {
 	case "$1" in
 	on)
-		setgpioled $(nvram get 2860 yellow_led_pin) 0
+		setgpioled $(nvram get 2860 yellow_led_pin) 1
 		;;
 	off)
-		setgpioled $(nvram get 2860 yellow_led_pin) 1
+		setgpioled $(nvram get 2860 yellow_led_pin) 0
 		;;
 	status)
 		status=$(getgpioled $(nvram get 2860 yellow_pin))
@@ -107,10 +107,10 @@ yellow_led() {
 ir_led() {
 	case "$1" in
 	on)
-		setgpio $(nvram get 2860 ir_pin) 0
+		setgpio $(nvram get 2860 ir_pin) 1
 		;;
 	off)
-		setgpio $(nvram get 2860 ir_pin) 1
+		setgpio $(nvram get 2860 ir_pin) 0
 		;;
 	status)
 		status=$(getgpio $(nvram get 2860 ir_pin))
