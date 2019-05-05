@@ -87,7 +87,7 @@ start | "")
 	init_gpio "$(nvram get 2860 ir_pin)" "out"
 	ir_cut "on"
 
-	autonight -D /dev/jz_adc_aux_0 -d 1 -O 600 -F 650 &
+	#autonight -D /dev/jz_adc_aux_0 -d 1 -O 600 -F 650 &
 
 	# set solid yellow led
 	echo none >/sys/class/leds/led_yellow/trigger

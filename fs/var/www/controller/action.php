@@ -72,7 +72,7 @@ else if ( isset($_GET["cmd"]) )
     echo "command 'set_rtsp_settings' with parameters " . $_POST["rtsp_port"] . " / " . $_POST["stream_format"] . " / " . $_POST["audio_enabled"];
     exec('nvram set 2860 rtsp.port "' . $_POST["rtsp_port"] . '"');
     exec('nvram set 2860 rtsp.stream ' . $_POST["stream_format"]);
-    exec('nvram set 2860 rtsp.en_audio ' . $_POST["audio_enabled"]);
+    exec('nvram set 2860 rtsp.en_audio "' . $_POST["audio_enabled"] . '"');
     exec('nvram commit');
   }
   else

@@ -262,7 +262,7 @@ header('location:login.php');
                 </span> 
                 <!-- Startup Sound -->
                 <span class="navbar-item">
-                  <input class="switch is-small" data-checked="cgi-bin/scripts.cgi?cmd=start&script=sound-on-startup" data-unchecked="cgi-bin/scripts.cgi?cmd=stop&script=sound-on-startup" id="sound_on_startup" name="sound_on_startup" type="checkbox"> 
+                  <input class="switch is-small" data-checked="cgi-bin/scripts.cgi?cmd=start&script=sound-on-startup" data-unchecked="cgi-bin/scripts.cgi?cmd=stop&script=sound-on-startup" id="sound_on_startup" name="sound_on_startup" type="checkbox" <?php if (exec ('[ -f /opt/config/autostart/sound-on-startup ] && { echo "ON"; }') == "ON" ) echo "checked=\"checked\""; ?>> 
                   <label for="sound_on_startup">Sound on Startup
                   </label>
                 </span>

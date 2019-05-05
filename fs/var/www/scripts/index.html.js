@@ -1,7 +1,4 @@
-var SWITCHES = ["yellow_led", "blue_led", "ir_led", "ir_cut", "rtsp_h264",
-   "rtsp_mjpeg", "auto_night_detection", "mqtt_status", "mqtt_control",
-   "sound_on_startup", "motion_detection"
-];
+
 var timeoutJobs = {};
 
 function refreshLiveImage() {
@@ -14,27 +11,6 @@ function scheduleRefreshLiveImage(interval) {
       clearTimeout(timeoutJobs['refreshLiveImage']);
    }
    timeoutJobs['refreshLiveImage'] = setTimeout(refreshLiveImage, interval);
-}
-
-function syncSwitch(sw) {
-   var e = $('#' + sw);
-   if (!e.prop('disabled')) {
-      $.get("cgi-bin/state.cgi", {
-         cmd: sw
-      }).done(function(status) {
-         // console.log(sw + " status " + status + " / current " + e.prop('checked'));
-         e.prop('checked', (status.trim().toLowerCase() == "on"));
-      });
-   }
-}
-
-function syncSwitches() {
-   for (var i in SWITCHES) {
-      if (timeoutJobs[SWITCHES[i]] != undefined) {
-         clearTimeout(timeoutJobs[SWITCHES[i]]);
-      }
-      syncSwitch(SWITCHES[i]);
-   }
 }
 
 function showResult(txt) {
