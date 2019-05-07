@@ -44,7 +44,7 @@
 +	else if test \"${soctype}\" = \"T20X\" && test \"${flashtype}\" = \"GD25Q128\" && i2c probe 0x40 ; then \
 +	  gpio set 38; gpio set 39; gpio set 47; gpio set 43; gpio clear 48; if printenv hwversion; then true; else setenv hwversion DF3; saveenv; fi; \
 +	  \
-+	else if test \"${soctype}\" = \"T20L\" && test \"${flashtype}\" = \"EN25QH128A\" && i2c probe 0x48 ; then \
++	else if test \"${soctype}\" = \"T20L\" && test \"${flashtype}\" = \"W25Q128\" ; then \
 +	  gpio set 75; gpio set 76; gpio set 60; if printenv hwversion; then true; else setenv hwversion SXJ02ZM; saveenv; fi; \
 +	  \
 +	else if test \"${soctype}\" = \"T20X\" && test \"${flashtype}\" = \"EN25QH128A\" && i2c probe 0x40 ; then \
