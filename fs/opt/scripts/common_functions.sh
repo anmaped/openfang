@@ -130,17 +130,17 @@ ir_led() {
 ir_cut() {
 	case "$1" in
 	on)
-		setgpio 25 0
-		setgpio 26 1
+		setgpio $(nvram get 2860 ir_filter_pin1) 0
+		setgpio $(nvram get 2860 ir_filter_pin2) 1
 		sleep 1
-		setgpio 26 0
+		setgpio $(nvram get 2860 ir_filter_pin2) 0
 		echo "1" >/var/run/ircut
 		;;
 	off)
-		setgpio 26 0
-		setgpio 25 1
+		setgpio $(nvram get 2860 ir_filter_pin1) 1
+		setgpio $(nvram get 2860 ir_filter_pin2) 0
 		sleep 1
-		setgpio 25 0
+		setgpio $(nvram get 2860 ir_filter_pin1) 0
 		echo "0" >/var/run/ircut
 		;;
 	status)

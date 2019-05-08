@@ -12,9 +12,12 @@ nvram set rtdev motion_script_off "sh /opt/scripts/motion-script-off.sh"
 	nvram set rtdev motion_tracking_script "sh /opt/scripts/motion-track-script.sh"
 }
 
+nvram set 2860 ir_filter_pin1 25
+nvram set 2860 ir_filter_pin2 26
+
 # Xiaomi Dafang, Wyze Cam Pan, Wyze Cam V2
 # mtdparts=jz_sfc:256k(boot),2048k(kernel),3392k(root),640k(driver),4736k(appfs),2048k(backupk),640k(backupd),2048k(backupa),256k(config),256k(para),-(flag)
-{ [ "$model" = "T20_D" ] || [ "$model" = "T20_WP" ] || [ "$model" = "T20_WC" ]; } && {
+{ [ "$model" = "DF3" ] || [ "$model" = "WYZECP1" ] || [ "$model" = "WYZEC2" ]; } && {
 	nvram set 2860 blue_led_pin led_blue;
 	nvram set 2860 yellow_led_pin led_yellow;
 	nvram set 2860 ir_pin 49;
@@ -27,10 +30,10 @@ nvram set rtdev motion_script_off "sh /opt/scripts/motion-script-off.sh"
 
 # Xiaomi Xiaofang 1S
 # mtdparts=jz_sfc:256k(boot),2048k(kernel),3392k(root),640k(driver),4736k(appfs),2048k(backupk),640k(backupd),2048k(backupa),256k(config),256k(para),-(flag)
-{ [ "$model" = "T20L_XF1S" ]; } && {
-	nvram set 2860 blue_led_pin led_blue1;
-	nvram set 2860 yellow_led_pin led_yellow1;
-	nvram set 2860 ir_pin 72;
+{ [ "$model" = "SENISC5" ]; } && {
+	nvram set 2860 blue_led_pin led_blue;
+	nvram set 2860 yellow_led_pin led_yellow;
+	nvram set 2860 ir_pin 49;
 	nvram set rtdev motor "false";
 	cp -f /uEnv_64_layout1.txt /uEnv.txt;
 	#check if mtd partitions are right for this model
@@ -39,7 +42,7 @@ nvram set rtdev motion_script_off "sh /opt/scripts/motion-script-off.sh"
 
 # Xiaomi Mijia 2018
 # mtdparts=jz_sfc:256k(boot),2560k(kernel),7104k(rootfs),6336k(data),64k(config),64k(factory),-(flag)
-{ [ "$model" = "T20L_M" ]; } && {
+{ [ "$model" = "SXJ02ZM" ]; } && {
 	nvram set 2860 blue_led_pin led_blue1;
 	nvram set 2860 yellow_led_pin led_yellow1;
 	nvram set 2860 ir_pin 72;
