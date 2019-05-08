@@ -45,7 +45,7 @@
 +	  gpio set 38; gpio set 39; gpio set 47; gpio set 43; gpio clear 48; if printenv hwversion; then true; else setenv hwversion DF3; saveenv; fi; \
 +	  \
 +	else if test \"${soctype}\" = \"T20L\" && test \"${flashtype}\" = \"W25Q128\" ; then \
-+	  gpio set 75; gpio set 76; gpio set 60; if printenv hwversion; then true; else setenv hwversion SXJ02ZM; saveenv; fi; \
++	  gpio clear 75; gpio clear 76; gpio set 60; if printenv hwversion; then true; else setenv hwversion SXJ02ZM; saveenv; fi; \
 +	  \
 +	else if test \"${soctype}\" = \"T20X\" && test \"${flashtype}\" = \"EN25QH128A\" && i2c probe 0x40 ; then \
 +	  gpio set 38; gpio set 39; gpio set 47; gpio set 43; gpio clear 48; sleep 3; gpio clear 43; if printenv hwversion; then true; else setenv hwversion WYZEC2; saveenv; fi; \
@@ -53,13 +53,13 @@
 +	else \
 +	  if printenv count; then \
 +	    if test \"${count}\" = \"1\"; then \
-+	      echo \"c: ${count}\"; setenv count 2; saveenv; \
++	      echo \"ping: ${count}\"; setenv count 2; saveenv; \
 +	      gpio set 43; gpio clear 48; sleep 3; gpio clear 43; \
 +	    else \
-+	      echo \"c: ${count}\"; gpio set 43; gpio clear 48; \
++	      echo \"pong: ${count}\"; setenv count 1; saveenv; gpio set 43; gpio clear 48; \
 +	    fi; \
 +	  else \
-+	    echo \"c: ${count}\"; setenv count 1; saveenv; \
++	    echo \"pong: ${count}\"; setenv count 1; saveenv; \
 +	    gpio set 43; gpio clear 48; \
 +	  fi; \
 +	fi; fi; fi; fi; \
@@ -69,7 +69,7 @@
 +	if mmc rescan; then \
 +	  echo \"MMC Found\"; \
 +	  if ext4load mmc 0:1 0x80600000 uEnv.txt; then \
-+	    gpio clear 39; env import -t 0x80600000 ${filesize}; setenv bootargs \"${bootargs} hwversion=${hwversion}\"; boot; \
++	    env import -t 0x80600000 ${filesize}; setenv bootargs \"${bootargs} hwversion=${hwversion}\"; boot; \
 +	  fi; \
 +	  else \
 +	    echo \"MMC not found...\"; \
