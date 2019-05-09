@@ -68,6 +68,7 @@ cp "$CPW"/patches/python/019-force-internal-hash-if-ssl-disabled.patch "$WDIR"/p
 
 # copy custom openfang packages to buildroot directory
 rm -r "$WDIR"/package/ffmpeg # use updated package version instead
+rm -r "$WDIR"/package/libtirpc # use updated package version instead
 #rm -r "$WDIR"/package/python # use updated package version instead
 #rm -r "$WDIR"/package/uclibc # use updated package version instead
 cp "$CPW"/buildroot/* . -rf
