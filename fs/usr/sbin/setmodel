@@ -15,14 +15,40 @@ nvram set rtdev motion_script_off "sh /opt/scripts/motion-script-off.sh"
 nvram set 2860 ir_filter_pin1 25
 nvram set 2860 ir_filter_pin2 26
 
-# Xiaomi Dafang, Wyze Cam Pan, Wyze Cam V2
+nvram set 2860 "rtsp.port" 8554
+nvram set 2860 "rtsp.stream" 0
+nvram set 2860 "rtsp.en_audio" ""
+
+# Xiaomi Dafang, Wyze Cam Pan
 # mtdparts=jz_sfc:256k(boot),2048k(kernel),3392k(root),640k(driver),4736k(appfs),2048k(backupk),640k(backupd),2048k(backupa),256k(config),256k(para),-(flag)
-{ [ "$model" = "DF3" ] || [ "$model" = "WYZECP1" ] || [ "$model" = "WYZEC2" ]; } && {
+{ [ "$model" = "DF3" ] || [ "$model" = "WYZECP1" ]; } && {
 	nvram set 2860 blue_led_pin led_blue;
 	nvram set 2860 yellow_led_pin led_yellow;
 	nvram set 2860 ir_pin 49;
 	nvram set 2860 usb_en_pin 77;
 	nvram set rtdev motor "true";
+	nvram set 2860 "video.resolution" "-W1920 -H1080"
+	nvram set 2860 "video.format" "2"
+	nvram set 2860 "video.bitrate" "2600"
+	nvram set 2860 sensor_id jxf22
+	nvram set 2860 sensor_address 64
+	cp -f /uEnv_128.txt /uEnv.txt;
+	#check if mtd partitions are right for this model
+	[ "$(cat /proc/mtd | grep 'mtd8: 00040000 00008000 "config"')" != "" ] && { nvram commit; echo "ok"; exit 0; }
+}
+
+#  Wyze Cam V2
+[ "$model" = "WYZEC2" ] && {
+	nvram set 2860 blue_led_pin led_blue;
+	nvram set 2860 yellow_led_pin led_yellow;
+	nvram set 2860 ir_pin 49;
+	nvram set 2860 usb_en_pin 77;
+	nvram set rtdev motor "false";
+	nvram set 2860 "video.resolution" "-W1920 -H1080"
+	nvram set 2860 "video.format" "2"
+	nvram set 2860 "video.bitrate" "2600"
+	nvram set 2860 sensor_id jxf23
+	nvram set 2860 sensor_address 64
 	cp -f /uEnv_128.txt /uEnv.txt;
 	#check if mtd partitions are right for this model
 	[ "$(cat /proc/mtd | grep 'mtd8: 00040000 00008000 "config"')" != "" ] && { nvram commit; echo "ok"; exit 0; }
@@ -35,6 +61,11 @@ nvram set 2860 ir_filter_pin2 26
 	nvram set 2860 yellow_led_pin led_yellow;
 	nvram set 2860 ir_pin 49;
 	nvram set rtdev motor "false";
+	nvram set 2860 "video.resolution" "-W1600 -H900"
+	nvram set 2860 "video.format" "2"
+	nvram set 2860 "video.bitrate" "2000"
+	nvram set 2860 sensor_id jxf23
+	nvram set 2860 sensor_address 64
 	cp -f /uEnv_64_layout1.txt /uEnv.txt;
 	#check if mtd partitions are right for this model
 	[ "$(cat /proc/mtd | grep 'mtd8: 00040000 00008000 "config"')" != "" ] && { nvram commit; echo "ok"; exit 0; }
@@ -47,6 +78,11 @@ nvram set 2860 ir_filter_pin2 26
 	nvram set 2860 yellow_led_pin led_yellow1;
 	nvram set 2860 ir_pin 72;
 	nvram set rtdev motor "false";
+	nvram set 2860 "video.resolution" "-W1600 -H900"
+	nvram set 2860 "video.format" "2"
+	nvram set 2860 "video.bitrate" "2000"
+	nvram set 2860 sensor_id ps5250
+	nvram set 2860 sensor_address 72
 	cp -f /uEnv_64.txt /uEnv.txt;
 	#check if mtd partitions are right for this model
 	[ "$(cat /proc/mtd | grep 'mtd4: 00010000 00008000 "config"')" != "" ] && { nvram commit; echo "ok"; exit 0; }

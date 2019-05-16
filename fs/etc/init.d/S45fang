@@ -68,16 +68,8 @@ start | "")
 	RMEM=$(cat /uEnv.txt | grep -o 'rmem=[^@]*' | cut -c 6- -)
 	ISPMEM=$(cat /uEnv.txt | grep -o 'ispmem=[^@]*' | cut -c 8- -)
 
-	# Start RTSP-Server:
-	if [ "$RMEM" = "32M" ] && [ "$ISPMEM" = "9M" ]; then
-                [ "$sensor" = "jxf22"  ] && v4l2rtspserver-v0.0.8 -W 1920 -H 1080 $([ "$(nvram get 2860 rtsp.en_audio)" != "true" ] && echo "-A";) -N jxf22 -D 64 &> /var/log/v4l2rtspserver.log &
-                [ "$sensor" = "jxf23"  ] && v4l2rtspserver-v0.0.8 -W 1920 -H 1080 $([ "$(nvram get 2860 rtsp.en_audio)" != "true" ] && echo "-A";) -N jxf23 -D 64 &> /var/log/v4l2rtspserver.log &
-		[ "$sensor" = "ps5250" ] && v4l2rtspserver-v0.0.8 -W 1920 -H 1080 -A -N ps5250 -D 72 &> /var/log/v4l2rtspserver.log &
-	else
-                [ "$sensor" = "jxf22"  ] && v4l2rtspserver-v0.0.8 $(nvram get 2860 video.resolution) $([ "$(nvram get 2860 rtsp.en_audio)" != "true" ] && echo "-A";) -N jxf22 -D 64 &> /var/log/v4l2rtspserver.log &
-                [ "$sensor" = "jxf23"  ] && v4l2rtspserver-v0.0.8 $(nvram get 2860 video.resolution) $([ "$(nvram get 2860 rtsp.en_audio)" != "true" ] && echo "-A";) -N jxf23 -D 64 &> /var/log/v4l2rtspserver.log &
-		[ "$sensor" = "ps5250" ] && v4l2rtspserver-v0.0.8 $(nvram get 2860 video.resolution) -A -N ps5250 -D 72 &> /var/log/v4l2rtspserver.log &
-	fi
+	# Start RTSP-Server
+	v4l2rtspserver-v0.0.8 $(nvram get 2860 video.resolution) $([ "$(nvram get 2860 rtsp.en_audio)" != "true" ] && echo "-A";) -P "$(nvram get 2860 rtsp.port)" -N "$(nvram get 2860 sensor_id)" -D "$(nvram get 2860 sensor_address)" &> /var/log/v4l2rtspserver.log &
 
 	setconf -k b -v $(nvram get 2860 video.bitrate)
 

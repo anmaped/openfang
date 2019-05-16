@@ -531,26 +531,22 @@ $IP = shell_exec('echo -n $(ifconfig wlan0 |grep "inet addr" |awk \'{print $2}\'
 
 <div class="field is-horizontal">
   <div class="field-label is-normal">
-    <label class="label">Daemon
+    <label class="label">Path
     </label>
   </div>
   <div class="field-body">
     <div class="field">
-    <button class="button is-link" onClick="call('cgi-bin/action.cgi?cmd=h264_start')">Start
-    </button>
-    <button class="button is-warning" onClick="call('cgi-bin/action.cgi?cmd=rtsp_stop')">Stop
-    </button>
-    <p>Path to feed : 
+    <p> Real-time Streaming Protocol (RTSP) : 
       <a href='rtsp://<?php echo $IP; ?>:8554/unicast'>rtsp://
         <?php echo $IP; ?>:8554/unicast
       </a>
     </p>
-    <p>HLS : 
+    <p>HTTP Live Streaming (HLS) : 
       <a href='http://<?php echo $IP; ?>:8554/unicast.m3u8'>http://
         <?php echo $IP; ?>:8554/unicast.m3u8
       </a>
     </p>
-    <p>MPEG-DASH : 
+    <p>Dynamic Adaptive Streaming over HTTP (MPEG-DASH) : 
       <a href='http://<?php echo $IP; ?>:8554/unicast.mpd'>http://
         <?php echo $IP; ?>:8554/unicast.mpd
       </a>
