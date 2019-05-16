@@ -245,6 +245,40 @@ $IP = shell_exec('echo -n $(ifconfig wlan0 |grep "inet addr" |awk \'{print $2}\'
         </p>
       </div>
     </div>
+    <!-- Factory Reset -->
+    <div class='card '>
+      <header class='card-header'>
+        <p class='card-header-title'>Factory Defaults
+        </p>
+      </header>
+      <div class='card-content'>
+        <p style="overflow: auto;">
+          <div class="buttons">
+              <button class="button is-link modal-button" data-target="popup-factory" onClick="$('#popup-factory').addClass('is-active');">Factory Reset
+              </button>
+          </div>
+        </p>
+      </div>
+
+<div id="popup-factory" class="modal">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Factory Defaults</p>
+      <button class="delete" aria-label="close" onClick="$('#popup-factory').removeClass('is-active');"></button>
+    </header>
+    <section class="modal-card-body">
+      <!-- Content ... -->
+      Are you sure you're gonna proceed? All current settings will be replaced by the factory default settings.
+    </section>
+    <footer class="modal-card-foot">
+      <button class="button is-success" onClick="call('controller/action.php?cmd=factoryreset'); window.location = 'reboot.php'; $('#popup-factory').removeClass('is-active');">Proceed</button>
+      <button class="button" onClick="$('#popup-factory').removeClass('is-active');">Cancel</button>
+    </footer>
+  </div>
+</div>      
+
+    </div>
   </div>
   <div class="container_item" data-item="2">
     <!-- IR LED / Cut-->

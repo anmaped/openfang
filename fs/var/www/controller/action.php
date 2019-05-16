@@ -75,6 +75,11 @@ else if ( isset($_GET["cmd"]) )
     exec('nvram set 2860 rtsp.en_audio "' . $_POST["audio_enabled"] . '"');
     exec('nvram commit');
   }
+  else if ( $_GET["cmd"] == "factoryreset" )
+  {
+    exec('nvram clear rtdev');
+    exec('nvram commit');
+  }
   else
   {
     echo "unrecognized command.";

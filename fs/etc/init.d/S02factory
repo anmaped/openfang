@@ -24,7 +24,7 @@ case "$1" in
 			# check if hardware was identified, reboot otherwise
 			model_name=$(cat /proc/cmdline | grep -o 'hwversion=[^@]*' | cut -c 11- -)
 			echo "Model Found: $model_name"
-			[ "$model_name" = "" ] && { modprobe sinfo; echo 1 >/proc/jz/sinfo/info; sleep 10; reboot; }
+			{ [ "$model_name" = "" ] && [ ! -f /opt/model ]; } && { modprobe sinfo; echo 1 >/proc/jz/sinfo/info; sleep 10; echo "unknown" > /opt/model; reboot; }
 			# hardware was identified; commit the model changes
 			setmodel "$model_name"
 			[ $? ] && { echo "Settings have been applied acording to the model."; reboot; }
