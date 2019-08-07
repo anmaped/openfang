@@ -52,12 +52,12 @@ The deafult user/password is admin/admin.
 ### 6. How can I reset to Factory ?
 
 Connect via ssh to device and use the following commands: 
-`
+```
 nvram clear rtdev
 nvram commit 
 
 reboot
-`
+```
 This will factory reset the device!
 
 
