@@ -29,6 +29,12 @@ case "$1" in
 			setmodel "$model_name"
 			[ $? ] && { echo "Settings have been applied acording to the model."; reboot; }
 		else
+			# check if reset button is pressed
+			number=$(nvram get 2860 reset_pin)
+			echo $number > /sys/class/gpio/export
+			echo in > /sys/class/gpio/gpio$number/direction
+			[ "$(cat /sys/class/gpio/gpio$number/value)" = "0" ] && nvram clear rtdev && nvram commit && reboot
+
 			[ "$(nvram get rtdev fw_version)" != "$(cat /opt/version)" ] && nvram set rtdev fw_version "$(cat /opt/version)"
 			
 			# restore the SSL certifcate

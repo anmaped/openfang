@@ -25,6 +25,7 @@ nvram set 2860 "rtsp.en_audio" ""
 	nvram set 2860 blue_led_pin led_blue;
 	nvram set 2860 yellow_led_pin led_yellow;
 	nvram set 2860 ir_pin 49;
+	nvram set 2860 reset_pin 50;
 	nvram set 2860 usb_en_pin 77;
 	nvram set rtdev motor "true";
 	nvram set 2860 "video.resolution" "-W1920 -H1080"
@@ -42,6 +43,7 @@ nvram set 2860 "rtsp.en_audio" ""
 	nvram set 2860 blue_led_pin led_blue;
 	nvram set 2860 yellow_led_pin led_yellow;
 	nvram set 2860 ir_pin 49;
+	nvram set 2860 reset_pin 50;
 	nvram set 2860 usb_en_pin 77;
 	nvram set rtdev motor "false";
 	nvram set 2860 "video.resolution" "-W1920 -H1080"
@@ -60,6 +62,7 @@ nvram set 2860 "rtsp.en_audio" ""
 	nvram set 2860 blue_led_pin led_blue;
 	nvram set 2860 yellow_led_pin led_yellow;
 	nvram set 2860 ir_pin 49;
+	nvram set 2860 reset_pin 50;
 	nvram set rtdev motor "false";
 	nvram set 2860 "video.resolution" "-W1600 -H900"
 	nvram set 2860 "video.format" "2"
@@ -77,6 +80,7 @@ nvram set 2860 "rtsp.en_audio" ""
 	nvram set 2860 blue_led_pin led_blue1;
 	nvram set 2860 yellow_led_pin led_yellow1;
 	nvram set 2860 ir_pin 72;
+	nvram set 2860 reset_pin 50;
 	nvram set rtdev motor "false";
 	nvram set 2860 "video.resolution" "-W1600 -H900"
 	nvram set 2860 "video.format" "2"
