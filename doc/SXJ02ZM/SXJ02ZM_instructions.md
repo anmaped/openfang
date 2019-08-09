@@ -7,7 +7,7 @@ In order to install OpenFang on the camera, we need to program a custom bootload
 
 
 
-### Requirements
+## Requirements
 You will need:
 - USB CH341A programmer ([amazon link](https://www.amazon.de/Programmer-CH341A-Burner-EEPROM-Writer/dp/B01D4CXYJE)) and Programmer Testing Clip for SOP8 packages ([amazon link](https://www.amazon.de/dp/B07GLB1M75/ref=cm_sw_r_tw_dp_U_x_aQdKCbTGZ0032))
 <img src="/doc/SXJ02ZM/img/c341a_clamp.jpg" width="400">
@@ -19,7 +19,7 @@ You will need:
 
 
 
-## 1. Case disassembly
+# 1. Case disassembly
 - Remove the back of the camera, starting from the botton.
 <img src="/doc/SXJ02ZM/img/opencase.jpg" width="300">
 
@@ -41,8 +41,8 @@ You will need:
 
 
 
-## 2. (De)soldering and preparing to flash
-### Desoldering
+# 2. (De)soldering and preparing to flash
+## Desoldering
 - Desolder the VCC leg (Leg 8) of the SOP8 chip.
 <img src="/doc/SXJ02ZM/img/W25Q128JVSQ.jpg" width="300">
 <img src="/doc/SXJ02ZM/img/desolderedleg.jpg" width="300">
@@ -55,7 +55,7 @@ You will need:
 
 
 
-### Conecting the SPI Flash to the programmer
+## Conecting the SPI Flash to the programmer
 - Put the programmer clip tight on the SOP8 package, having in mind that the red cable is always for PIN1. Make sure it sits tight on the SOP8 package.
 <img src="/doc/SXJ02ZM/img/clamponsop.jpg" width="300">
 <img src="/doc/SXJ02ZM/img/clamponsop2.jpg" width="300">
@@ -71,20 +71,20 @@ You will need:
 
 
 
-## 3. Flashing the SPI Flash (Windows / Mac / Linux)
-### Downloading the needed files
+# 3. Flashing the SPI Flash (Windows / Mac / Linux)
+## Downloading the needed files
 - Download the latest release package from [OpenFang/releases](https://github.com/anmaped/openfang/releases) and extract it somewhere.
 - Download the proper flashing software from the tools directory. It is recommended to flash the SPI Flash under Linux / MacOS as I never had success in flashing it with windows! Feel free to report otherwise.
 - You might have to recompile CH341aprog. Download the latest release at [setarcos/ch341prog](https://github.com/setarcos/ch341prog)and compile it.
 
 
-#### Flashing under MacOS / Linux
+### Flashing under MacOS / Linux
 - Use ch341prog to first erase the SPI Flash: ``` ./ch341prog -e ```
 - Use ch341prog to write the custom bootloader to the SPI Flash: ``` ./ch341prog -w u-boot-lzo-with-spl_t20_64M.bin ```  Caution: flash the 64M binary file!
 
 
 
-#### Flashing under Windows
+### Flashing under Windows
 - Download the [CH341A programmer v1.29](https://www.bios-mods.com/forum/Thread-CH341A-v1-29), extract it somewhere and run it.
 
 - After clicking on connect, you will be prompted to select your flash memory. Select any of the two. 
@@ -112,8 +112,8 @@ You will need:
 
 
 
-## 4. Preparing the SD-Card (Windows / Mac / Linux)
-### Flash rootfs using Windows
+# 4. Preparing the SD-Card (Windows / Mac / Linux)
+## Flash rootfs using Windows
 - Download and install any partitioning software. My favourite freeware for this is Active Partition Manager.
 - On active partiton manager erase all partitions of the sd-card.
 - Create one NTFS-Partition with about 4GB (4096 mbytes)
@@ -124,7 +124,7 @@ You will need:
 
 
 
-### Flash rootfs using linux
+## Flash rootfs using linux
 ```
 fdisk /dev/sdb
 ```
@@ -155,18 +155,18 @@ to flash the rootfs image.
 
 
 
-### Flash rootfs using MacOS
+## Flash rootfs using MacOS
 Follow the same instructions for Linux.
 
 
 
-## 5. Configuration of the camera
+# 5. Configuration of the camera
 If everything went well so far, your cam's front LED should be flashing in different colors, and after some couple of seconds should stay orange. If this is the case, you can now connect your computer to the temporary created hotspot from the camera for the initial setup.
 When you connect to the OpenFang access point, you can open a browser and call https://192.168.14.1 in the browser to access the panel. Use admin / admin in order to log on.
 
 
 
-### Resize the rootfs image
+## Resize the rootfs image
 The rootfs image is smaller than the available partition where we have written the rootfs directories. To be able to use all the available space we allocated for the partition, we have to resize the filesystem.
 
 - Log on a SSH shell to 192.168.14.1 with username admin / admin.
@@ -176,7 +176,7 @@ The rootfs image is smaller than the available partition where we have written t
 
 
 
-### Configure the camera on the WebUi
+## Configure the camera on the WebUi
 - Go to Settings and select the Model of the cam (in this case the Mijia 2018)
 - Go to wireless in the settings, select the mode and insert your home router's network credentials. Don't chose the type AP, as it will create an acess point/hotspot and this is not what we want.
 

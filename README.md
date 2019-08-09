@@ -9,6 +9,10 @@ Ingenic T20L (64Mb DDR) | &nbsp;
 :-- | --:
 ![Xiaomi Mijia](doc/SXJ02ZM/img/xiaomi_mijia_2018.jpg) Xiaomi Mijia 2018 | ![Xiaomi Xiaofang 1S](doc/xiaomi_xiaofang1s/img/xiaofang1s.jpg) Xiaomi Xiaofang 1S
 
+Ingenic T20N (64Mb DDR + SIMD128)
+:-- |
+![DIGOO DG W30](doc/dg-w30/img/dg-w30.jpg) DIGOO DG W30
+
 Ingenic T20X (128Mb DDR) | &nbsp;
 :-- | --:
 ![Wyze Cam v2](doc/wyzecam_v2/img/wyzecam_v2.jpg) Wyze Cam V2 | 
@@ -25,6 +29,9 @@ Before installing openfang, we sugest you to carefully read the [FAQ](/doc/faq.m
 
 After that, continue to the [Installation](/doc/install.md) procedure. More details on [troubleshooting](doc/troubleshooting.md).
 
+## How to compile openfang
+
+Openfang is actively developed and releases are only provided when the openfang distribution is stable. If you want to test the development version you can easily compile it using [docker](https://www.docker.com/). More details on how to do it [here](doc/docker.md).
 
 ### Issues and support ###
 
