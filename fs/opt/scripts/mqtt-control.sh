@@ -9,12 +9,12 @@ killall mosquitto_sub.bin 2> /dev/null
 /opt/bin/mosquitto_sub.bin -v -h "$HOST" -p "$PORT" -u "$USER" -P "$PASS" -t "${TOPIC}"/# -t "${LOCATION}/set" ${MOSQUITTOOPTS} | while read -r line ; do
   echo $line
   case $line in
-    "${LOCATION}/set announce")
+#    "${LOCATION}/set announce")
 #      /opt/scripts/mqtt-autodiscovery.sh
-      ;;
-    "${TOPIC}/set help")
-      /opt/bin/mosquitto_pub.bin -h "$HOST" -p "$PORT" -u "$USER" -P "$PASS" -t "${TOPIC}"/help ${MOSQUITTOOPTS} -m "possible commands: configured topic + Yellow_LED/set on/off, configured topic + Blue_LED/set on/off, configured topic + set with the following commands: status, $(grep \)$ /opt/www/cgi-bin/action.cgi | grep -v '[=*]' | sed -e "s/ //g" | grep -v -E '(osd|setldr|settz|showlog)' | sed -e "s/)//g")"
-    ;;
+#      ;;
+#    "${TOPIC}/set help")
+#      /opt/bin/mosquitto_pub.bin -h "$HOST" -p "$PORT" -u "$USER" -P "$PASS" -t "${TOPIC}"/help ${MOSQUITTOOPTS} -m "possible commands: configured topic + Yellow_LED/set on/off, configured topic + Blue_LED/set on/off, configured topic + set with the following commands: status, $(grep \)$ /opt/www/cgi-bin/action.cgi | grep -v '[=*]' | sed -e "s/ //g" | grep -v -E '(osd|setldr|settz|showlog)' | sed -e "s/)//g")"
+#    ;;
 
     "${TOPIC}/set status")
       /opt/bin/mosquitto_pub.bin -h "$HOST" -p "$PORT" -u "$USER" -P "$PASS" -t "${TOPIC}"/ ${MOSQUITTOPUBOPTS} ${MOSQUITTOOPTS} -m "$(/opt/scripts/mqtt-status.sh)"
@@ -82,34 +82,6 @@ killall mosquitto_sub.bin 2> /dev/null
       fi
     ;;
 
-    "${TOPIC}/rtsp_h264_server")
-      /opt/bin/mosquitto_pub.bin -h "$HOST" -p "$PORT" -u "$USER" -P "$PASS" -t "${TOPIC}"/rtsp_h264_server ${MOSQUITTOPUBOPTS} ${MOSQUITTOOPTS} -m "$(rtsp_h264_server status)"
-    ;;
-
-    "${TOPIC}/rtsp_h264_server/set ON")
-      rtsp_h264_server on
-      /opt/bin/mosquitto_pub.bin -h "$HOST" -p "$PORT" -u "$USER" -P "$PASS" -t "${TOPIC}"/rtsp_h264_server ${MOSQUITTOPUBOPTS} ${MOSQUITTOOPTS} -m "$(rtsp_h264_server status)"
-    ;;
-
-    "${TOPIC}/rtsp_h264_server/set OFF")
-      rtsp_h264_server off
-      /opt/bin/mosquitto_pub.bin -h "$HOST" -p "$PORT" -u "$USER" -P "$PASS" -t "${TOPIC}"/rtsp_h264_server ${MOSQUITTOPUBOPTS} ${MOSQUITTOOPTS} -m "$(rtsp_h264_server status)"
-    ;;
-
-    "${TOPIC}/rtsp_mjpeg_server")
-      /opt/bin/mosquitto_pub.bin -h "$HOST" -p "$PORT" -u "$USER" -P "$PASS" -t "${TOPIC}"/rtsp_mjpeg_server ${MOSQUITTOPUBOPTS} ${MOSQUITTOOPTS} -m "$(rtsp_mjpeg_server status)"
-    ;;
-
-    "${TOPIC}/rtsp_mjpeg_server/set ON")
-      rtsp_mjpeg_server on
-      /opt/bin/mosquitto_pub.bin -h "$HOST" -p "$PORT" -u "$USER" -P "$PASS" -t "${TOPIC}"/rtsp_mjpeg_server ${MOSQUITTOPUBOPTS} ${MOSQUITTOOPTS} -m "$(rtsp_mjpeg_server status)"
-    ;;
-
-    "${TOPIC}/rtsp_mjpeg_server/set OFF")
-      rtsp_mjpeg_server off
-      /opt/bin/mosquitto_pub.bin -h "$HOST" -p "$PORT" -u "$USER" -P "$PASS" -t "${TOPIC}"/rtsp_mjpeg_server ${MOSQUITTOPUBOPTS} ${MOSQUITTOOPTS} -m "$(rtsp_mjpeg_server status)"
-    ;;
-
     "${TOPIC}/night_mode")
       /opt/bin/mosquitto_pub.bin -h "$HOST" -p "$PORT" -u "$USER" -P "$PASS" -t "${TOPIC}"/night_mode ${MOSQUITTOPUBOPTS} ${MOSQUITTOOPTS} -m "$(night_mode status)"
     ;;
@@ -137,6 +109,9 @@ killall mosquitto_sub.bin 2> /dev/null
       auto_night_mode off
       /opt/bin/mosquitto_pub.bin -h "$HOST" -p "$PORT" -u "$USER" -P "$PASS" -t "${TOPIC}"/night_mode/auto ${MOSQUITTOPUBOPTS} ${MOSQUITTOOPTS} -m "$(auto_night_mode status)"
     ;;
+##############################################################################################################################################################
+##################### VALIDATED
+##############################################################################################################################################################
 
     "${TOPIC}/motion/detection")
       /opt/bin/mosquitto_pub.bin -h "$HOST" -p "$PORT" -u "$USER" -P "$PASS" -t "${TOPIC}"/motion/detection ${MOSQUITTOPUBOPTS} ${MOSQUITTOOPTS} -m "$(motion_detection status)"
@@ -152,7 +127,36 @@ killall mosquitto_sub.bin 2> /dev/null
       /opt/bin/mosquitto_pub.bin -h "$HOST" -p "$PORT" -u "$USER" -P "$PASS" -t "${TOPIC}"/motion/detection ${MOSQUITTOPUBOPTS} ${MOSQUITTOOPTS} -m "$(motion_detection status)"
     ;;
 
-   "${TOPIC}/motion/send_mail")
+    "${TOPIC}/motion/tracking")
+      /opt/bin/mosquitto_pub.bin -h "$HOST" -p "$PORT" -u "$USER" -P "$PASS" -t "${TOPIC}"/motion/tracking ${MOSQUITTOPUBOPTS} ${MOSQUITTOOPTS} -m "$(motion_tracking status)"
+    ;;
+
+    "${TOPIC}/motion/tracking/set ON")
+      motion_tracking on
+      /opt/bin/mosquitto_pub.bin -h "$HOST" -p "$PORT" -u "$USER" -P "$PASS" -t "${TOPIC}"/motion/tracking ${MOSQUITTOPUBOPTS} ${MOSQUITTOOPTS} -m "$(motion_tracking status)"
+    ;;
+
+    "${TOPIC}/motion/tracking/set OFF")
+      motion_tracking off
+      /opt/bin/mosquitto_pub.bin -h "$HOST" -p "$PORT" -u "$USER" -P "$PASS" -t "${TOPIC}"/motion/tracking ${MOSQUITTOPUBOPTS} ${MOSQUITTOOPTS} -m "$(motion_tracking status)"
+    ;;
+
+    "${TOPIC}/remount_sdcard/set ON")
+      remount_sdcard
+      /opt/bin/mosquitto_pub.bin -h "$HOST" -p "$PORT" -u "$USER" -P "$PASS" -t "${TOPIC}"/remount_sdcard ${MOSQUITTOPUBOPTS} ${MOSQUITTOOPTS} -m "Remounting the SD Card"
+    ;;
+
+    "${TOPIC}/reboot/set ON")
+      /opt/bin/mosquitto_pub.bin -h "$HOST" -p "$PORT" -u "$USER" -P "$PASS" -t "${TOPIC}"/reboot ${MOSQUITTOPUBOPTS} ${MOSQUITTOOPTS} -m "Rebooting the System"
+      reboot_system
+    ;;
+
+    "${TOPIC}/snapshot/set ON")
+      snapshot
+      /opt/bin/mosquitto_pub.bin -h "$HOST" -p "$PORT" -u "$USER" -P "$PASS" -t "${TOPIC}"/snapshot ${MOSQUITTOOPTS} ${MOSQUITTOPUBOPTS} -f "$filename"
+    ;;
+	
+    "${TOPIC}/motion/send_mail")
       /opt/bin/mosquitto_pub.bin -h "$HOST" -p "$PORT" -u "$USER" -P "$PASS" -t "${TOPIC}"/motion/send_mail ${MOSQUITTOPUBOPTS} ${MOSQUITTOOPTS} -m "$(motion_send_mail status)"
     ;;
 
@@ -178,20 +182,6 @@ killall mosquitto_sub.bin 2> /dev/null
     "${TOPIC}/motion/send_telegram/set OFF")
       motion_send_telegram off
       /opt/bin/mosquitto_pub.bin -h "$HOST" -p "$PORT" -u "$USER" -P "$PASS" -t "${TOPIC}"/motion/send_telegram ${MOSQUITTOPUBOPTS} ${MOSQUITTOOPTS} -m "$(motion_send_telegram status)"
-    ;;
-
-    "${TOPIC}/motion/tracking")
-      /opt/bin/mosquitto_pub.bin -h "$HOST" -p "$PORT" -u "$USER" -P "$PASS" -t "${TOPIC}"/motion/tracking ${MOSQUITTOPUBOPTS} ${MOSQUITTOOPTS} -m "$(motion_tracking status)"
-    ;;
-
-    "${TOPIC}/motion/tracking/set ON")
-      motion_tracking on
-      /opt/bin/mosquitto_pub.bin -h "$HOST" -p "$PORT" -u "$USER" -P "$PASS" -t "${TOPIC}"/motion/tracking ${MOSQUITTOPUBOPTS} ${MOSQUITTOOPTS} -m "$(motion_tracking status)"
-    ;;
-
-    "${TOPIC}/motion/tracking/set OFF")
-      motion_tracking off
-      /opt/bin/mosquitto_pub.bin -h "$HOST" -p "$PORT" -u "$USER" -P "$PASS" -t "${TOPIC}"/motion/tracking ${MOSQUITTOPUBOPTS} ${MOSQUITTOOPTS} -m "$(motion_tracking status)"
     ;;
 
     "${TOPIC}/motors/vertical/set up")
@@ -287,19 +277,32 @@ killall mosquitto_sub.bin 2> /dev/null
       /opt/bin/mosquitto_pub.bin -h "$HOST" -p "$PORT" -u "$USER" -P "$PASS" -t "${TOPIC}"/motors ${MOSQUITTOPUBOPTS} ${MOSQUITTOOPTS} -m "$(motor status horizontal)"
     ;;
 
-    "${TOPIC}/remount_sdcard/set ON")
-      remount_sdcard
-      /opt/bin/mosquitto_pub.bin -h "$HOST" -p "$PORT" -u "$USER" -P "$PASS" -t "${TOPIC}"/remount_sdcard ${MOSQUITTOPUBOPTS} ${MOSQUITTOOPTS} -m "Remounting the SD Card"
+    "${TOPIC}/rtsp_h264_server")
+      /opt/bin/mosquitto_pub.bin -h "$HOST" -p "$PORT" -u "$USER" -P "$PASS" -t "${TOPIC}"/rtsp_h264_server ${MOSQUITTOPUBOPTS} ${MOSQUITTOOPTS} -m "$(rtsp_h264_server status)"
     ;;
 
-    "${TOPIC}/reboot/set ON")
-      /opt/bin/mosquitto_pub.bin -h "$HOST" -p "$PORT" -u "$USER" -P "$PASS" -t "${TOPIC}"/reboot ${MOSQUITTOPUBOPTS} ${MOSQUITTOOPTS} -m "Rebooting the System"
-      reboot_system
+    "${TOPIC}/rtsp_h264_server/set ON")
+      rtsp_h264_server on
+      /opt/bin/mosquitto_pub.bin -h "$HOST" -p "$PORT" -u "$USER" -P "$PASS" -t "${TOPIC}"/rtsp_h264_server ${MOSQUITTOPUBOPTS} ${MOSQUITTOOPTS} -m "$(rtsp_h264_server status)"
     ;;
 
-    "${TOPIC}/snapshot/set ON")
-      snapshot
-      /opt/bin/mosquitto_pub.bin -h "$HOST" -p "$PORT" -u "$USER" -P "$PASS" -t "${TOPIC}"/snapshot ${MOSQUITTOOPTS} ${MOSQUITTOPUBOPTS} -f "$filename"
+    "${TOPIC}/rtsp_h264_server/set OFF")
+      rtsp_h264_server off
+      /opt/bin/mosquitto_pub.bin -h "$HOST" -p "$PORT" -u "$USER" -P "$PASS" -t "${TOPIC}"/rtsp_h264_server ${MOSQUITTOPUBOPTS} ${MOSQUITTOOPTS} -m "$(rtsp_h264_server status)"
+    ;;
+
+    "${TOPIC}/rtsp_mjpeg_server")
+      /opt/bin/mosquitto_pub.bin -h "$HOST" -p "$PORT" -u "$USER" -P "$PASS" -t "${TOPIC}"/rtsp_mjpeg_server ${MOSQUITTOPUBOPTS} ${MOSQUITTOOPTS} -m "$(rtsp_mjpeg_server status)"
+    ;;
+
+    "${TOPIC}/rtsp_mjpeg_server/set ON")
+      rtsp_mjpeg_server on
+      /opt/bin/mosquitto_pub.bin -h "$HOST" -p "$PORT" -u "$USER" -P "$PASS" -t "${TOPIC}"/rtsp_mjpeg_server ${MOSQUITTOPUBOPTS} ${MOSQUITTOOPTS} -m "$(rtsp_mjpeg_server status)"
+    ;;
+
+    "${TOPIC}/rtsp_mjpeg_server/set OFF")
+      rtsp_mjpeg_server off
+      /opt/bin/mosquitto_pub.bin -h "$HOST" -p "$PORT" -u "$USER" -P "$PASS" -t "${TOPIC}"/rtsp_mjpeg_server ${MOSQUITTOPUBOPTS} ${MOSQUITTOOPTS} -m "$(rtsp_mjpeg_server status)"
     ;;
 
     "${TOPIC}/set "*)
