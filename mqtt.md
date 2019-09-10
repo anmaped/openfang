@@ -15,13 +15,13 @@ ln -s /lib/librt-1.0.12.so /lib/librt.so.0
 ### Bin's ported
 We ported the following files from Dafang in bin folder with 755 permisions:
 ```files
-bin/mosquitto_pub.bin
-bin/mosquitto_sub.bin
 bin/busybox
-bin/getimage
+
 
 chmod 755 bin/*
 ```
+
+mosquitto_sub, mosquitto_pub and getImages were already in Openfang.
 
 ### MQTT config file
 We ported this file from config/mqtt.conf.dist and we need to rename to config/mqtt.conf. Changing the paths and our configuration.
