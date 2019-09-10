@@ -340,7 +340,7 @@ auto_night_mode() {
 # Take a snapshot
 snapshot(){
     filename="/opt/DCIM/snapshot.jpg"
-    /opt/bin/getimage > "$filename" &
+    /usr/bin/getimage > "$filename" &
     sleep 1
 }
 
