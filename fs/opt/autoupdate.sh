@@ -8,10 +8,28 @@ ID=
 
 WORKING_DIR=/mnt/mmcblk0p2
 
-update() {
-	xz -cd images-$ID.tar.xz | tar xvf -
+create_swap()
+{
+	dd if=/dev/zero of="$1" bs=1024 count=262144 # 256Mb
 
-	[[ -d "/mnt/update" ]] || { mkdir /mnt/update; }
+	chown root:root "$1"
+	chmod 0600 "$1"
+
+	mkswap "$1" # create swap file system
+
+	swapon "$1" # enable swap
+}
+
+update() {
+
+	echo "Update is starting..."
+
+	# check if there is enough memory available
+	[ $(free | head -3 | tail -1 | awk '{printf $4}') -gt 64000 ] || { echo "No free ram available! Creating swap file..."; create_swap "$WORKING_DIR/swap" ; }
+
+	xz -cd "images-$1.tar.xz" | pv -s $(printf "%.0f\n" $(xz -l "images-$1.tar.xz" | tail -n 1 | awk '{print $5}'))m | tar xvf -
+
+	[ -d "/mnt/update" ] || { mkdir /mnt/update; }
 
 	mount -t ext3 -o loop openfang-images/rootfs.ext2 /mnt/update
 
@@ -19,6 +37,7 @@ update() {
 
 	umount /mnt/update/
 
+	swapoff -a
 	echo "Update Successful."
 }
 
@@ -30,9 +49,9 @@ version)
 --id=*)
 	ID_NEW=$(echo "$1" | cut -d "=" -f 2)
 	echo "$ID_NEW"
-	[[ ! -f "$WORKING_DIR/images-$ID_NEW.tar.xz" ]] || {
+	[ -f "$WORKING_DIR/images-$ID_NEW.tar.xz" ] && {
 		cd $WORKING_DIR
-		update
+		update $ID_NEW
 		exit 0
 	}
 	echo "File not found!"
@@ -53,7 +72,7 @@ version)
 	VERSION_=$(date -d "$VERSION" +%s)
 	NEW_VER_=$(date -d "$NEW_VER" +%s)
 
-	if [[ "$VERSION_" -lt "$NEW_VER_" ]]; then
+	if [ "$VERSION_" -lt "$NEW_VER_" ]; then
 		echo "***"
 		echo "$VERSION ($VERSION_) will be updated to $NEW_VER ($NEW_VER_)"
 		echo "***"
@@ -67,16 +86,25 @@ version)
 	echo "Current version is $date_b ($date_b_) and will be updated to $VERSION ($VERSION_)"
 	echo "***"
 
-	[[ "$VERSION_" -le "$date_b_" ]] && {
+	[ "$VERSION_" -le "$date_b_" ] && {
 		echo "nothing to do."
 		exit 0
 	}
+
+	# check if there is a second partition
+	[ -d "$WORKING_DIR" ] || { echo "A second partition is not available to extract files!"; exit 1; }
+
+	# check if there is 500mb free space available
+	[ $(df -k "$WORKING_DIR" | tail -n 1 | awk '{printf $4}') -gt 500000 ] || { echo "No space available!"; exit 1; }
 
 	cd $WORKING_DIR
 
 	curl -L --insecure https://github.com/anmaped/openfang/releases/download/$TAG/images-$ID.tar.xz -o images-$ID.tar.xz
 
-	update
+	# check if file exists
+	[ -f "images-$ID.tar.xz" ] || { echo "Something wrong happen with the downloaded file."; exit 1; }
+
+	update $ID
 	;;
 
 esac

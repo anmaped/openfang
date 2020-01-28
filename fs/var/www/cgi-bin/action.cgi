@@ -85,29 +85,27 @@ if [ -n "$F_cmd" ]; then
     ;;
 
     blue_led_on)
-      setgpio 38 1
-      setgpio 39 0
+      blue_led on
     ;;
 
     blue_led_off)
-      setgpio 39 1
+      blue_led off
     ;;
 
     yellow_led_on)
-      setgpio 38 0
-      setgpio 39 1
+      yellow_led on
     ;;
 
     yellow_led_off)
-      setgpio 38 1
+      yellow_led off
     ;;
 
     ir_led_on)
-      setgpio 49 0
+      ir_led on
     ;;
 
     ir_led_off)
-      setgpio 49 1
+      ir_led off
     ;;
 
     ir_cut_on)
@@ -257,9 +255,9 @@ if [ -n "$F_cmd" ]; then
         fi
       fi
       hst=$(printf '%b' "${F_hostname//%/\\x}")
-      if [ "$(cat /etc/hostname.conf)" != "$hst" ]; then
+      if [ "$(cat /etc/hostname)" != "$hst" ]; then
         echo "<p>Setting hostname to '$hst'...</p>"
-        echo "$hst" > /etc/hostname.conf
+        echo "$hst" > /etc/hostname
         if hostname "$hst"; then
           echo "<p>Success</p>"
         else echo "<p>Failed</p>"
@@ -281,7 +279,7 @@ if [ -n "$F_cmd" ]; then
       osdtext=$(printf '%b' "${F_osdtext//%/\\x}")
       osdtext=$(echo "$osdtext" | sed -e "s/\\+/ /g")
 
-      if [ ! -z "$axis_enable"];then
+      if [ ! -z "$axis_enable" ]; then
         update_axis
         osdtext="${osdtext} ${AXIS}"
         echo "DISPLAY_AXIS=true" > /opt/config/osd.conf
@@ -487,11 +485,7 @@ if [ -n "$F_cmd" ]; then
         then
             echo "===============" >> /var/log/update.log
             date >> /var/log/update.log
-            if [ "$F_login" != "" ]; then
-                busybox nohup /opt/autoupdate.sh -s -v -f -u $F_login  >> "/var/log/update.log" &
-            else
-                busybox nohup /opt/autoupdate.sh -s -v -f >> "/var/log/update.log" &
-            fi
+            /opt/autoupdate.sh  >> "/var/log/update.log" &
             processId=$(ps | grep autoupdate.sh | grep -v grep)
         fi
         echo $processId

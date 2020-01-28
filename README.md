@@ -3,10 +3,20 @@ The openfang is a bootloader, kernel and toolchain for devices using Ingenic T10
 
 ## Overview
 
-At the present time, this repository only contains kernel and rootfs for cameras using Inegnic T20 SOC. To ease identifying these cameras please use the pictures below.
+At the present time, this repository only contains kernel and rootfs for cameras using Inegnic T20 SOC. To ease identifying these cameras please use the pictures below. A more detailed technical description can be found [here](doc/overview.md).
 
-![Xiaomi Dafang](doc/wyzecam_pan.jpg) Xiaomi Dafang
-![Wyzecam Pan](doc/xiaomi_dafang.jpg) Wyzecam Pan
+Ingenic T20L (64Mb DDR) | &nbsp;
+:-- | --:
+![Xiaomi Mijia](doc/SXJ02ZM/img/xiaomi_mijia_2018.jpg) Xiaomi Mijia 2018 | ![Xiaomi Xiaofang 1S](doc/xiaomi_xiaofang1s/img/xiaofang1s.jpg) Xiaomi Xiaofang 1S
+
+Ingenic T20N (64Mb DDR + SIMD128)
+:-- |
+![DIGOO DG W30](doc/dg-w30/img/dg-w30.jpg) DIGOO DG W30
+
+Ingenic T20X (128Mb DDR) | &nbsp;
+:-- | --:
+![Wyze Cam v2](doc/wyzecam_v2/img/wyzecam_v2.jpg) Wyze Cam V2 | 
+![Xiaomi Dafang](doc/xiaomi_dafang/img/xiaomi_dafang.jpg) Xiaomi Dafang | ![Wyze Cam Pan](doc/WYZECP1/img/wyzecam_pan.jpg) Wyze Cam Pan
 
 If you have a device with a Ingenic T10 SOC, consider using for now https://github.com/EliasKotlyar/Xiaomi-Dafang-Hacks
 
@@ -15,10 +25,13 @@ If you have a classic XiaoFang with a ARM-Processor, consider using https://gith
 
 ## How to install openfang
 
-Before installing openfang, we sugest you to carefully read the [FAQ](/doc/faq.md).
+Before installing openfang, we suggest you carefully read the [FAQ](/doc/faq.md).
 
-After that, continue to the [Installation](/doc/install.md) procedure.
+After that, continue to the [Installation](/doc/install.md) procedure. More details on [troubleshooting](doc/troubleshooting.md).
 
+## How to compile openfang
+
+Openfang is actively developed and releases are only provided when the openfang distribution is stable. If you want to test the development version you can easily compile it using [docker](https://www.docker.com/). More details on how to do it [here](doc/docker.md).
 
 ### Issues and support ###
 

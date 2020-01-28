@@ -27,6 +27,34 @@ $(document).ready(function() {
     event.preventDefault();
   });
 
+  $('#formRTSP').submit(function(event) {
+    var b = $('#formRTSPSubmit');
+    b.toggleClass('is-loading');
+    b.prop('disabled', !b.prop('disabled'));
+    var formData = {
+      'rtsp_port': $('#rtsp_port').val(),
+      'stream_format': $('select[name=stream_format]').val(),
+      'audio_enabled' : $('#audio_enabled:checked').val(),
+    };
+    $.ajax({
+      type: 'POST',
+      url: $('#formRTSP').attr('action'),
+      data: formData,
+      dataType: 'html',
+      encode: true
+    }).done(function(res) {
+      b.toggleClass('is-loading');
+      b.prop('disabled', !b.prop('disabled'));
+
+      showResult(res);
+      // reload after 2s
+      setTimeout(function() {
+        $('#content').load('cgi-bin/status.cgi');
+      }, 2000);
+    });
+    event.preventDefault();
+  });
+
   $('#tzForm').submit(function(event) {
     var b = $('#tzSubmit');
     b.toggleClass('is-loading');

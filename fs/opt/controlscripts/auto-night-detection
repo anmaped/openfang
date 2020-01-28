@@ -1,0 +1,39 @@
+#!/bin/sh
+PIDFILE="/run/auto-night-detection.pid"
+
+status()
+{
+  pid="$(cat "$PIDFILE" 2>/dev/null)"
+  if [ "$pid" ]; then
+    kill -0 "$pid" >/dev/null && echo "PID: $pid" || return 1
+  fi
+}
+
+start()
+{
+  if [ -f /run/auto-night-detection.pid ]; then
+    echo "Auto Night Detection already running";
+  else
+    echo "Starting Auto Night Detection"
+    autonight -D /dev/jz_adc_aux_0 -d 1 -O 600 -F 650 &
+    echo "$!" > "$PIDFILE"
+  fi
+}
+
+stop()
+{
+  pid="$(cat "$PIDFILE" 2>/dev/null)"
+  if [ "$pid" ]; then
+     kill "$pid" && rm "$PIDFILE"
+  fi
+}
+
+if [ $# -eq 0 ]; then
+  start
+else
+  case $1 in start|stop|status)
+    $1
+    ;;
+  esac
+fi
+

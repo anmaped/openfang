@@ -60,7 +60,7 @@ if [ -n "$F_cmd" ]; then
     ;;
 
   sound_on_startup)
-    if [ -f /system/sdcard/config/autostart/sound-on-startup ];
+    if [ -f /opt/config/autostart/sound-on-startup ];
       then sound_on_startup="ON";
     else
       sound_on_startup="OFF";

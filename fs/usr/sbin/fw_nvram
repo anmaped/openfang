@@ -1,0 +1,24 @@
+#!/bin/sh
+
+# NVRAM
+
+
+case "$1" in
+  set)
+	echo "Setting $2...."
+	# check if $2 and $3 is valid
+	#fw_setenv $2 $3
+	;;
+  get)
+	out=`fw_printenv $2`
+	[ "`echo $out | cut -c -1`" = "#" ] && return ""
+	striped=`echo $out | cut -d= -f2`
+	echo $striped
+        ;;
+
+  *)
+        echo "Usage: $0 {set|get} [value]"
+        exit 1
+esac
+
+exit $?

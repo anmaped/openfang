@@ -1,5 +1,5 @@
 --- uboot/include/configs/isvp_t20.h	2018-09-28 03:16:07.000000000 +0200
-+++ uboot_/include/configs/isvp_t20.h	2018-10-14 05:43:27.064133800 +0200
++++ uboot_/include/configs/isvp_t20.h	2019-04-10 15:51:24.602353800 +0200
 @@ -98,7 +98,7 @@
  #else
  #define CONFIG_DDR2_M14D5121632A
@@ -27,43 +27,69 @@
  #endif
  
  /**
-@@ -137,7 +139,31 @@
+@@ -137,7 +139,52 @@
  #endif
  
  #ifdef CONFIG_SFC_NOR
 -	#define CONFIG_BOOTCOMMAND "sf probe;sf read 0x80600000 0x40000 0x280000; bootm 0x80600000"
-+	#define CONFIG_BOOTCOMMAND \
-+	"echo \"Sets yellow LED off\"; \
-+	gpio set 38; \
-+	echo \"Sets blue LED off\"; \
-+	gpio set 39; \
-+	echo \"Enables USB\"; \
-+	gpio set 47; \
-+	echo \"Enables SDCARD\"; \
-+	gpio set 43; \
-+	gpio clear 48; \
-+	if mmc rescan; then " \
-+		"echo MMC Found; " \
-+		"echo Trying to find EXT3 uEnv.txt; " \
-+		"if ext4load mmc 0:1 0x80600000 uEnv.txt; then " \
-+			"echo uEnv found - Booting from microsd ...; " \
-+			"gpio clear 39;"\
-+			"env import -t 0x80600000 ${filesize};" \
-+			"boot;" \
-+		"fi;" \
-+        "else " \
-+		"echo MMC not found...; " \
-+	"fi;" \
-+	"echo Booting from Flash...; " \
-+	"gpio clear 38;"\
-+	"sf probe;sf read 0x80600000 0x40000 0x280000; bootm 0x80600000;"
++	#define CONFIG_BOOTCOMMAND " \
++	if printenv soctype; then \
++	  echo \"Settings are already stored!\"; \
++	else \
++	  jzsoc; saveenv; \
++	fi; \
++	if test \"${soctype}\" = \"T20L\" && test \"${flashtype}\" = \"EN25QH128A\" && i2c probe 0x40 ; then \
++	  gpio set 38; gpio set 39; gpio set 47; gpio set 43; gpio clear 48; sleep 3; gpio clear 43; if printenv hwversion; then true; else setenv hwversion SENISC5; saveenv; fi; \
++	  \
++	else if test \"${soctype}\" = \"T20X\" && test \"${flashtype}\" = \"GD25Q128\" && i2c probe 0x40 ; then \
++	  gpio set 38; gpio set 39; gpio set 47; gpio set 43; gpio clear 48; if printenv hwversion; then true; else setenv hwversion DF3; saveenv; fi; \
++	  \
++	else if test \"${soctype}\" = \"T20L\" && test \"${flashtype}\" = \"W25Q128\" ; then \
++	  gpio clear 75; gpio clear 76; gpio set 60; if printenv hwversion; then true; else setenv hwversion SXJ02ZM; saveenv; fi; \
++	  \
++	else if test \"${soctype}\" = \"T20X\" && test \"${flashtype}\" = \"EN25QH128A\" && i2c probe 0x40 ; then \
++	  gpio set 38; gpio set 39; gpio set 47; gpio set 43; gpio clear 48; sleep 3; gpio clear 43; if printenv hwversion; then true; else setenv hwversion WYZEC2; saveenv; fi; \
++	  \
++	else \
++	  if printenv count; then \
++	    if test \"${count}\" = \"1\"; then \
++	      echo \"ping: ${count}\"; setenv count 2; saveenv; \
++	      gpio set 43; gpio clear 48; sleep 3; gpio clear 43; \
++	    else \
++	      echo \"pong: ${count}\"; setenv count 1; saveenv; gpio set 43; gpio clear 48; \
++	    fi; \
++	  else \
++	    echo \"pong: ${count}\"; setenv count 1; saveenv; \
++	    gpio set 43; gpio clear 48; \
++	  fi; \
++	fi; fi; fi; fi; \
++	echo Hardware found: ${hwversion}; \
++	\
++	\
++	if mmc rescan; then \
++	  echo \"MMC Found\"; \
++	  if ext4load mmc 0:1 0x80600000 uEnv.txt; then \
++	    env import -t 0x80600000 ${filesize}; setenv bootargs \"${bootargs} hwversion=${hwversion}\"; boot; \
++	  fi; \
++	  else \
++	    echo \"MMC not found...\"; \
++	fi; \
++	gpio clear 38; \
++	sf probe; \
++	sf read 0x80600000 0x40000 0x280000; \
++	bootm 0x80600000;"
  #endif /* CONFIG_SFC_NOR */
  
  /**
-@@ -255,9 +281,10 @@
+@@ -255,9 +302,14 @@
  #define CONFIG_CMDLINE_EDITING
  #define CONFIG_AUTO_COMPLETE
- /*#define CONFIG_CMD_I2C*/
+-/*#define CONFIG_CMD_I2C*/
++#define CONFIG_SOFT_I2C /* Always defined for software I2C support */
++#define CONFIG_SYS_I2C_SPEED 50000 /* default speed (in HZ) */
++#define CONFIG_SOFT_I2C_GPIO_SCL 13
++#define CONFIG_SOFT_I2C_GPIO_SDA 12
++#define CONFIG_CMD_I2C
 +#define CONFIG_CMD_GPIO
  
  /************************ USB CONFIG ***************************/
@@ -72,7 +98,7 @@
  #ifdef CONFIG_CMD_USB
  #define CONFIG_USB_DWC2
  #define CONFIG_USB_DWC2_REG_ADDR 0x13500000
-@@ -266,7 +293,12 @@
+@@ -266,7 +318,12 @@
  /* #define CONFIG_USB_STORAGE */
  #endif
  
@@ -86,7 +112,7 @@
  #ifdef CONFIG_AUTO_UPDATE
  	#define CONFIG_CMD_SDUPDATE		1
  #endif
-@@ -363,7 +395,7 @@
+@@ -363,7 +392,7 @@
  
  #define CONFIG_SPL_MAX_SIZE		(26 * 1024)
  

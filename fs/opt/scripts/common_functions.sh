@@ -24,10 +24,20 @@ getgpio() {
 	cat /sys/class/gpio/gpio"$GPIOPIN"/value
 }
 
+# Read a value from a gpio pin
+getgpioled() {
+	cat /sys/class/leds/$1/brightness
+}
+
 # Write a value to gpio pin
 setgpio() {
 	GPIOPIN=$1
-	echo "$2" >"/sys/class/gpio/gpio$GPIOPIN/value"
+	echo "$2" > "/sys/class/gpio/gpio$GPIOPIN/value"
+}
+
+# Write a value to gpio-led pin
+setgpioled() {
+	echo $2 > /sys/class/leds/$1/brightness
 }
 
 # Replace the old value of a config_key at the cfg_path with new_value
@@ -51,20 +61,19 @@ rewrite_config() {
 blue_led() {
 	case "$1" in
 	on)
-		setgpio 38 1
-		setgpio 39 0
+		setgpioled $(nvram get 2860 blue_led_pin) 1
 		;;
 	off)
-		setgpio 39 1
+		setgpioled $(nvram get 2860 blue_led_pin) 0
 		;;
 	status)
-		status=$(getgpio 39)
+		status=$(getgpioled $(nvram get 2860 blue_led_pin))
 		case $status in
 		0)
-			echo "ON"
+			echo "OFF"
 			;;
 		1)
-			echo "OFF"
+			echo "ON"
 			;;
 		esac
 		;;
@@ -75,20 +84,19 @@ blue_led() {
 yellow_led() {
 	case "$1" in
 	on)
-		setgpio 38 0
-		setgpio 39 1
+		setgpioled $(nvram get 2860 yellow_led_pin) 1
 		;;
 	off)
-		setgpio 38 1
+		setgpioled $(nvram get 2860 yellow_led_pin) 0
 		;;
 	status)
-		status=$(getgpio 38)
+		status=$(getgpioled $(nvram get 2860 yellow_pin))
 		case $status in
 		0)
-			echo "ON"
+			echo "OFF"
 			;;
 		1)
-			echo "OFF"
+			echo "ON"
 			;;
 		esac
 		;;
@@ -99,19 +107,19 @@ yellow_led() {
 ir_led() {
 	case "$1" in
 	on)
-		setgpio 49 0
+		setgpio $(nvram get 2860 ir_pin) 1
 		;;
 	off)
-		setgpio 49 1
+		setgpio $(nvram get 2860 ir_pin) 0
 		;;
 	status)
-		status=$(getgpio 49)
+		status=$(getgpio $(nvram get 2860 ir_pin))
 		case $status in
 		0)
-			echo "ON"
+			echo "OFF"
 			;;
 		1)
-			echo "OFF"
+			echo "ON"
 			;;
 		esac
 		;;
@@ -122,17 +130,17 @@ ir_led() {
 ir_cut() {
 	case "$1" in
 	on)
-		setgpio 25 0
-		setgpio 26 1
+		setgpio $(nvram get 2860 ir_filter_pin1) 0
+		setgpio $(nvram get 2860 ir_filter_pin2) 1
 		sleep 1
-		setgpio 26 0
+		setgpio $(nvram get 2860 ir_filter_pin2) 0
 		echo "1" >/var/run/ircut
 		;;
 	off)
-		setgpio 26 0
-		setgpio 25 1
+		setgpio $(nvram get 2860 ir_filter_pin1) 1
+		setgpio $(nvram get 2860 ir_filter_pin2) 0
 		sleep 1
-		setgpio 25 0
+		setgpio $(nvram get 2860 ir_filter_pin1) 0
 		echo "0" >/var/run/ircut
 		;;
 	status)
@@ -238,11 +246,11 @@ http_server() {
 
 # Set a new http password
 http_password() {
-	user="root" # by default root until we have proper user management
-	realm="all" # realm is defined in the lightppd.conf
+	user="admin" # by default root until we have proper user management
+	realm="Password Required" # realm is defined in the lightppd.conf
 	pass=$1
 	hash=$(echo -n "$user:$realm:$pass" | md5sum | cut -b -32)
-	echo "$user:$realm:$hash" >/system/sdcard/config/lighttpd.user
+	echo "$user:$realm:$hash" > /etc/lighttpd/lighttpd.user
 }
 
 # Control the RTSP h264 server

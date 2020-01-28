@@ -1,0 +1,97 @@
+#!/bin/sh
+
+. /opt/scripts/common_functions.sh
+
+case "$1" in
+start | "")
+
+	# update module dependencies
+	depmod
+
+	# Set the GPIO PC13 (77) to high to enable the USB power
+	USB_EN_GPIO=$(nvram get 2860 usb_en_pin)
+	[ "$USB_EN_GPIO" != ""  ] && init_gpio "$USB_EN_GPIO" "out"
+
+	# Mount params partition
+	# mount -t jffs2 /dev/mtdblock9 /params
+
+	# Detect other partitions available in the microSD
+	[ -b "/dev/mmcblk0p2" ] && {
+		mkdir -p /mnt/mmcblk0p2
+		mount /dev/mmcblk0p2 /mnt/mmcblk0p2
+	}
+	[ -b "/dev/mmcblk0p3" ] && {
+		mkdir -p /mnt/mmcblk0p3
+		mount /dev/mmcblk0p3 /mnt/mmcblk0p3
+	}
+	[ -b "/dev/mmcblk0p4" ] && {
+		mkdir -p /mnt/mmcblk0p4
+		mount /dev/mmcblk0p4 /mnt/mmcblk0p4
+	}
+	[ -b "/dev/mmcblk0p5" ] && {
+		mkdir -p /mnt/mmcblk0p5
+		mount /dev/mmcblk0p5 /mnt/mmcblk0p5
+	}
+
+	# Start Motor:
+	modprobe sample_motor
+
+	# Determine the image sensor model:
+	modprobe sinfo
+	echo 1 >/proc/jz/sinfo/info
+	sensor=$(grep -m1 -oE 'jxf[0-9]*$' /proc/jz/sinfo/info)
+	[ "$sensor" = "" ] && sensor=$(grep -m1 -oE 'ps[0-9]*$' /proc/jz/sinfo/info)
+
+	# Start the image sensor:
+	modprobe tx-isp isp_clk=100000000
+
+	[ "$sensor" = "jxf22" ] && modprobe sensor_jxf22 data_interface=2 pwdn_gpio=-1 reset_gpio=18 sensor_gpio_func=0
+
+	[ "$sensor" = "jxf23" ] && modprobe sensor_jxf23 data_interface=2 pwdn_gpio=-1 reset_gpio=18 sensor_gpio_func=0
+
+	[ "$sensor" = "ps5250" ] && modprobe sensor_ps5250 pwdn_gpio=-1 reset_gpio=18 sensor_gpio_func=0
+
+	# Start User Applications:
+
+	wmode=$(nvram get wapi wmode)
+	if [ "$wmode" = "STA" ]; then
+		## Sync the via NTP:
+		ntp_srv="$(cat /etc/ntp.conf)"
+		timeout -t 30 sh -c "until ping -4 -c1 \"google.com\" &>/dev/null; do sleep 3; done" # wait for available connection
+		ntpd -p "$ntp_srv"
+	fi
+
+	# Disable motion:
+	setconf -k m -v -1
+
+	# Detect maximum sensor resolution (mem=87M@0x0 ispmem=9M@0x5700000 rmem=32M@0x6000000)
+	RMEM=$(cat /uEnv.txt | grep -o 'rmem=[^@]*' | cut -c 6- -)
+	ISPMEM=$(cat /uEnv.txt | grep -o 'ispmem=[^@]*' | cut -c 8- -)
+
+	# Start RTSP-Server
+	v4l2rtspserver-v0.0.8 $(nvram get 2860 video.resolution) $([ "$(nvram get 2860 rtsp.en_audio)" != "true" ] && echo "-A";) -P "$(nvram get 2860 rtsp.port)" -N "$(nvram get 2860 sensor_id)" -D "$(nvram get 2860 sensor_address)" &> /var/log/v4l2rtspserver.log &
+
+	setconf -k b -v $(nvram get 2860 video.bitrate)
+
+	# enable ir-filter and ir-led gpio
+	init_gpio "$(nvram get 2860 ir_filter_pin1)" "out"
+	init_gpio "$(nvram get 2860 ir_filter_pin2)" "out"
+	init_gpio "$(nvram get 2860 ir_pin)" "out"
+	ir_cut "on"
+
+	#autonight -D /dev/jz_adc_aux_0 -d 1 -O 600 -F 650 &
+
+	# set solid yellow led
+	echo none >/sys/class/leds/led_yellow/trigger
+	echo 1 >/sys/class/leds/led_yellow/brightness
+	echo none >/sys/class/leds/led_yellow1/trigger
+	echo 1 >/sys/class/leds/led_yellow1/brightness
+
+	;;
+
+stop) ;;
+
+\
+	*) ;;
+
+esac
