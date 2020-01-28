@@ -90,7 +90,7 @@ yellow_led() {
 		setgpioled $(nvram get 2860 yellow_led_pin) 0
 		;;
 	status)
-		status=$(getgpioled $(nvram get 2860 yellow_pin))
+		status=$(getgpioled $(nvram get 2860 yellow_led_pin))
 		case $status in
 		0)
 			echo "OFF"
@@ -291,52 +291,6 @@ rtsp_mjpeg_server() {
 	esac
 }
 
-# Control the motion detection function
-motion_detection() {
-	case "$1" in
-	on)
-		/system/sdcard/bin/setconf -k m -v 4
-		;;
-	off)
-		/system/sdcard/bin/setconf -k m -v -1
-		;;
-	status)
-		status=$(/system/sdcard/bin/setconf -g m 2>/dev/null)
-		case $status in
-		-1)
-			echo "OFF"
-			;;
-		*)
-			echo "ON"
-			;;
-		esac
-		;;
-	esac
-}
-
-# Control the motion tracking function
-motion_tracking() {
-	case "$1" in
-	on)
-		/system/sdcard/bin/setconf -k t -v on
-		;;
-	off)
-		/system/sdcard/bin/setconf -k t -v off
-		;;
-	status)
-		status=$(/system/sdcard/bin/setconf -g t 2>/dev/null)
-		case $status in
-		true)
-			echo "ON"
-			;;
-		*)
-			echo "OFF"
-			;;
-		esac
-		;;
-	esac
-}
-
 # Control the night mode
 night_mode() {
 	case "$1" in
@@ -379,6 +333,73 @@ auto_night_mode() {
 		else
 			echo "OFF"
 		fi
+		;;
+	esac
+}
+
+# Take a snapshot
+snapshot(){
+    filename="/opt/DCIM/snapshot.jpg"
+    /usr/bin/getimage > "$filename" &
+    sleep 1
+}
+
+# Reboot the System
+reboot_system() {
+  /sbin/reboot
+}
+
+# Re-Mount the SD Card
+remount_sdcard() {
+  mount -o remount,rw /opt
+}
+
+##############################################################################################################################################################
+##################### VALIDATED
+##############################################################################################################################################################
+
+# Control the motion detection function
+motion_detection() {
+	case "$1" in
+	on)
+		/usr/bin/setconf -k m -v 4
+		;;
+	off)
+		/usr/bin/setconf -k m -v -1
+		;;
+	status)
+		status=$(/usr/bin/setconf -g m 2>/dev/null)
+		case $status in
+		-1)
+			echo "OFF"
+			;;
+		*)
+			echo "ON"
+			;;
+		esac
+		;;
+	esac
+}
+
+# Control the motion tracking function
+motion_tracking() {
+	case "$1" in
+	on)
+		/usr/bin/setconf -k t -v on
+		;;
+	off)
+		/usr/bin/setconf -k t -v off
+		;;
+	status)
+		status=$(/usr/bin/setconf -g t 2>/dev/null)
+		case $status in
+		true)
+			echo "ON"
+			;;
+		*)
+			echo "OFF"
+			;;
+		esac
 		;;
 	esac
 }
