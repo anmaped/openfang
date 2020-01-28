@@ -49,8 +49,19 @@ Just use `su` and set your password using `passwd` tool.
 
 The deafult user/password is admin/admin.
 
+### 6. How can I reset to Factory ?
 
-### 6. [Dafang-Hacks](https://github.com/Dafang-Hacks/rootfs) seems like a very similar effort to [Openfang](https://github.com/anmaped/openfang/). Which one should I choose to flash and contribute to?
+Connect via ssh to device and use the following commands: 
+```
+nvram clear rtdev
+nvram commit 
+
+reboot
+```
+This will factory reset the device!
+
+
+### 7. [Dafang-Hacks](https://github.com/Dafang-Hacks/rootfs) seems like a very similar effort to [Openfang](https://github.com/anmaped/openfang/). Which one should I choose to flash and contribute to?
 
 Openfang is more flexible towards future/other devices and (currently) the most active, although being based on some original efforts made with the Dafang-hacks.
 
