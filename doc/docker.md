@@ -4,6 +4,12 @@ Docker is well known among software developers. Even if you are not familiar wit
 
 ## Build openfang using pre-built docker image (recommended)
 
+! Some users have problems compiling Openfang with GCC 2.28 and M4 (Ubuntu 18 or later ). We recomend Ubuntu 16.04.6 LTS to deploy Openfang docker. Make sure that you have the following packages in the system:
+
+```
+sudo apt install gcc g++ python make m4 zip unzip lzop
+```
+
 The next set of commands will retrieve the image from dockerhub and compile it. To do so, use the following commands:
 
 ```
