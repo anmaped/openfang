@@ -90,7 +90,16 @@ You will need:
 - After clicking on connect, you will be prompted to select your flash memory. Select any of the two. 
 <img src="/doc/SXJ02ZM/img/windows_flasher_2.png" width="300">
 
+### Making backup
+Attention: it's highly recommended NOT TO IGNORE THIS STEP, because this is the only way you can revert your camera's firmware back to stock!
 
+- Click on "Read".
+
+- When reading is completed, click on "Verify" to verify that reading result matches content on flash.
+
+- Click on "Save" and save your backup.
+
+### Flashing
 - Click on erase at the top icons and wait for the process to finish. 
 <img src="/doc/SXJ02ZM/img/windows_flasher_3.png" width="300">
 
