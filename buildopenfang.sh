@@ -73,6 +73,8 @@ rm -r "$WDIR"/package/libtirpc # use updated package version instead
 #rm -r "$WDIR"/package/uclibc # use updated package version instead
 cp "$CPW"/buildroot/* . -rf
 
+BUILDROOT_CHANGED=$(git diff --name-only "$CPW"/config/buildroot.config)
+[ -n "$BUILDROOT_CHANGED" ] || make oldconfig
 make
 
 #
