@@ -90,6 +90,10 @@ nvram set 2860 "rtsp.en_audio" ""
 	cp -f /uEnv_64.txt /uEnv.txt;
 	#check if mtd partitions are right for this model
 	[ "$(cat /proc/mtd | grep 'mtd4: 00010000 00008000 "config"')" != "" ] && { nvram commit; echo "ok"; exit 0; }
+
+	# Set IR filter pins
+	nvram set 2860 ir_filter_pin1 26
+	nvram set 2860 ir_filter_pin2 25
 }
 
 echo "nok"
