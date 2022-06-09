@@ -81,11 +81,12 @@ start | "")
 
 	#autonight -D /dev/jz_adc_aux_0 -d 1 -O 600 -F 650 &
 
-	# set solid yellow led
+	# Set Yellow led
+	yellow_led_state="$(nvram get 2860 yellow_led_state)"
 	echo none >/sys/class/leds/led_yellow/trigger
-	echo 1 >/sys/class/leds/led_yellow/brightness
+	echo $yellow_led_state >/sys/class/leds/led_yellow/brightness
 	echo none >/sys/class/leds/led_yellow1/trigger
-	echo 1 >/sys/class/leds/led_yellow1/brightness
+	echo $yellow_led_state >/sys/class/leds/led_yellow1/brightness
 
 	;;
 
