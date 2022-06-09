@@ -340,6 +340,14 @@ if [ -n "$F_cmd" ]; then
       /usr/bin/setconf -k n -v 0
     ;;
 
+    night-mode-on)
+      night_mode on
+    ;;
+
+    night-mode-off)
+      night_mode off
+    ;;
+
     flip-on)
       /usr/bin/setconf -k f -v 1
     ;;
